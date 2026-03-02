@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.6] - 2026-03-03
+
+### Fixed
+
+- Fix macOS DMG builds failing Gatekeeper privacy checks by adding ad-hoc code signing (`signingIdentity: "-"`) to `bundle.macOS` in Tauri config, allowing the app to pass macOS security validation without a paid Apple Developer certificate
+- Fix spurious `nul` file created in the project root on Windows when Tauri redirects output to the `NUL` device during builds; delete the file and add `nul` to `.gitignore`
+
+### Changed
+
+- Bump `@tanstack/svelte-query` from 6.0.18 to 6.1.0
+- Bump `@lucide/svelte` from 0.575.0 to 0.576.0
+- Bump `@sveltejs/kit` from 2.53.2 to 2.53.4
+- Bump `lint-staged` from 16.2.7 to 16.3.1
+- Bump `svelte` from 5.53.5 to 5.53.6
+- Bump `svelte-check` from 4.4.3 to 4.4.4
+
 ## [2.1.5] - 2026-03-01
 
 ### Fixed
@@ -384,6 +400,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Update SvelteKit and Svelte packages to avoid CVE from older versions ([#20](https://github.com/HopeArtOrg/hope-re/pull/20))
 
+[2.1.6]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.5...v2.1.6
+[2.1.5]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.4...v2.1.5
 [2.1.4]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.3...v2.1.4
 [2.1.3]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.1...v2.1.2
