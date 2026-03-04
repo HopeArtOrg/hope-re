@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Theme } from "$lib/stores/theme.svelte";
+  import type { Theme } from "$lib/stores/use-theme.svelte";
 
   import { MoonIcon, SunIcon } from "@lucide/svelte";
   import { Button } from "$lib/components/ui/button";
-  import { useTheme } from "$lib/stores/theme.svelte";
+  import { useTheme } from "$lib/stores/use-theme.svelte";
 
   const theme = useTheme();
 

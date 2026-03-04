@@ -8,7 +8,7 @@
 
   import "../app.css";
   import { Toaster } from "$lib/components/ui/sonner";
-  import { useTheme } from "$lib/stores/theme.svelte";
+  import { useTheme } from "$lib/stores/use-theme.svelte";
   import { cn } from "$lib/utils";
   import { onMount } from "svelte";
 

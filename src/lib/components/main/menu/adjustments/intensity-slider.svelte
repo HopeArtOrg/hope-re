@@ -6,16 +6,16 @@
 
   import type { IntensitySliderProps } from "../types";
 
-  let { value = $bindable([20]) }: IntensitySliderProps = $props();
+  let { value = $bindable([30]) }: IntensitySliderProps = $props();
 
   const sliderId = `intensity-slider-${Math.random().toString(36).substring(2, 9)}`;
 
   const intensityDisplay = $derived((value[0] / 100).toFixed(2));
 
   const intensityLevel = $derived(
-    value[0] < 9
+    value[0] < 15
       ? "Low"
-      : value[0] < 17
+      : value[0] < 35
       ? "Medium"
       : "High",
   );
@@ -50,14 +50,14 @@
             type="multiple"
             bind:value
             min={1}
-            max={25}
+            max={50}
             step={1}
             aria-label="Intensity control" />
 
     <div class="flex justify-between items-center text-xs text-muted-foreground">
       <span>0.01</span>
-      <span class="font-medium">0.12</span>
-      <span>0.25</span>
+      <span class="font-medium">0.25</span>
+      <span>0.50</span>
     </div>
   </div>
 

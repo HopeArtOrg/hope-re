@@ -29,7 +29,7 @@ const DEFAULTS: ProtectionState = {
   algorithm: "noise",
   glazeStyle: "abstract",
   nightshadeTarget: "dog",
-  intensity: [50],
+  intensity: [30],
   outputQuality: [92],
   renderQuality: [75],
 };
