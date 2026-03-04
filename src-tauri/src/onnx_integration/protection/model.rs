@@ -2,6 +2,7 @@ use std::path::PathBuf;
 
 use ort::session::Session;
 
+use crate::onnx_integration::capabilities::build_execution_providers;
 use crate::onnx_integration::model_downloader::resolve_downloaded_model;
 
 fn is_git_lfs_pointer(bytes: &[u8]) -> bool {
@@ -20,10 +21,23 @@ pub fn load_model(model_path: &std::path::Path) -> Result<Session, String> {
         ));
     }
 
-    Session::builder()
+    let eps = build_execution_providers();
+
+    let builder = Session::builder()
         .map_err(|e| format!("Failed to create session builder: {}", e))?
         .with_optimization_level(ort::session::builder::GraphOptimizationLevel::Level3)
-        .map_err(|e| format!("Failed to set optimization level: {}", e))?
+        .map_err(|e| format!("Failed to set optimization level: {}", e))?;
+
+    let builder = if !eps.is_empty() {
+        log::info!("Loading model with {} execution provider(s)", eps.len());
+        builder
+            .with_execution_providers(eps)
+            .map_err(|e| format!("Failed to set execution providers: {}", e))?
+    } else {
+        builder
+    };
+
+    builder
         .commit_from_memory(&model_bytes)
         .map_err(|e| format!("Failed to load model from {:?}: {}", model_path, e))
 }

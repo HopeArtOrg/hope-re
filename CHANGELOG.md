@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.7] - 2026-03-04
+
+### Fixed
+
+- Fix ONNX model inference running on CPU-only even when GPU acceleration is available because `load_model()` in `model.rs` never called `build_execution_providers()`, while the separate `create_ort_session` test command did; protection pipeline now uses CUDA (NVIDIA), DirectML (Windows), CoreML (macOS/iOS), or XNNPACK (Linux/Android) when available
+- Fix `theme.svelte.ts` not following the `use-*.svelte.ts` store naming convention; rename to `use-theme.svelte.ts` and update imports in `+layout.svelte` and `theme-toggle.svelte`
+
+### Changed
+
+- Increase noise algorithm epsilon from `intensity * 0.16` to `intensity * 0.48` and iterations from 250 to 500 for significantly stronger adversarial perturbation
+- Increase noise `alpha_multiplier` from 3.0 to 5.0 and reduce `perceptual_weight` from 0.4 to 0.15 to allow more aggressive per-step changes
+- Increase glaze algorithm epsilon from `intensity * 0.10` to `intensity * 0.36` and iterations from 350 to 600 for stronger style cloaking
+- Increase glaze `alpha_multiplier` from 2.5 to 4.5 and reduce `perceptual_weight` from 0.8 to 0.3
+- Increase nightshade algorithm epsilon from `intensity * 0.09` to `intensity * 0.32` and iterations from 500 to 750 for stronger data poisoning
+- Increase nightshade `alpha_multiplier` from 3.0 to 5.0 and reduce `perceptual_weight` from 1.2 to 0.4
+- Increase `SPSA_DIRECTIONS_PER_ITER` from 8 to 12 for higher-quality gradient estimates producing stronger perturbations
+- Raise edge weight map floor from 0.3 to 0.5 so flat/smooth image areas receive more perturbation instead of concentrating only on edges
+- Widen intensity slider range from 1-25 (max 0.25) to 1-50 (max 0.50) and update default from 50 to 30
+- Update intensity level thresholds from Low (<0.09) / Medium (<0.17) / High to Low (<0.15) / Medium (<0.35) / High
+- Update render quality time estimates to reflect increased iteration counts: Faster ~2-5 mins, Fast ~10-25 mins, Default ~20-50 mins, Slower ~40-90 mins, Slowest ~60-150 mins
+- Fix README incorrectly describing TanStack Query as managing "server state" when the app is fully static and client-side with no backend server; all query operations invoke local Tauri commands via IPC
+- Add tribute to the original Hope app (version 1) in README with links to `HopeADeff/Hope` and `HopeArtOrg/hope-archive`
+
 ## [2.1.6] - 2026-03-03
 
 ### Fixed
@@ -400,22 +423,3 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Update SvelteKit and Svelte packages to avoid CVE from older versions ([#20](https://github.com/HopeArtOrg/hope-re/pull/20))
 
-[2.1.6]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.5...v2.1.6
-[2.1.5]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.4...v2.1.5
-[2.1.4]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.3...v2.1.4
-[2.1.3]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.2...v2.1.3
-[2.1.2]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.1...v2.1.2
-[2.1.1]: https://github.com/HopeArtOrg/hope-re/compare/v2.1.0...v2.1.1
-[2.1.0]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.8...v2.1.0
-[2.0.8]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.77...v2.0.8
-[2.0.77]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.76...v2.0.77
-[2.0.76]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.75...v2.0.76
-[2.0.75]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.7...v2.0.75
-[2.0.7]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.44...v2.0.7
-[2.0.44]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.42...v2.0.44
-[2.0.42]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.41...v2.0.42
-[2.0.41]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.4...v2.0.41
-[2.0.4]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.3...v2.0.4
-[2.0.3]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.2-alpha...v2.0.3
-[2.0.2-alpha]: https://github.com/HopeArtOrg/hope-re/compare/v2.0.1-alpha...v2.0.2-alpha
-[2.0.1-alpha]: https://github.com/HopeArtOrg/hope-re/commits/v2.0.1-alpha

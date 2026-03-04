@@ -50,7 +50,7 @@ pub fn compute_edge_weight_map(tile: &Array4<f32>) -> Vec<f32> {
     let inv_range = 1.0 / (max_e - min_e + 1e-8);
 
     for e in &mut edges {
-        *e = 0.3 + 0.7 * (*e - min_e) * inv_range;
+        *e = 0.5 + 0.5 * (*e - min_e) * inv_range;
     }
 
     edges
