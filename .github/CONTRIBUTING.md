@@ -1,149 +1,147 @@
-# Đóng góp cho Hope V2.0.1
+# Contributing to Hope:RE
 
-Chúng tôi rất mong bạn đóng góp cho dự án này và giúp nó trở nên tốt hơn nữa!
-Là một người đóng góp, dưới đây là các hướng dẫn mà chúng tôi mong bạn tuân thủ:
+We would love for you to contribute to this project and help make it even better!
+As a contributor, here are the guidelines we would like you to follow:
 
-- [Quy tắc ứng xử](#code-of-conduct)
-- [Câu hỏi hoặc Vấn đề?](#question-or-problem)
-- [Vấn đề và Lỗi](#found-a-bug)
-- [Yêu cầu Tính năng](#missing-a-feature)
-- [Hướng dẫn Gửi đóng góp](#submission-guidelines)
-- [Quy tắc Lập trình](#coding-rules)
-- [Hướng dẫn Viết Commit Message](#commit-message-format)
-- [Ký CLA](#signing-the-cla)
+- [Code of Conduct](#code-of-conduct)
+- [Question or Problem?](#question-or-problem)
+- [Issues and Bugs](#found-a-bug)
+- [Feature Requests](#missing-a-feature)
+- [Submission Guidelines](#submission-guidelines)
+- [Coding Rules](#coding-rules)
+- [Commit Message Format](#commit-message-format)
 
-## Quy tắc ứng xử
+## Code of Conduct
 
-Hãy giúp chúng tôi giữ cho dự án này cởi mở và hòa nhập.
-Vui lòng đọc và tuân theo [Quy tắc ứng xử](./CODE_OF_CONDUCT.md) của chúng tôi.
+Help us keep this project open and inclusive.
+Please read and follow our [Code of Conduct](./CODE_OF_CONDUCT.md).
 
-## Câu hỏi hoặc Vấn đề?
+## Question or Problem?
 
-Đừng mở issue (vấn đề) cho các câu hỏi hỗ trợ chung vì chúng tôi muốn giữ GitHub issues cho các báo cáo lỗi và yêu cầu tính năng.
-Thay vào đó, chúng tôi khuyên bạn nên hỏi trực tiếp qua [email](mailto:trananhquan1009@gmail.com) để đặt các câu hỏi liên quan đến hỗ trợ.
+Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests.
+Instead, we recommend reaching out directly via [email](mailto:trananhquan1009@gmail.com) for support-related questions.
 
-Discord là nơi tốt hơn nhiều để đặt câu hỏi vì:
+## Found a Bug?
 
-- Có cộng đồng sẵn sàng giúp đỡ.
-- Các câu hỏi và câu trả lời luôn có sẵn để mọi người cùng xem.
+If you find a bug in the source code, you can help us by [submitting an issue](#submitting-an-issue) to our [GitHub Repository](https://github.com/HopeArtOrg/hope-re/issues).
+Even better, you can [submit a Pull Request](#submitting-a-pull-request-pr) with a fix.
 
-Chúng tôi sẽ đóng tất cả các issue mang tính chất yêu cầu hỗ trợ chung và hướng dẫn mọi người qua Discord.
+## Missing a Feature?
 
-## Phát hiện Lỗi?
+You can _request_ a new feature by [submitting an issue](#submitting-an-issue) to our GitHub Repository.
+If you would like to _implement_ a new feature, please consider the size of the change:
 
-Nếu bạn tìm thấy lỗi trong mã nguồn, bạn có thể giúp chúng tôi bằng cách [gửi một issue](#gửi-một-issue) đến [Kho lưu trữ GitHub](https://github.com/Hope-Defensive/Hope-AD/issues) của chúng tôi.
-Tuyệt vời hơn nữa, bạn có thể [gửi một Pull Request](#gửi-một-pull-request-pr) kèm theo bản sửa lỗi.
+- For a **Major Feature**, first open an issue and outline your proposal so that it can be discussed.
+- **Small Features** can be crafted and [directly submitted as a Pull Request](#submitting-a-pull-request-pr).
 
-## Thiếu Tính năng?
+## Submission Guidelines
 
-Bạn có thể _yêu cầu_ một tính năng mới bằng cách [gửi một issue](#gửi-một-issue) đến Kho lưu trữ GitHub của chúng tôi.
-Nếu bạn muốn _triển khai_ một tính năng mới, vui lòng xem xét quy mô của thay đổi:
+### Submitting an Issue
 
-- Đối với một **Tính năng Lớn**, trước tiên hãy mở một issue và phác thảo đề xuất của bạn để có thể thảo luận.
-- **Tính năng Nhỏ** có thể được thực hiện và [gửi trực tiếp dưới dạng Pull Request](#gửi-một-pull-request-pr).
+Before you submit an issue, please search the issue tracker. An issue for your problem may already exist and the discussion might provide you with workarounds.
 
-## Hướng dẫn Gửi đóng góp
+We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it. In order to reproduce bugs, we require that you provide a minimal reproduction.
 
-### Gửi một Issue
+You can file new issues by selecting from our [new issue templates](https://github.com/HopeArtOrg/hope-re/issues/new/choose) and filling out the template.
 
-Trước khi bạn gửi một issue, vui lòng tìm kiếm trong trình theo dõi vấn đề (issue tracker). Có thể đã có một issue cho vấn đề của bạn và cuộc thảo luận ở đó có thể cung cấp cho bạn giải pháp thay thế.
+### Submitting a Pull Request (PR)
 
-Chúng tôi muốn sửa tất cả các vấn đề càng sớm càng tốt, nhưng trước khi sửa lỗi, chúng tôi cần tái hiện và xác nhận nó. Để tái hiện lỗi, chúng tôi yêu cầu bạn cung cấp một bản tái hiện tối thiểu (minimal reproduction).
+Before you submit your Pull Request (PR), consider the following guidelines:
 
-Bạn có thể tạo issue mới bằng cách chọn từ [các mẫu issue mới](https://github.com/Hope-Defensive/Hope-AD/issues/new/choose) của chúng tôi và điền vào mẫu.
-
-### Gửi một Pull Request (PR)
-
-Trước khi bạn gửi Pull Request (PR), hãy xem xét các hướng dẫn sau:
-
-1. Tìm kiếm [GitHub PRs](https://github.com/Hope-Defensive/Hope-AD/pulls) để xem có PR nào đang mở hoặc đã đóng liên quan đến nội dung bạn gửi không.
-2. Đảm bảo rằng có một issue mô tả vấn đề bạn đang sửa, hoặc tài liệu hóa thiết kế cho tính năng bạn muốn thêm.
-3. Vui lòng ký [Thỏa thuận Cấp phép Người đóng góp (CLA)](#ký-cla) của chúng tôi trước khi gửi PR.
-4. [Fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) kho lưu trữ.
-5. Trong kho lưu trữ đã fork của bạn, hãy thực hiện các thay đổi trong một nhánh git mới:
+1. Search [GitHub PRs](https://github.com/HopeArtOrg/hope-re/pulls) for an open or closed PR that relates to your submission.
+2. Make sure there is an issue describing the problem you are fixing, or documenting the design for the feature you would like to add.
+3. [Fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) the repository.
+4. In your forked repository, make your changes in a new git branch:
 
    ```sh
    git checkout -b my-fix-branch main
    ```
 
-6. Tạo bản vá (patch) của bạn.
-7. Tuân theo [Quy tắc Lập trình](https://www.google.com/search?q=%23quy-t%E1%BA%AFc-l%E1%BA%ADp-tr%C3%ACnh) của chúng tôi.
-8. Đảm bảo kiểm thử các thay đổi của bạn.
-9. Commit các thay đổi của bạn bằng cách sử dụng thông điệp commit mô tả tuân theo [quy ước thông điệp commit](https://www.google.com/search?q=%23%C4%91%E1%BB%8Bnh-d%E1%BA%A1ng-commit-message) của chúng tôi.
+5. Create your patch.
+6. Follow our [Coding Rules](#coding-rules).
+7. Make sure to test your changes.
+8. Run `pnpm lint` to ensure your code passes linting.
+9. Commit your changes using a descriptive commit message that follows our [commit message conventions](#commit-message-format).
    ```sh
    git commit --all
    ```
-10. Push nhánh của bạn lên GitHub:
+10. Push your branch to GitHub:
     ```sh
     git push origin my-fix-branch
     ```
-11. Trên GitHub, gửi một pull request đến nhánh `main`.
+11. On GitHub, send a pull request to the `main` branch.
 
-#### Review Pull Request
+#### Reviewing a Pull Request
 
-Các nhà bảo trì có quyền không chấp nhận pull request từ các thành viên cộng đồng không tuân thủ các quy tắc ứng xử tốt. Hành vi như vậy bao gồm việc không tuân theo [Quy tắc ứng xử](https://www.google.com/search?q=./CODE_OF_CONDUCT.md).
+The maintainers reserve the right to not accept pull requests from community members who have not shown good conduct. Such behavior includes not following the [Code of Conduct](./CODE_OF_CONDUCT.md).
 
-##### Giải quyết phản hồi review
+##### Addressing review feedback
 
-Nếu chúng tôi yêu cầu thay đổi thông qua review code, thì:
+If we ask for changes via code reviews, then:
 
-1.  Thực hiện các cập nhật cần thiết cho mã.
-2.  Tạo một commit fixup và push lên kho lưu trữ GitHub của bạn:
-    ```sh
-    git commit --all --fixup HEAD
-    git push
-    ```
+1. Make the required updates to the code.
+2. Create a fixup commit and push to your GitHub repository:
+   ```sh
+   git commit --all --fixup HEAD
+   git push
+   ```
 
-##### Cập nhật thông điệp commit
+##### Updating the commit message
 
-Người review có thể đề xuất thay đổi cho thông điệp commit. Để cập nhật thông điệp commit của commit cuối cùng trên nhánh của bạn:
+A reviewer might suggest changes to a commit message. To update the message of the last commit on your branch:
 
-1.  Checkout nhánh của bạn:
-    ```sh
-    git checkout my-fix-branch
-    ```
-2.  Amend (sửa đổi) commit cuối cùng và thay đổi thông điệp commit:
-    ```sh
-    git commit --amend
-    ```
-3.  Push lên kho lưu trữ GitHub của bạn:
-    ```sh
-    git push --force-with-lease
-    ```
+1. Check out your branch:
+   ```sh
+   git checkout my-fix-branch
+   ```
+2. Amend the last commit and modify the commit message:
+   ```sh
+   git commit --amend
+   ```
+3. Push to your GitHub repository:
+   ```sh
+   git push --force-with-lease
+   ```
 
-#### Sau khi pull request của bạn được merge
+#### After your pull request is merged
 
-Sau khi pull request của bạn được merge, bạn có thể xóa nhánh của mình một cách an toàn và pull các thay đổi từ kho lưu trữ chính:
+After your pull request is merged, you can safely delete your branch and pull the changes from the main repository:
 
-- Xóa nhánh remote trên GitHub thông qua giao diện web GitHub hoặc shell cục bộ của bạn:
+- Delete the remote branch on GitHub via the GitHub web UI or your local shell:
   ```sh
   git push origin --delete my-fix-branch
   ```
-- Checkout nhánh main:
+- Check out the main branch:
   ```sh
   git checkout main -f
   ```
-- Xóa nhánh cục bộ:
+- Delete the local branch:
   ```sh
   git branch -D my-fix-branch
   ```
-- Cập nhật nhánh main của bạn với phiên bản upstream mới nhất:
+- Update your main branch with the latest upstream version:
   ```sh
   git pull --ff upstream main
   ```
 
-## Quy tắc Lập trình
+## Coding Rules
 
-Để đảm bảo tính nhất quán trong toàn bộ mã nguồn, hãy ghi nhớ các quy tắc này khi bạn làm việc:
+To ensure consistency throughout the source code, keep these rules in mind as you are working:
 
-- Tất cả các tính năng hoặc bản sửa lỗi **phải được kiểm thử**.
-- Tất cả các phương thức API công khai **phải được tài liệu hóa**.
+- All features or bug fixes **must be tested**.
+- Run `pnpm lint` before committing to ensure code passes ESLint checks.
+- Follow Angular-style [commit message conventions](#commit-message-format).
+- Use `type` keyword for TypeScript type definitions, never `interface`.
+- Use `import type` for type-only imports.
+- Use Svelte 5 runes (`$props()`, `$state()`, `$derived()`, `$effect()`) -- no legacy Svelte syntax.
+- No `<style>` blocks in Svelte components -- use Tailwind CSS utility classes only.
+- File names must be kebab-case (except Rust files which use snake_case).
 
-## Định dạng Commit Message
+## Commit Message Format
 
-Chúng tôi có các quy tắc rất chính xác về cách định dạng các thông điệp commit Git. Định dạng này giúp **lịch sử commit dễ đọc hơn**.
+We have very precise rules over how our Git commit messages are formatted. This format leads to **easier to read commit history**.
 
-Mỗi thông điệp commit bao gồm một **header** (tiêu đề), một **body** (phần thân), và một **footer** (chân trang).
+Each commit message consists of a **header**, a **body**, and a **footer**.
 
 ```
 <header>
@@ -153,29 +151,20 @@ Mỗi thông điệp commit bao gồm một **header** (tiêu đề), một **bo
 <footer>
 ```
 
-Phần `header` là bắt buộc và phải tuân theo định dạng:
+The `header` is mandatory and must conform to the format:
 
 ```
 <type>(<scope>): <short summary>
 ```
 
-- **type**: build|ci|docs|feat|fix|perf|refactor|test
-- **scope**: api|commands|config|entities|events|guards|i18n|services|utils|cli|\#{issue_id}|(trống)
-- **summary**: mệnh lệnh thức, thì hiện tại, không có dấu chấm ở cuối
+- **type**: build | ci | docs | feat | fix | perf | refactor | test
+- **scope**: the place of the commit change (e.g. `protection`, `commands`, `ui`, or empty)
+- **summary**: imperative present tense, no capitalized first letter, no period at the end
 
-Phần `body` là bắt buộc đối với tất cả các commit ngoại trừ loại "docs". Khi hiện diện, nó phải dài ít nhất 20 ký tự và giải thích động lực cho sự thay đổi.
+The `body` is optional. When present, it should explain the motivation for the change and contrast this with previous behavior.
 
-Phần `footer` là tùy chọn. Nó có thể chứa thông tin về các thay đổi phá vỡ (breaking changes), các phần bị loại bỏ (deprecations), hoặc tham chiếu đến các issue/PR.
+The `footer` is optional. It can contain information about breaking changes, deprecations, or references to issues and PRs.
 
-### Revert commits (Hoàn tác commit)
+### Revert commits
 
-Nếu commit hoàn tác một commit trước đó, nó nên bắt đầu bằng `revert: `, theo sau là header của commit bị hoàn tác.
-
-## Ký CLA
-
-Vui lòng ký Thỏa thuận Cấp phép Người đóng góp (CLA) của chúng tôi trước khi gửi pull request. Để bất kỳ thay đổi mã nào được chấp nhận, CLA phải được ký. Đây là một quá trình nhanh chóng\!
-
-- Đối với cá nhân, chúng tôi có một biểu mẫu nhấp chuột đơn giản.
-- Đối với các tập đoàn, chúng tôi sẽ cần bạn in, ký và gửi biểu mẫu.
-
-Nếu bạn có nhiều hơn một tài khoản GitHub, hoặc nhiều địa chỉ email được liên kết với một tài khoản GitHub duy nhất, bạn phải ký CLA bằng địa chỉ email chính của tài khoản GitHub được sử dụng để tạo Git commit và gửi pull request.
+If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit.

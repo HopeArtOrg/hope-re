@@ -58,7 +58,7 @@ If the prefix is `feat`, `fix` or `perf`, it will appear in the changelog. Howev
 
 Other prefixes are up to your discretion. Suggested prefixes are `build`, `ci`, `docs` ,`style`, `refactor`, and `test` for non-changelog related tasks.
 
-Details regarding these types can be found in the official [Template Contributing Guidelines](./CONTRIBUTING.md#commit-message-format).
+Details regarding these types can be found in the [Contributing Guidelines](./CONTRIBUTING.md#commit-message-format).
 
 ### Scope
 

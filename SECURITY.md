@@ -1,22 +1,22 @@
-# Chính Sách Bảo Mật
+# Security Policy
 
-## Báo Cáo Lỗ Hổng
+## Reporting a Vulnerability
 
-Nếu bạn phát hiện một lỗ hổng bảo mật trong dự án này, vui lòng báo cáo bằng cách gửi email đến [trananhquan1009@gmail.com](mailto:trananhquan1009@gmail.com). Vui lòng **không** tạo issue công khai trên GitHub cho các vấn đề liên quan đến bảo mật.
+If you discover a security vulnerability in this project, please report it by sending an email to [trananhquan1009@gmail.com](mailto:trananhquan1009@gmail.com). Please **do not** create a public GitHub issue for security-related concerns.
 
-Vui lòng bao gồm càng nhiều chi tiết càng tốt trong báo cáo của bạn, bao gồm:
+Please include as much detail as possible in your report, including:
 
-- Mô tả về lỗ hổng
-- Các bước để tái hiện (nếu có thể áp dụng)
-- Tác động thực tế hoặc tác động tiềm ẩn
-- Bất kỳ đề xuất giảm thiểu hoặc sửa lỗi nào
+- A description of the vulnerability
+- Steps to reproduce (if applicable)
+- Actual or potential impact
+- Any suggested mitigations or fixes
 
-Chúng tôi sẽ xem xét báo cáo của bạn ngay lập tức và phản hồi sớm nhất có thể. Nếu lỗ hổng được xác nhận, chúng tôi sẽ làm việc để khắc phục nó và có thể yêu cầu thêm thông tin từ bạn.
+We will review your report promptly and respond as soon as possible. If the vulnerability is confirmed, we will work to address it and may request additional information from you.
 
-## Các Phiên Bản Được Hỗ Trợ
+## Supported Versions
 
-Chúng tôi hướng tới việc hỗ trợ phiên bản chính (major version) mới nhất của dự án này. Các bản sửa lỗi bảo mật thường sẽ chỉ được cung cấp cho bản phát hành gần đây nhất.
+We aim to support the latest major version of this project. Security fixes will generally only be provided for the most recent release.
 
-## Chính Sách Công Bố
+## Disclosure Policy
 
-Chúng tôi yêu cầu bạn cho chúng tôi một khoảng thời gian hợp lý để giải quyết vấn đề trước khi thực hiện bất kỳ công bố công khai nào. Chúng tôi cam kết giải quyết các vấn đề bảo mật một cách nhanh chóng và có trách nhiệm.
+We ask that you give us a reasonable amount of time to resolve the issue before making any public disclosure. We are committed to addressing security issues quickly and responsibly.

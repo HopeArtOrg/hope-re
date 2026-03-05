@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.9] - 2026-03-05
+
+### Fixed
+
+- Fix email address typo in CODE_OF_CONDUCT.md missing `.com` domain suffix
+- Fix COMMIT_CONVENTION.md referencing "Template Contributing Guidelines" instead of "Contributing Guidelines"
+
+### Changed
+
+- Translate CONTRIBUTING.md from Vietnamese to English and remove CLA section
+- Translate SECURITY.md from Vietnamese to English
+- Expand PULL_REQUEST_TEMPLATE.md with structured description, type of change checklist, and submission checklist
+- Bump `marked` from 17.0.3 to 17.0.4
+- Bump `@internationalized/date` from 3.11.0 to 3.12.0
+- Bump `@lucide/svelte` from 0.576.0 to 0.577.0
+- Bump `@tauri-apps/cli` from 2.10.0 to 2.10.1
+- Bump `bits-ui` from 2.16.2 to 2.16.3
+- Bump `lint-staged` from 16.3.1 to 16.3.2
+- Bump `svelte` from 5.53.6 to 5.53.7
+- Bump `svelte-sonner` from 1.0.7 to 1.0.8
+
 ## [2.1.8] - 2026-03-05
 
 ### Changed
