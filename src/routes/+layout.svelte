@@ -4,9 +4,10 @@
   import { QueryClientProvider } from "@tanstack/svelte-query";
   import { SvelteQueryDevtools } from "@tanstack/svelte-query-devtools";
   import { platform } from "@tauri-apps/plugin-os";
-  import { Header, MinimizedDock, ResourceDownloadGuard, UpdateDialog, WindowTitle } from "$lib/components";
+  import favicon from "$lib/assets/favicon.svg";
 
   import "../app.css";
+  import { Header, MinimizedDock, ResourceDownloadGuard, UpdateDialog, WindowTitle } from "$lib/components";
   import { Toaster } from "$lib/components/ui/sonner";
   import { useTheme } from "$lib/stores/use-theme.svelte";
   import { cn } from "$lib/utils";
@@ -37,6 +38,10 @@
     }
   });
 </script>
+
+<svelte:head>
+  <link rel="icon" href={favicon} />
+</svelte:head>
 
 <QueryClientProvider client={data.queryClient}>
   <Toaster position="top-center" />

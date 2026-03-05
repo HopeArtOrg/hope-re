@@ -1,5 +1,9 @@
 # Hope:RE
 
+<p align="center">
+  <img src="src/lib/assets/favicon.svg" alt="Hope:RE" width="128" height="128" />
+</p>
+
 Hope:RE is an open-source desktop application that protects artwork from unauthorized AI training
 and style mimicry. It applies adversarial perturbations to images using CLIP-based ONNX models,
 making protected artwork resistant to generative AI systems that attempt to learn from or reproduce
@@ -169,6 +173,7 @@ pnpm install            # install frontend dependencies
 pnpm dev                # start Vite dev server (port 3000)
 pnpm build              # production frontend build
 pnpm lint               # run ESLint
+pnpm format             # run ESLint with auto-fix
 pnpm check              # type-check Svelte and TypeScript
 
 pnpm tauri dev          # full desktop app (Rust + frontend)
