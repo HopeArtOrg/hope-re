@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.8] - 2026-03-05
+
+### Changed
+
+- Add Hope:RE favicon to README for visual brand identity
+- Bump version to 2.1.8 across package.json, Cargo.toml, and tauri.conf.json
+
 ## [2.1.7] - 2026-03-04
 
 ### Fixed
