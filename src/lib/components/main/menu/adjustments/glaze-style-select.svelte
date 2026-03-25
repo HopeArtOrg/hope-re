@@ -1,9 +1,10 @@
 <script lang="ts">
+  import type { GlazeStyleSelectProps } from "../types";
+
   import { TargetIcon } from "@lucide/svelte";
+
   import * as Select from "$lib/components/ui/select";
   import { glazeStyles } from "$lib/constants";
-
-  import type { GlazeStyleSelectProps } from "../types";
 
   let { value = $bindable("abstract") }: GlazeStyleSelectProps = $props();
 

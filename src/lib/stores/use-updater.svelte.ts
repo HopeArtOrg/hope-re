@@ -1,7 +1,8 @@
 import { useQueryClient } from "@tanstack/svelte-query";
 import { relaunch } from "@tauri-apps/plugin-process";
-import { useCheckForUpdate } from "$lib/queries";
 import { toast } from "svelte-sonner";
+
+import { useCheckForUpdate } from "$lib/queries";
 
 let dialogOpen = $state<boolean>(false);
 let downloadProgress = $state<number>(0);

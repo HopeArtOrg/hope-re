@@ -1,11 +1,12 @@
 <script lang="ts">
+  import type { RenderQualitySliderProps } from "../types";
+
   import { ClockIcon } from "@lucide/svelte";
+
   import { Badge } from "$lib/components/ui/badge";
   import { Slider } from "$lib/components/ui/slider";
   import { qualityPresets } from "$lib/constants";
   import { cn } from "$lib/utils";
-
-  import type { RenderQualitySliderProps } from "../types";
 
   let { value = $bindable([50]) }: RenderQualitySliderProps = $props();
 

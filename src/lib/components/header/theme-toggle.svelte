@@ -2,6 +2,7 @@
   import type { Theme } from "$lib/stores/use-theme.svelte";
 
   import { MoonIcon, SunIcon } from "@lucide/svelte";
+
   import { Button } from "$lib/components/ui/button";
   import { useTheme } from "$lib/stores/use-theme.svelte";
 

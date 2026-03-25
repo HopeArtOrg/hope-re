@@ -1,10 +1,11 @@
 <script lang="ts">
+  import type { OutputQualitySliderProps } from "../types";
+
   import { ImageIcon } from "@lucide/svelte";
+
   import { Badge } from "$lib/components/ui/badge";
   import { Slider } from "$lib/components/ui/slider";
   import { cn } from "$lib/utils";
-
-  import type { OutputQualitySliderProps } from "../types";
 
   let { value = $bindable([92]) }: OutputQualitySliderProps = $props();
 

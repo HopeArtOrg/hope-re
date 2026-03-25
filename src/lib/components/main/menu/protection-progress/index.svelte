@@ -1,14 +1,15 @@
 <script lang="ts">
+  import type { ProtectionProgressProps } from "../types";
+
   import {
     CircleAlertIcon,
     CircleCheckBigIcon,
     LoaderCircleIcon,
   } from "@lucide/svelte";
+
   import { Badge } from "$lib/components/ui/badge";
   import { Progress } from "$lib/components/ui/progress";
   import { cn } from "$lib/utils";
-
-  import type { ProtectionProgressProps } from "../types";
 
   const {
     isProcessing = false,

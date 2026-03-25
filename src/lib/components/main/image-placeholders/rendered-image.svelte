@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { DownloadIcon, Maximize2Icon } from "@lucide/svelte";
-  import { Button } from "$lib/components/ui/button";
-
   import type { RenderedImageActionsProps } from "./types";
+
+  import { DownloadIcon, Maximize2Icon } from "@lucide/svelte";
+
+  import { Button } from "$lib/components/ui/button";
 
   const { onDownload, onFullscreen }: RenderedImageActionsProps = $props();
 </script>

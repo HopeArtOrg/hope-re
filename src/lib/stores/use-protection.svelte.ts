@@ -4,8 +4,9 @@ import type {
 } from "$lib/components";
 
 import { listen } from "@tauri-apps/api/event";
-import { buildProtectionSettings, useProtectImage } from "$lib/queries";
 import { toast } from "svelte-sonner";
+
+import { buildProtectionSettings, useProtectImage } from "$lib/queries";
 
 type ProtectionProgress = {
   stage: string;

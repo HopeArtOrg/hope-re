@@ -1,5 +1,9 @@
 <script lang="ts">
+  import type { BaseImagePlaceholderProps } from "./types";
+
   import { ImageIcon, UploadIcon } from "@lucide/svelte";
+  import { toast } from "svelte-sonner";
+
   import { Badge } from "$lib/components/ui/badge";
   import {
     ACCEPT_IMAGE,
@@ -7,9 +11,6 @@
     Trigger as FileDropZoneTrigger,
   } from "$lib/components/ui/file-drop-zone";
   import { cn } from "$lib/utils";
-  import { toast } from "svelte-sonner";
-
-  import type { BaseImagePlaceholderProps } from "./types";
 
   const {
     imageSrc = null,

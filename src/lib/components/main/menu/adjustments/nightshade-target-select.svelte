@@ -1,9 +1,10 @@
 <script lang="ts">
+  import type { NightshadeTargetSelectProps } from "../types";
+
   import { CrosshairIcon } from "@lucide/svelte";
+
   import * as Select from "$lib/components/ui/select";
   import { nightshadeTargets } from "$lib/constants";
-
-  import type { NightshadeTargetSelectProps } from "../types";
 
   let { value = $bindable("dog") }: NightshadeTargetSelectProps = $props();
 

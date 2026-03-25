@@ -1,10 +1,11 @@
 <script lang="ts">
+  import type { IntensitySliderProps } from "../types";
+
   import { GaugeIcon } from "@lucide/svelte";
+
   import { Badge } from "$lib/components/ui/badge";
   import { Slider } from "$lib/components/ui/slider";
   import { cn } from "$lib/utils";
-
-  import type { IntensitySliderProps } from "../types";
 
   let { value = $bindable([30]) }: IntensitySliderProps = $props();
 

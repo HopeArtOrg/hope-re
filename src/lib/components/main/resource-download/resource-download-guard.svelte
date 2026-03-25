@@ -2,13 +2,14 @@
   import type { Snippet } from "svelte";
 
   import { DownloadIcon, LoaderCircleIcon, MinusIcon, TriangleAlertIcon } from "@lucide/svelte";
+  import { onMount } from "svelte";
+
   import { Badge } from "$lib/components/ui/badge";
   import { Button } from "$lib/components/ui/button";
   import * as Dialog from "$lib/components/ui/dialog";
   import { Progress } from "$lib/components/ui/progress";
   import { useModelDownload } from "$lib/stores/use-model-download.svelte";
   import { cn } from "$lib/utils";
-  import { onMount } from "svelte";
 
   type Props = {
     children: Snippet;
