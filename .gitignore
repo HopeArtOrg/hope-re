@@ -28,3 +28,7 @@ vite.config.ts.timestamp-*
 AGENTS.md
 .opencode/
 opencode.json
+
+# Gemini
+.gemini/
+GEMINI.md

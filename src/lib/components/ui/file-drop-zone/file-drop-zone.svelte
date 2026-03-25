@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { box } from "svelte-toolbelt";
-
   import type { FileDropZoneRootProps } from "./types.js";
+
+  import { box } from "svelte-toolbelt";
 
   import { useFileDropZone } from "./file-drop-zone.svelte.js";
 

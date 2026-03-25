@@ -1,5 +1,6 @@
 <script lang="ts">
   import { platform } from "@tauri-apps/plugin-os";
+
   import { cn } from "$lib/utils";
 
   import SystemInfoDialog from "./system-info-dialog.svelte";

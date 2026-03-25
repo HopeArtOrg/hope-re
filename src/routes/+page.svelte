@@ -6,6 +6,8 @@
     TriangleAlertIcon,
     XIcon,
   } from "@lucide/svelte";
+  import { toast } from "svelte-sonner";
+
   import {
     BaseImagePlaceholder,
     ImageFullscreenDialog,
@@ -16,7 +18,6 @@
   import { useInferenceCapabilities } from "$lib/queries";
   import { useImage } from "$lib/stores/use-image.svelte";
   import { useProtection } from "$lib/stores/use-protection.svelte";
-  import { toast } from "svelte-sonner";
 
   const image = useImage();
   const protection = useProtection();

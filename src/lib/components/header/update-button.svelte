@@ -1,5 +1,6 @@
 <script lang="ts">
   import { CircleArrowUpIcon, LoaderCircleIcon } from "@lucide/svelte";
+
   import { Button } from "$lib/components/ui/button";
   import { useUpdater } from "$lib/stores/use-updater.svelte";
   import { cn } from "$lib/utils";

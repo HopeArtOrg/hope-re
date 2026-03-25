@@ -1,10 +1,11 @@
 <script lang="ts">
+  import type { AlgorithmSelectProps } from "../types";
+
   import { PaletteIcon } from "@lucide/svelte";
+
   import * as Select from "$lib/components/ui/select";
   import { algorithms } from "$lib/constants";
   import { cn } from "$lib/utils";
-
-  import type { AlgorithmSelectProps } from "../types";
 
   let { value = $bindable("noise") }: AlgorithmSelectProps = $props();
 

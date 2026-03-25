@@ -1,19 +1,19 @@
 <script lang="ts">
+  import type { LayoutData } from "./$types";
   import type { Snippet } from "svelte";
 
   import { QueryClientProvider } from "@tanstack/svelte-query";
   import { SvelteQueryDevtools } from "@tanstack/svelte-query-devtools";
   import { platform } from "@tauri-apps/plugin-os";
-  import favicon from "$lib/assets/favicon.svg";
 
   import "../app.css";
+  import { onMount } from "svelte";
+
+  import favicon from "$lib/assets/favicon.svg";
   import { Header, MinimizedDock, ResourceDownloadGuard, UpdateDialog, WindowTitle } from "$lib/components";
   import { Toaster } from "$lib/components/ui/sonner";
   import { useTheme } from "$lib/stores/use-theme.svelte";
   import { cn } from "$lib/utils";
-  import { onMount } from "svelte";
-
-  import type { LayoutData } from "./$types";
 
   type LayoutDataProps = {
     children: Snippet;

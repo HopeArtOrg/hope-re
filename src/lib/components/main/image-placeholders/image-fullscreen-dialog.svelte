@@ -1,13 +1,14 @@
 <script lang="ts">
+  import type { ImageFullscreenDialogProps } from "./types";
+
   import {
     XIcon,
     ZoomInIcon,
     ZoomOutIcon,
   } from "@lucide/svelte";
+
   import { Button } from "$lib/components/ui/button";
   import * as Dialog from "$lib/components/ui/dialog";
-
-  import type { ImageFullscreenDialogProps } from "./types";
 
   let {
     open = $bindable(false),

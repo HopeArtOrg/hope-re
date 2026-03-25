@@ -2,6 +2,8 @@ import { save } from "@tauri-apps/plugin-dialog";
 import { writeFile } from "@tauri-apps/plugin-fs";
 import { toast } from "svelte-sonner";
 
+const ISO_REPLACE_REGEX = /[:.]/g;
+
 export function useImage() {
   let originalImage = $state<string | null>(null);
   let fullscreenOpen = $state<boolean>(false);
@@ -30,7 +32,7 @@ export function useImage() {
       return;
 
     try {
-      const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, -5);
+      const timestamp = new Date().toISOString().replace(ISO_REPLACE_REGEX, "-").slice(0, -5);
       const defaultPath = `protected-${algorithm}-${timestamp}.png`;
 
       const filePath = await save({

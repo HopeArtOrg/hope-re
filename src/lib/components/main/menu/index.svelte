@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { SlidersVerticalIcon } from "@lucide/svelte";
-  import { Separator } from "$lib/components/ui/separator";
-
   import type { ProtectionMenuProps } from "./types";
+
+  import { SlidersVerticalIcon } from "@lucide/svelte";
+
+  import { Separator } from "$lib/components/ui/separator";
 
   import {
     AlgorithmSelect,

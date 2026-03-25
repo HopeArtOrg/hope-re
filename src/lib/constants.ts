@@ -1,8 +1,7 @@
+import type { ProtectionMenuProps } from "./components";
 import type { Icon as IconType } from "@lucide/svelte";
 
 import { ClockIcon, GaugeIcon, ZapIcon } from "@lucide/svelte";
-
-import type { ProtectionMenuProps } from "./components";
 
 export const algorithms: {
   value: Exclude<ProtectionMenuProps["algorithm"], undefined>;

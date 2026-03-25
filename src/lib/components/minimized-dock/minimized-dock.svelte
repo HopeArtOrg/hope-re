@@ -1,5 +1,6 @@
 <script lang="ts">
   import { CircleArrowUpIcon, DownloadIcon } from "@lucide/svelte";
+
   import { Progress } from "$lib/components/ui/progress";
   import { useModelDownload } from "$lib/stores/use-model-download.svelte";
   import { useUpdater } from "$lib/stores/use-updater.svelte";

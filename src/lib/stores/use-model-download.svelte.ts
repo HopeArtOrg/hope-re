@@ -2,6 +2,7 @@ import type { ModelsCheckResult } from "$lib/queries";
 
 import { useQueryClient } from "@tanstack/svelte-query";
 import { listen } from "@tauri-apps/api/event";
+
 import { useDownloadModel, useModelsStatus } from "$lib/queries";
 
 type DownloadProgress = {

@@ -1,8 +1,9 @@
 <script lang="ts">
-  import UploadIcon from "@lucide/svelte/icons/upload";
-  import { cn } from "$lib/utils.js";
-
   import type { FileDropZoneTriggerProps } from "./types.js";
+
+  import UploadIcon from "@lucide/svelte/icons/upload";
+
+  import { cn } from "$lib/utils.js";
 
   import { useFileDropZoneTrigger } from "./file-drop-zone.svelte.js";
   import { displaySize } from "./index.js";
