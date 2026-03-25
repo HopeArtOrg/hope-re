@@ -16,6 +16,7 @@ export default antfu({
     "**/src-tauri/target/*",
   ],
 }, {
+  files: ["**/*.svelte"],
   rules: {
     "svelte/max-attributes-per-line": [
       "error",
@@ -24,6 +25,10 @@ export default antfu({
         multiline: 1,
       },
     ],
+  },
+}, {
+  files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.svelte"],
+  rules: {
     "ts/no-redeclare": "off",
     "ts/consistent-type-definitions": ["error", "type"],
     "no-console": ["warn"],
@@ -33,9 +38,22 @@ export default antfu({
     "perfectionist/sort-imports": [
       "error",
       {
-        tsconfigRootDir: ".",
+        type: "natural",
+        order: "asc",
+        groups: [
+          "type",
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"],
+          "unknown",
+        ],
+        internalPattern: ["^\\$lib/.*"],
       },
     ],
+  },
+}, {
+  rules: {
     "unicorn/filename-case": [
       "error",
       {
