@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { AlgorithmSelectProps } from "../types";
 
+  import { PaletteIcon } from "@lucide/svelte";
+
   import * as Select from "$lib/components/ui/select";
   import { algorithms } from "$lib/constants";
   import { cn } from "$lib/utils";
@@ -16,33 +18,28 @@
   );
 </script>
 
-<div class="space-y-10 flex flex-col items-center">
-  <div class="flex items-center justify-between w-full">
-    <div class="flex items-center gap-4">
-      <div class="p-3 bg-indigo-500/10 rounded-2xl shadow-sm border border-indigo-500/10">
-        <currentAlgo.icon class={cn("size-5", currentAlgo.colour)} />
-      </div>
-      <span class="text-lg font-bold text-neutral-700 dark:text-neutral-200 tracking-tight">Algorithm</span>
+<div class="space-y-3">
+  <div class="flex items-center gap-2">
+    <div class={cn("p-1.5 rounded-lg", currentAlgo.bgColour)}>
+      <PaletteIcon class={cn("size-4", currentAlgo.colour)} />
     </div>
-    <div class="px-4 py-1.5 rounded-full bg-secondary border border-border shadow-sm flex items-center justify-center">
-      <span class="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold">Safety Mode</span>
-    </div>
+    <span class="text-sm font-medium">Algorithm</span>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full h-20 bg-card/50 border-2 border-transparent rounded-2xl text-lg font-medium tracking-wide hover:bg-card hover:border-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-sm zen-dashed" aria-label="Algorithm Selection">
+    <Select.Trigger class="w-full hover:border-foreground/20 transition-colors" aria-label="Algorithm Selection">
       {triggerContent}
     </Select.Trigger>
-    <Select.Content class="rounded-2xl border-border bg-background/95 backdrop-blur-xl p-2 shadow-2xl">
+    <Select.Content>
       {#each algorithms as algo}
-        <Select.Item value={algo.value} class="rounded-xl focus:bg-secondary py-5 px-6">
-          <div class="flex items-center gap-5">
-            <div class={cn("p-2 rounded-xl", algo.bgColour)}>
-              <algo.icon class={cn("size-5", algo.colour)} />
+        <Select.Item value={algo.value}>
+          <div class="flex items-center gap-3 py-1">
+            <div class={cn("p-1.5 rounded", algo.bgColour)}>
+              <PaletteIcon class={cn("size-4", algo.colour)} />
             </div>
-            <div class="flex flex-col gap-1">
-              <span class="font-bold text-base tracking-tight">{algo.label}</span>
-              <span class="text-xs font-medium text-muted-foreground opacity-80">{algo.description}</span>
+            <div class="flex-1">
+              <p class="font-medium text-sm">{algo.label}</p>
+              <p class="text-xs text-muted-foreground">{algo.description}</p>
             </div>
           </div>
         </Select.Item>

@@ -13,37 +13,34 @@
   );
 </script>
 
-<div class="space-y-10 flex flex-col items-center">
-  <div class="flex items-center justify-between w-full">
-    <div class="flex items-center gap-4">
-      <div class="p-3 bg-amber-500/10 rounded-2xl shadow-sm border border-amber-500/10">
-        <TargetIcon class="size-5 text-amber-600 dark:text-amber-400" />
-      </div>
-      <span class="text-lg font-bold text-neutral-700 dark:text-neutral-200 tracking-tight">Target Style</span>
+<div class="space-y-3">
+  <div class="flex items-center gap-2">
+    <div class="p-1.5 rounded-lg bg-amber-500/10">
+      <TargetIcon class="size-4 text-amber-600 dark:text-amber-400" />
     </div>
-    <div class="px-4 py-1.5 rounded-full bg-secondary border border-border shadow-sm flex items-center justify-center">
-      <span class="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold">Artistic Vibe</span>
-    </div>
+    <span class="text-sm font-medium">Target Style</span>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full h-20 bg-card/50 border-2 border-transparent rounded-2xl text-lg font-medium tracking-wide hover:bg-card hover:border-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-sm zen-dashed" aria-label="Glaze style selection">
+    <Select.Trigger class="w-full hover:border-foreground/20 transition-colors" aria-label="Glaze style selection">
       {contentTrigger}
     </Select.Trigger>
-    <Select.Content class="rounded-2xl border-border bg-background/95 backdrop-blur-xl p-2 shadow-2xl">
+    <Select.Content>
       {#each glazeStyles as style}
-        <Select.Item value={style.value} class="rounded-xl focus:bg-secondary py-5 px-6">
-          <div class="flex items-center gap-5">
-            <div class="p-2 rounded-xl bg-amber-500/10">
-              <style.icon class="size-5 text-amber-600 dark:text-amber-400" />
-            </div>
-            <div class="flex flex-col gap-1">
-              <span class="font-bold text-base tracking-tight">{style.label}</span>
-              <span class="text-xs font-medium text-muted-foreground opacity-80">{style.description}</span>
+        <Select.Item value={style.value}>
+          <div class="flex items-center gap-3 py-1">
+            <span class="text-base">{style.emoji}</span>
+            <div class="flex flex-col gap-0.5">
+              <span class="font-medium text-sm">{style.label}</span>
+              <span class="text-xs text-muted-foreground">{style.description}</span>
             </div>
           </div>
         </Select.Item>
       {/each}
     </Select.Content>
   </Select.Root>
+
+  <p class="text-xs text-muted-foreground">
+    Your image will be shifted toward this art style to confuse AI scrapers.
+  </p>
 </div>

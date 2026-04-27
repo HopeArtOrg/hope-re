@@ -3,6 +3,7 @@
 
   import { ClockIcon } from "@lucide/svelte";
 
+  import { Badge } from "$lib/components/ui/badge";
   import { Slider } from "$lib/components/ui/slider";
   import { qualityPresets } from "$lib/constants";
   import { cn } from "$lib/utils";
@@ -16,20 +17,26 @@
   );
 </script>
 
-<div class="space-y-12 flex flex-col items-center">
-  <div class="flex items-center justify-between w-full">
-    <div class="flex items-center gap-4">
-      <div class="p-3 bg-sky-500/10 rounded-2xl shadow-sm border border-sky-500/10">
-        <ClockIcon class="size-5 text-sky-600 dark:text-sky-400" />
+<div class="space-y-3">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="p-1.5 rounded-lg bg-sky-500/10">
+        <ClockIcon class="size-4 text-sky-600 dark:text-sky-400" />
       </div>
-      <label for={sliderId} class="text-lg font-bold text-neutral-700 dark:text-neutral-200 tracking-tight">Render Quality</label>
+      <label for={sliderId} class="text-sm font-medium">Render Quality</label>
     </div>
-    <div class="px-4 py-1.5 rounded-full bg-secondary border border-border shadow-sm">
-      <span class="text-[10px] uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400 font-bold">{currentPreset.label}</span>
-    </div>
+    <Badge variant="secondary" class="gap-1.5">
+      {@const Icon = currentPreset.icon}
+      <Icon class="size-3" />
+      <span class="text-xs font-medium">{currentPreset.label}</span>
+    </Badge>
   </div>
 
-  <div class="space-y-8 w-full">
+  <p class="text-xs text-muted-foreground">
+    Processing time for Glaze &sol; Nightshade &sol; Noise. Higher &equals; better quality but slower.
+  </p>
+
+  <div class="space-y-3">
     <Slider type="multiple"
             bind:value
             min={0}
@@ -37,23 +44,39 @@
             step={25}
             aria-label="Render quality control" />
 
-    <div class="flex justify-between items-start pt-2">
+    <div class="flex justify-between items-start">
       {#each qualityPresets as preset}
+        {@const Icon = preset.icon}
         <button type="button"
                 class={cn(
-                  "flex flex-col items-center gap-3 text-[11px] transition-all duration-300 uppercase tracking-tighter",
-                  (value[0] === preset.value) && "text-primary font-medium scale-110",
-                  (value[0] !== preset.value) && "text-neutral-400 font-light opacity-60 hover:opacity-100",
+                  "flex flex-col items-center gap-1 text-xs transition-opacity",
+                  (value[0] === preset.value) && "opacity-100",
+                  (value[0] !== preset.value) && "opacity-40",
                 )}
                 onclick={() => value = [preset.value]}>
-          <span>{preset.label}</span>
-          <span class="text-[10px] opacity-60 font-mono tracking-normal">{preset.time}</span>
+          <Icon class={cn("size-3.5", preset.colour)} />
+          <span class={cn("font-medium whitespace-nowrap", preset.colour)}>
+            {preset.label}
+          </span>
+          <span class="text-muted-foreground whitespace-nowrap">
+            {preset.time}
+          </span>
         </button>
       {/each}
     </div>
   </div>
 
-  <p class="text-xs font-light text-neutral-400 leading-relaxed max-w-2xl">
-    Processing precision for Glaze, Nightshade, and Noise algorithms. High quality increases protection efficacy but requires more computation time.
-  </p>
+  <div class="p-3 rounded-lg bg-muted/50 border">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <currentPreset.icon class={cn("size-4", currentPreset.colour)} />
+        <span class={cn("text-sm font-medium", currentPreset.colour)}>
+          {currentPreset.label}
+        </span>
+      </div>
+      <span class="text-sm text-muted-foreground">
+        {currentPreset.time}
+      </span>
+    </div>
+  </div>
 </div>

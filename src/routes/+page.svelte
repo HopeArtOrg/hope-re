@@ -1,7 +1,10 @@
 <script lang="ts">
   import {
     LoaderCircleIcon,
+    RotateCcwIcon,
+    ShieldIcon,
     TriangleAlertIcon,
+    XIcon,
   } from "@lucide/svelte";
   import { toast } from "svelte-sonner";
 
@@ -69,136 +72,107 @@
   <meta name="description" content="Protect your images from unauthorized AI training with advanced algorithms like Glaze and Nightshade." />
 </svelte:head>
 
-<div class="w-full bg-background selection:bg-primary/20 bg-[radial-gradient(var(--color-secondary)_1px,transparent_1px)] [background-size:32px_32px]">
-  <div class="container mx-auto px-8 py-16 h-full max-w-7xl">
-    <div class="flex flex-col gap-20 h-full">
+<div class="w-full bg-background">
+  <div class="container mx-auto p-4 md:p-6 h-full max-w-7xl">
+    <div class="flex flex-col gap-6 h-full">
       {#if isMobile}
-        <div class="flex flex-col gap-16 flex-1 min-h-0">
+        <div class="flex flex-col gap-4 flex-1 min-h-0">
           {#if protection.hasResult && !protection.modelUsed}
-            <div class="flex items-center gap-3 p-5 bg-amber-500/10 rounded-2xl text-xs font-medium text-amber-800 dark:text-amber-200 tracking-tight border border-amber-500/20">
-              <TriangleAlertIcon class="size-4 shrink-0 opacity-80" />
-              <span>AI models not loaded. Basic fallback protection is active.</span>
+            <div class="flex items-center gap-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/10 text-sm text-amber-600 dark:text-amber-400">
+              <TriangleAlertIcon class="size-4 shrink-0" />
+              <span>Protected with basic fallback. AI models were not loaded. Download models in settings for effective protection.</span>
             </div>
           {/if}
 
           {#if protection.resultImage}
-            <div class="space-y-6 flex flex-col items-center">
-              <div class="inline-flex px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-                <span class="text-[11px] uppercase tracking-[0.25em] text-primary font-bold">Protected Image</span>
-              </div>
-              <div class="w-full">
-                <BaseImagePlaceholder imageSrc={protection.resultImage}
-                                      label="Protected Image"
-                                      readonly>
-                  <RenderedImageActions onDownload={handleDownload}
-                                        onFullscreen={image.handleFullscreen} />
-                </BaseImagePlaceholder>
-              </div>
-            </div>
+            <BaseImagePlaceholder imageSrc={protection.resultImage}
+                                  label="Protected Image"
+                                  readonly>
+              <RenderedImageActions onDownload={handleDownload}
+                                    onFullscreen={image.handleFullscreen} />
+            </BaseImagePlaceholder>
           {:else}
-            <div class="space-y-6 flex flex-col items-center">
-              <div class="inline-flex px-4 py-1.5 rounded-full bg-secondary border border-border">
-                <span class="text-[11px] uppercase tracking-[0.25em] text-muted-foreground font-bold">Original Image</span>
-              </div>
-              <div class="w-full">
-                <BaseImagePlaceholder imageSrc={image.originalImage}
-                                      label="Original Image"
-                                      onUpload={image.handleUpload} />
-              </div>
-            </div>
+            <BaseImagePlaceholder imageSrc={image.originalImage}
+                                  label="Original Image"
+                                  onUpload={image.handleUpload} />
           {/if}
         </div>
       {:else}
         {#if protection.hasResult && !protection.modelUsed}
-          <div class="flex items-center gap-3 p-5 bg-amber-500/10 rounded-2xl text-xs font-medium text-amber-800 dark:text-amber-200 tracking-tight border border-amber-500/20">
-            <TriangleAlertIcon class="size-4 shrink-0 opacity-80" />
-            <span>AI models not loaded. Basic fallback protection is active.</span>
+          <div class="flex items-center gap-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/10 text-sm text-amber-600 dark:text-amber-400">
+            <TriangleAlertIcon class="size-4 shrink-0" />
+            <span>Protected with basic fallback. AI models were not loaded. Download models in settings for effective protection.</span>
           </div>
         {/if}
 
-        <div class="grid grid-cols-2 gap-20 flex-1">
-          <div class="space-y-8 flex flex-col items-center">
-            <div class="inline-flex px-5 py-2 rounded-full bg-secondary border border-border shadow-sm">
-              <span class="text-[11px] uppercase tracking-[0.25em] text-muted-foreground font-bold">Original Work</span>
-            </div>
-            <div class="w-full">
-              <BaseImagePlaceholder imageSrc={image.originalImage}
-                                    label="Original Image"
-                                    onUpload={image.handleUpload} />
-            </div>
-          </div>
+        <div class="grid grid-cols-2 gap-6 flex-1">
+          <BaseImagePlaceholder imageSrc={image.originalImage}
+                                label="Original Image"
+                                onUpload={image.handleUpload} />
 
-          <div class="space-y-8 flex flex-col items-center">
-            <div class="inline-flex px-5 py-2 rounded-full bg-primary/10 border border-primary/20 shadow-sm">
-              <span class="text-[11px] uppercase tracking-[0.25em] text-primary font-bold">Protected Work</span>
-            </div>
-            <div class="w-full">
-              <BaseImagePlaceholder imageSrc={protection.resultImage}
-                                    label="Protected Image"
-                                    readonly>
-                {#if protection.resultImage}
-                  <RenderedImageActions onDownload={handleDownload}
-                                        onFullscreen={image.handleFullscreen} />
-                {/if}
-              </BaseImagePlaceholder>
-            </div>
-          </div>
+          <BaseImagePlaceholder imageSrc={protection.resultImage}
+                                label="Protected Image"
+                                readonly>
+            {#if protection.resultImage}
+              <RenderedImageActions onDownload={handleDownload}
+                                    onFullscreen={image.handleFullscreen} />
+            {/if}
+          </BaseImagePlaceholder>
         </div>
       {/if}
 
-      <div class="w-full max-w-5xl mx-auto bg-card/30 backdrop-blur-sm p-6 md:p-12 rounded-3xl border border-border/50">
-        <ProtectionMenu bind:algorithm={protection.algorithm}
-                        bind:glazeStyle={protection.glazeStyle}
-                        bind:nightshadeTarget={protection.nightshadeTarget}
-                        bind:intensity={protection.intensity}
-                        bind:outputQuality={protection.outputQuality}
-                        bind:renderQuality={protection.renderQuality}
-                        isProcessing={protection.isProcessing}
-                        progress={protection.progress}
-                        status={protection.progressStatus}
-                        progressMessage={protection.progressMessage} />
-      </div>
+      <ProtectionMenu bind:algorithm={protection.algorithm}
+                      bind:glazeStyle={protection.glazeStyle}
+                      bind:nightshadeTarget={protection.nightshadeTarget}
+                      bind:intensity={protection.intensity}
+                      bind:outputQuality={protection.outputQuality}
+                      bind:renderQuality={protection.renderQuality}
+                      isProcessing={protection.isProcessing}
+                      progress={protection.progress}
+                      status={protection.progressStatus}
+                      progressMessage={protection.progressMessage} />
 
       {#if isSuccess && inferenceData}
-        <div class="text-[10px] text-muted-foreground font-medium tracking-[0.2em] uppercase flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 opacity-80">
-          <span class="bg-secondary px-3 py-1 rounded-full border border-border inline-flex items-center justify-center">System Active</span>
-          <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-            {#each inferenceData.providers as provider}
-              <span class="flex items-center justify-center gap-2">
-                <span class="size-2 bg-primary rounded-full animate-pulse"></span>
-                {provider.name}
-              </span>
-            {/each}
-          </div>
+        <div class="text-xs text-muted-foreground px-2">
+          <span class="font-medium">Inference:</span>
+          {#each inferenceData.providers as provider}
+            <span class="ml-2 inline-flex items-center gap-1">
+              {provider.name}
+              <span class="size-1.5 rounded-full bg-emerald-500"></span>
+            </span>
+          {/each}
         </div>
       {/if}
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10 pb-12 md:pb-16 pt-4 max-w-5xl mx-auto w-full">
+      <div class="grid grid-cols-2 gap-4 pb-4">
         <Button
           size="lg"
-          class="h-20 bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 rounded-2xl border-none shadow-xl shadow-primary/20 text-sm font-bold uppercase tracking-[0.3em] disabled:opacity-30"
+          class="gap-2 h-14 bg-primary hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           onclick={handleProtect}
           disabled={!canProcess}
         >
           {#if protection.isProcessing}
-            <LoaderCircleIcon class="size-5 animate-spin opacity-80 mr-3" />
-            <span>Processing</span>
+            <LoaderCircleIcon class="size-5 animate-spin" />
+            <span class="font-medium">Processing...</span>
           {:else}
-            <span>Protect Artwork</span>
+            <ShieldIcon class="size-5" />
+            <span class="font-medium">Protect Image</span>
           {/if}
         </Button>
 
         <Button
-          variant="ghost"
+          variant="outline"
           size="lg"
-          class="h-20 text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all duration-300 rounded-2xl text-sm font-bold uppercase tracking-[0.3em] disabled:opacity-30"
+          class="gap-2 h-14 border hover:bg-destructive/10 hover:border-destructive/30 hover:text-destructive transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           onclick={handleCancel}
           disabled={!image.hasImage}
         >
           {#if protection.isProcessing}
-            <span>Cancel</span>
+            <XIcon class="size-5" />
+            <span class="font-medium">Cancel</span>
           {:else}
-            <span>Clear Workspace</span>
+            <RotateCcwIcon class="size-5" />
+            <span class="font-medium">Clear</span>
           {/if}
         </Button>
       </div>

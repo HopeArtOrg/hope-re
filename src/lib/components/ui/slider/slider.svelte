@@ -34,13 +34,13 @@ get along, so we shut typescript up by casting `value` to `never`.
       data-orientation={orientation}
       data-slot="slider-track"
       class={cn(
-        "bg-neutral-200 dark:bg-neutral-800 relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-[2px] data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-[2px]",
+        "bg-muted relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5",
       )}
     >
       <SliderPrimitive.Range
         data-slot="slider-range"
         class={cn(
-          "bg-primary/60 absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
+          "bg-primary absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
         )}
       />
     </span>
@@ -48,7 +48,7 @@ get along, so we shut typescript up by casting `value` to `never`.
       <SliderPrimitive.Thumb
         data-slot="slider-thumb"
         index={thumb}
-        class="block size-3 shrink-0 rounded-full bg-primary ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer"
+        class="border-primary ring-ring/50 block size-4 shrink-0 rounded-full border bg-white shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
       />
     {/each}
   {/snippet}

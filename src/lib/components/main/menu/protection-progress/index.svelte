@@ -7,6 +7,7 @@
     LoaderCircleIcon,
   } from "@lucide/svelte";
 
+  import { Badge } from "$lib/components/ui/badge";
   import { Progress } from "$lib/components/ui/progress";
   import { cn } from "$lib/utils";
 
@@ -29,28 +30,30 @@
 </script>
 
 {#if isProcessing || status !== "idle"}
-  <div class="space-y-4 py-6 animate-in fade-in slide-in-from-top-4 duration-700">
+  <div class="space-y-3 p-4 rounded-lg border bg-muted/30 animate-in fade-in slide-in-from-top-2 duration-300">
     <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
         {#if status === "processing"}
-          <LoaderCircleIcon class="size-3.5 text-primary opacity-50 animate-spin" />
-          <span class="text-[11px] font-light uppercase tracking-[0.2em] text-neutral-500">Processing</span>
+          <LoaderCircleIcon class="size-4 text-indigo-600 dark:text-indigo-400 animate-spin" />
+          <span class="text-sm font-medium text-indigo-600 dark:text-indigo-400">Protecting...</span>
         {:else if status === "success"}
-          <CircleCheckBigIcon class="size-3.5 text-emerald-500 opacity-70" />
-          <span class="text-[11px] font-light uppercase tracking-[0.2em] text-emerald-500">Protection Complete</span>
+          <CircleCheckBigIcon class="size-4 text-emerald-600 dark:text-emerald-400" />
+          <span class="text-sm font-medium text-emerald-600 dark:text-emerald-400">Complete</span>
         {:else if status === "error"}
-          <CircleAlertIcon class="size-3.5 text-rose-500 opacity-70" />
-          <span class="text-[11px] font-light uppercase tracking-[0.2em] text-rose-500">Pipeline Error</span>
+          <CircleAlertIcon class="size-4 text-destructive" />
+          <span class="text-sm font-medium text-destructive">Error</span>
         {/if}
       </div>
 
-      <span class="text-xs font-light font-mono text-neutral-400">{progress}%</span>
+      <Badge variant="secondary" class="font-jetbrains-mono text-xs">
+        {progress}&percnt;
+      </Badge>
     </div>
 
-    <Progress value={progress} class="h-[1px] bg-neutral-100 dark:bg-neutral-900" />
+    <Progress value={progress} class="h-2" />
 
     {#if message}
-      <p class={cn("text-[10px] font-light tracking-wide uppercase opacity-60", statusColour)}>
+      <p class={cn("text-xs", statusColour)}>
         {message}
       </p>
     {/if}

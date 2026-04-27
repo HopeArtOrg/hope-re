@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { ProtectionMenuProps } from "./types";
 
+  import { SlidersVerticalIcon } from "@lucide/svelte";
+
+  import { Separator } from "$lib/components/ui/separator";
+
   import {
     AlgorithmSelect,
     GlazeStyleSelect,
@@ -28,35 +32,42 @@
   const showNightshadeTarget = $derived(algorithm === "nightshade");
 </script>
 
-<div class="space-y-16 py-12">
-  <div class="space-y-12">
-    <div class="flex items-center gap-4">
-      <h3 class="text-[11px] font-medium tracking-[0.3em] text-neutral-500 uppercase">Protection Settings</h3>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-16">
-      <AlgorithmSelect bind:value={algorithm} />
-
-      {#if showGlazeStyle}
-        <div class="animate-in fade-in slide-in-from-top-2 duration-500">
-          <GlazeStyleSelect bind:value={glazeStyle} />
-        </div>
-      {:else if showNightshadeTarget}
-        <div class="animate-in fade-in slide-in-from-top-2 duration-500">
-          <NightshadeTargetSelect bind:value={nightshadeTarget} />
-        </div>
-      {:else}
-        <div class="hidden md:block"></div>
-      {/if}
-
-      <IntensitySlider bind:value={intensity} />
-
-      <OutputQualitySlider bind:value={outputQuality} />
-
-      <div class="md:col-span-2 pt-8">
-        <RenderQualitySlider bind:value={renderQuality} />
+<div class="space-y-6">
+  <div class="space-y-6 p-6 border rounded-xl bg-card">
+    <div class="flex items-center gap-3">
+      <div class="p-2 rounded-lg bg-primary/10">
+        <SlidersVerticalIcon class="size-5 text-primary" />
       </div>
+      <h3 class="text-base font-medium">Protection Settings</h3>
     </div>
+
+    <Separator />
+
+    <AlgorithmSelect bind:value={algorithm} />
+
+    <Separator />
+
+    {#if showGlazeStyle}
+      <div class="animate-in fade-in slide-in-from-top-2 duration-300">
+        <GlazeStyleSelect bind:value={glazeStyle} />
+      </div>
+    {:else if showNightshadeTarget}
+      <div class="animate-in fade-in slide-in-from-top-2 duration-300">
+        <NightshadeTargetSelect bind:value={nightshadeTarget} />
+      </div>
+    {/if}
+
+    {#if showGlazeStyle || showNightshadeTarget}
+      <Separator />
+    {/if}
+
+    <IntensitySlider bind:value={intensity} />
+
+    <Separator />
+
+    <OutputQualitySlider bind:value={outputQuality} />
+
+    <RenderQualitySlider bind:value={renderQuality} />
   </div>
 
   <ProtectionProgress {isProcessing}
