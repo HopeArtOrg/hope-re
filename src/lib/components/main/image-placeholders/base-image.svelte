@@ -33,9 +33,14 @@
                   onFileRejected={handleFileRejected}>
       <FileDropZoneTrigger class="flex-1">
         <div class={cn(
-          "relative w-full aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-900/50 transition-all duration-700",
-          !imageSrc && "cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-900",
+          "relative w-full aspect-square overflow-hidden transition-all duration-700",
+          !imageSrc && "cursor-pointer hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30",
+          imageSrc ? "bg-neutral-100 dark:bg-neutral-900/50" : "bg-neutral-50/30 dark:bg-neutral-950/20 zen-dashed-border",
         )}>
+          {#if !imageSrc}
+            <div class="absolute inset-0 opacity-40 dark:opacity-20 bg-[radial-gradient(circle_at_center,var(--color-primary)_0%,transparent_70%)]"></div>
+          {/if}
+
           {#if imageSrc}
             <div class="absolute inset-0 flex items-center justify-center p-8">
               <img src={imageSrc}
@@ -56,8 +61,13 @@
     </FileDropZone>
   {:else}
     <div class={cn(
-      "relative w-full aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-900/50 transition-all duration-700",
+      "relative w-full aspect-square overflow-hidden transition-all duration-700",
+      imageSrc ? "bg-neutral-100 dark:bg-neutral-900/50" : "bg-neutral-50/30 dark:bg-neutral-950/20 zen-dashed-border",
     )}>
+      {#if !imageSrc}
+        <div class="absolute inset-0 opacity-40 dark:opacity-20 bg-[radial-gradient(circle_at_center,var(--color-primary)_0%,transparent_70%)]"></div>
+      {/if}
+
       {#if imageSrc}
         <div class="absolute inset-0 flex items-center justify-center p-8">
           <img src={imageSrc}
@@ -77,3 +87,21 @@
     </div>
   {/if}
 </div>
+
+<style>
+  .zen-dashed-border {
+    background-image:
+      repeating-linear-gradient(0deg, var(--color-border), var(--color-border) 8px, transparent 8px, transparent 16px),
+      repeating-linear-gradient(90deg, var(--color-border), var(--color-border) 8px, transparent 8px, transparent 16px),
+      repeating-linear-gradient(180deg, var(--color-border), var(--color-border) 8px, transparent 8px, transparent 16px),
+      repeating-linear-gradient(270deg, var(--color-border), var(--color-border) 8px, transparent 8px, transparent 16px);
+    background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
+    background-position: 0 0, 0 0, 100% 0, 0 100%;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+  }
+
+  .zen-dashed-border:hover {
+    opacity: 1;
+  }
+</style>
