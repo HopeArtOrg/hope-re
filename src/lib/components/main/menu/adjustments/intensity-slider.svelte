@@ -21,13 +21,13 @@
   );
 </script>
 
-<div class="space-y-3">
+<div class="space-y-4">
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <div class="p-1.5 rounded-lg bg-amber-500/10">
-        <GaugeIcon class="size-4 text-amber-600 dark:text-amber-400" />
+    <div class="flex items-center gap-3">
+      <div class="p-2 rounded-lg bg-card shadow-sm border border-foreground/5 bg-amber-500/5">
+        <GaugeIcon class="size-4 text-amber-500/60 dark:text-amber-400/60" />
       </div>
-      <label for={sliderId} class="text-sm font-medium">Intensity</label>
+      <label for={sliderId} class="text-sm font-medium text-muted-foreground/80">Guidance Focus</label>
     </div>
     <div class="flex items-center gap-2">
       <span class={cn(

@@ -73,52 +73,60 @@
   <meta name="description" content="Protect your images from unauthorized AI training with advanced algorithms like Glaze and Nightshade." />
 </svelte:head>
 
-<div class="w-full bg-background">
-  <div class="container mx-auto p-4 md:p-6 h-full max-w-7xl">
-    <div class="flex flex-col gap-6 h-full">
+<div class="w-full bg-background transition-colors duration-500">
+  <div class="container mx-auto p-6 md:p-10 h-full max-w-7xl">
+    <div class="flex flex-col gap-10 h-full">
       {#if isMobile}
-        <div class="flex flex-col gap-4 flex-1 min-h-0">
+        <div class="flex flex-col gap-8 flex-1 min-h-0">
           {#if protection.hasResult && !protection.modelUsed}
-            <div class="flex items-center gap-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/10 text-sm text-amber-600 dark:text-amber-400">
+            <div class="flex items-center gap-3 p-4 rounded-xl panel-float text-sm text-amber-600/70 dark:text-amber-400/70 animate-in fade-in duration-700">
               <TriangleAlertIcon class="size-4 shrink-0" />
-              <span>Protected with basic fallback. AI models were not loaded. Download models in settings for effective protection.</span>
+              <span>Basic protection applied. Add AI models in settings for a more refined result.</span>
             </div>
           {/if}
 
           {#if protection.resultImage}
-            <BaseImagePlaceholder imageSrc={protection.resultImage}
-                                  label="Protected Image"
-                                  readonly>
-              <RenderedImageActions onDownload={handleDownload}
-                                    onFullscreen={image.handleFullscreen} />
-            </BaseImagePlaceholder>
+            <div class="panel-float p-1 rounded-2xl">
+              <BaseImagePlaceholder imageSrc={protection.resultImage}
+                                    label="Rendered Canvas"
+                                    readonly>
+                <RenderedImageActions onDownload={handleDownload}
+                                      onFullscreen={image.handleFullscreen} />
+              </BaseImagePlaceholder>
+            </div>
           {:else}
-            <BaseImagePlaceholder imageSrc={image.originalImage}
-                                  label="Original Image"
-                                  onUpload={image.handleUpload} />
+            <div class="panel-float p-1 rounded-2xl">
+              <BaseImagePlaceholder imageSrc={image.originalImage}
+                                    label="Original Canvas"
+                                    onUpload={image.handleUpload} />
+            </div>
           {/if}
         </div>
       {:else}
         {#if protection.hasResult && !protection.modelUsed}
-          <div class="flex items-center gap-2 p-3 rounded-lg border border-amber-500/30 bg-amber-500/10 text-sm text-amber-600 dark:text-amber-400">
+          <div class="flex items-center gap-3 p-4 rounded-xl panel-float text-sm text-amber-600/70 dark:text-amber-400/70 animate-in fade-in duration-700">
             <TriangleAlertIcon class="size-4 shrink-0" />
-            <span>Protected with basic fallback. AI models were not loaded. Download models in settings for effective protection.</span>
+            <span>Basic protection applied. Add AI models in settings for a more refined result.</span>
           </div>
         {/if}
 
-        <div class="grid grid-cols-2 gap-6 flex-1">
-          <BaseImagePlaceholder imageSrc={image.originalImage}
-                                label="Original Image"
-                                onUpload={image.handleUpload} />
+        <div class="grid grid-cols-2 gap-10 flex-1">
+          <div class="panel-float p-1 rounded-2xl">
+            <BaseImagePlaceholder imageSrc={image.originalImage}
+                                  label="Original Canvas"
+                                  onUpload={image.handleUpload} />
+          </div>
 
-          <BaseImagePlaceholder imageSrc={protection.resultImage}
-                                label="Protected Image"
-                                readonly>
-            {#if protection.resultImage}
-              <RenderedImageActions onDownload={handleDownload}
-                                    onFullscreen={image.handleFullscreen} />
-            {/if}
-          </BaseImagePlaceholder>
+          <div class="panel-float p-1 rounded-2xl">
+            <BaseImagePlaceholder imageSrc={protection.resultImage}
+                                  label="Rendered Canvas"
+                                  readonly>
+              {#if protection.resultImage}
+                <RenderedImageActions onDownload={handleDownload}
+                                      onFullscreen={image.handleFullscreen} />
+              {/if}
+            </BaseImagePlaceholder>
+          </div>
         </div>
       {/if}
 

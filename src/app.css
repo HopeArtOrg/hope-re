@@ -24,8 +24,8 @@
   --accent: oklch(0.88 0.013 100);
   --accent-foreground: oklch(0.32 0.01 95);
   --destructive: oklch(0.5 0.12 25);
-  --border: oklch(0.83 0.014 100);
-  --input: oklch(0.83 0.014 100);
+  --border: oklch(0.83 0.014 100 / 5%);
+  --input: oklch(0.83 0.014 100 / 10%);
   --ring: oklch(0.45 0.03 255);
 
   --chart-1: oklch(0.52 0.035 160);
@@ -39,7 +39,7 @@
   --sidebar-primary-foreground: oklch(0.93 0.012 103);
   --sidebar-accent: oklch(0.87 0.014 100);
   --sidebar-accent-foreground: oklch(0.32 0.01 95);
-  --sidebar-border: oklch(0.83 0.014 100);
+  --sidebar-border: oklch(0.83 0.014 100 / 5%);
   --sidebar-ring: oklch(0.45 0.03 255);
 }
 
@@ -59,8 +59,8 @@
   --accent: oklch(0.3 0.005 60);
   --accent-foreground: oklch(0.85 0.01 100);
   --destructive: oklch(0.6 0.12 25);
-  --border: oklch(0.88 0.012 100 / 10%);
-  --input: oklch(0.88 0.012 100 / 14%);
+  --border: oklch(0.88 0.012 100 / 3%);
+  --input: oklch(0.88 0.012 100 / 5%);
   --ring: oklch(0.6 0.04 255);
   --chart-1: oklch(0.58 0.035 160);
   --chart-2: oklch(0.52 0.025 95);
@@ -73,7 +73,7 @@
   --sidebar-primary-foreground: oklch(0.228 0.002 60);
   --sidebar-accent: oklch(0.3 0.005 60);
   --sidebar-accent-foreground: oklch(0.85 0.01 100);
-  --sidebar-border: oklch(0.88 0.012 100 / 10%);
+  --sidebar-border: oklch(0.88 0.012 100 / 3%);
   --sidebar-ring: oklch(0.6 0.04 255);
 }
 
@@ -117,14 +117,19 @@
 
 @theme {
   --font-be-vietnam-pro: "Be Vietnam Pro", sans-serif;
+  --font-sans: var(--font-be-vietnam-pro);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border/5 outline-ring/30 transition-all duration-300;
   }
   body {
-    @apply bg-background text-foreground font-be-vietnam-pro;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  .panel-float {
+    @apply border-none shadow-inner bg-card/40 backdrop-blur-sm;
+    box-shadow: inset 0 2px 4px 0 oklch(0 0 0 / 0.02);
   }
 }
 

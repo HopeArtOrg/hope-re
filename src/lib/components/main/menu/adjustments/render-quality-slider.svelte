@@ -16,13 +16,13 @@
   );
 </script>
 
-<div class="space-y-3">
+<div class="space-y-4">
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <div class="p-1.5 rounded-lg bg-sky-500/10">
-        <ClockIcon class="size-4 text-sky-600 dark:text-sky-400" />
+    <div class="flex items-center gap-3">
+      <div class="p-2 rounded-lg bg-card shadow-sm border border-foreground/5 bg-sky-500/5">
+        <ClockIcon class="size-4 text-sky-500/60 dark:text-sky-400/60" />
       </div>
-      <label for={sliderId} class="text-sm font-medium">Render Quality</label>
+      <label for={sliderId} class="text-sm font-medium text-muted-foreground/80">Detail Refinement</label>
     </div>
     <div class="flex items-center gap-2">
       <currentPreset.icon class={cn("size-3.5", currentPreset.colour)} />

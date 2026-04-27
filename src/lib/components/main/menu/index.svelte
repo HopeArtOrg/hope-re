@@ -3,8 +3,6 @@
 
   import { SlidersVerticalIcon } from "@lucide/svelte";
 
-  import { Separator } from "$lib/components/ui/separator";
-
   import {
     AlgorithmSelect,
     GlazeStyleSelect,
@@ -32,42 +30,33 @@
   const showNightshadeTarget = $derived(algorithm === "nightshade");
 </script>
 
-<div class="space-y-6">
-  <div class="space-y-6 p-6 border border-foreground/5 rounded-xl bg-card/50">
-    <div class="flex items-center gap-3">
-      <div class="p-2 rounded-lg bg-muted/20">
-        <SlidersVerticalIcon class="size-5 text-muted-foreground/60" />
+<div class="space-y-8">
+  <div class="space-y-8 p-8 rounded-xl panel-float">
+    <div class="flex items-center gap-4">
+      <div class="p-2.5 rounded-lg bg-muted/10 shadow-sm">
+        <SlidersVerticalIcon class="size-5 text-muted-foreground/50" />
       </div>
-      <h3 class="text-base font-medium text-muted-foreground/80">Protection Settings</h3>
+      <h3 class="text-base font-medium text-muted-foreground/70 tracking-tight">Artistic Guidance</h3>
     </div>
-
-    <Separator />
 
     <AlgorithmSelect bind:value={algorithm} />
 
-    <Separator />
-
     {#if showGlazeStyle}
-      <div class="animate-in fade-in slide-in-from-top-2 duration-300">
+      <div class="animate-in fade-in slide-in-from-top-2 duration-500">
         <GlazeStyleSelect bind:value={glazeStyle} />
       </div>
     {:else if showNightshadeTarget}
-      <div class="animate-in fade-in slide-in-from-top-2 duration-300">
+      <div class="animate-in fade-in slide-in-from-top-2 duration-500">
         <NightshadeTargetSelect bind:value={nightshadeTarget} />
       </div>
     {/if}
 
-    {#if showGlazeStyle || showNightshadeTarget}
-      <Separator />
-    {/if}
-
     <IntensitySlider bind:value={intensity} />
 
-    <Separator />
-
-    <OutputQualitySlider bind:value={outputQuality} />
-
-    <RenderQualitySlider bind:value={renderQuality} />
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <OutputQualitySlider bind:value={outputQuality} />
+      <RenderQualitySlider bind:value={renderQuality} />
+    </div>
   </div>
 
   <ProtectionProgress {isProcessing}

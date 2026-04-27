@@ -18,16 +18,16 @@
   );
 </script>
 
-<div class="space-y-3">
-  <div class="flex items-center gap-2">
-    <div class={cn("p-1.5 rounded-lg", currentAlgo.bgColour)}>
+<div class="space-y-4">
+  <div class="flex items-center gap-3">
+    <div class={cn("p-2 rounded-lg bg-card shadow-sm border border-foreground/5", currentAlgo.bgColour)}>
       <PaletteIcon class={cn("size-4", currentAlgo.colour)} />
     </div>
-    <span class="text-sm font-medium">Algorithm</span>
+    <span class="text-sm font-medium text-muted-foreground/80">Creative Idea</span>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full hover:border-foreground/10 transition-colors bg-muted/10 border-foreground/5" aria-label="Algorithm Selection">
+    <Select.Trigger class="w-full px-4 h-12 hover:bg-muted/5 transition-all duration-300 bg-muted/5 border-none shadow-inner" aria-label="Creative Idea Selection">
       {triggerContent}
     </Select.Trigger>
     <Select.Content>

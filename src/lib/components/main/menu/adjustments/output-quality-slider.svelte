@@ -17,13 +17,13 @@
   );
 </script>
 
-<div class="space-y-3">
+<div class="space-y-4">
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <div class="p-1.5 rounded-lg bg-emerald-500/10">
-        <ImageIcon class="size-4 text-emerald-600 dark:text-emerald-400" />
+    <div class="flex items-center gap-3">
+      <div class="p-2 rounded-lg bg-card shadow-sm border border-foreground/5 bg-emerald-500/5">
+        <ImageIcon class="size-4 text-emerald-500/60 dark:text-emerald-400/60" />
       </div>
-      <span class="text-sm font-medium">Output Quality</span>
+      <span class="text-sm font-medium text-muted-foreground/80">Detail Refinement</span>
     </div>
     <div class="flex items-center gap-2">
       <span class={cn(
