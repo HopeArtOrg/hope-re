@@ -36,30 +36,28 @@ export const algorithms: {
 export const glazeStyles: {
   value: Exclude<ProtectionMenuProps["glazeStyle"], undefined>;
   label: string;
-  emoji: string;
   description: string;
 }[] = [
-  { value: "abstract", label: "Abstract", emoji: "\uD83C\uDFA8", description: "Chaotic brushstrokes" },
-  { value: "impressionist", label: "Impressionist", emoji: "\uD83D\uDD8C\uFE0F", description: "Gentle light" },
-  { value: "cubist", label: "Cubist", emoji: "\uD83D\uDD37", description: "Fragmented forms" },
-  { value: "sketch", label: "Sketch", emoji: "\u270F\uFE0F", description: "Loose pencil lines" },
-  { value: "watercolor", label: "Watercolor", emoji: "\uD83D\uDCA7", description: "Flowing colors" },
+  { value: "abstract", label: "Abstract", description: "Chaotic brushstrokes" },
+  { value: "impressionist", label: "Impressionist", description: "Gentle light" },
+  { value: "cubist", label: "Cubist", description: "Fragmented forms" },
+  { value: "sketch", label: "Sketch", description: "Loose pencil lines" },
+  { value: "watercolor", label: "Watercolor", description: "Flowing colors" },
 ];
 
 export const nightshadeTargets: {
   value: Exclude<ProtectionMenuProps["nightshadeTarget"], undefined>;
   label: string;
-  emoji: string;
   description: string;
 }[] = [
-  { value: "dog", label: "Dog", emoji: "\uD83D\uDC36", description: "Tricks AI into seeing a dog" },
-  { value: "cat", label: "Cat", emoji: "\uD83D\uDC31", description: "Tricks AI into seeing a cat" },
-  { value: "car", label: "Car", emoji: "\uD83D\uDE97", description: "Tricks AI into seeing a car" },
-  { value: "landscape", label: "Landscape", emoji: "\uD83C\uDF04", description: "Tricks AI into seeing a landscape" },
-  { value: "person", label: "Person", emoji: "\uD83E\uDDCD", description: "Tricks AI into seeing a person" },
-  { value: "building", label: "Building", emoji: "\uD83C\uDFDB\uFE0F", description: "Tricks AI into seeing a building" },
-  { value: "food", label: "Food", emoji: "\uD83C\uDF72", description: "Tricks AI into seeing food" },
-  { value: "abstract", label: "Abstract", emoji: "\uD83C\uDFA8", description: "Tricks AI into seeing abstract art" },
+  { value: "dog", label: "Dog", description: "Tricks AI into seeing a dog" },
+  { value: "cat", label: "Cat", description: "Tricks AI into seeing a cat" },
+  { value: "car", label: "Car", description: "Tricks AI into seeing a car" },
+  { value: "landscape", label: "Landscape", description: "Tricks AI into seeing a landscape" },
+  { value: "person", label: "Person", description: "Tricks AI into seeing a person" },
+  { value: "building", label: "Building", description: "Tricks AI into seeing a building" },
+  { value: "food", label: "Food", description: "Tricks AI into seeing food" },
+  { value: "abstract", label: "Abstract", description: "Tricks AI into seeing abstract art" },
 ];
 
 export const qualityPresets: {

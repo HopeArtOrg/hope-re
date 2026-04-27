@@ -18,14 +18,15 @@
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full h-16 bg-transparent border-neutral-100 dark:border-neutral-900 rounded-none text-base font-light tracking-widest hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-all duration-500" aria-label="Algorithm Selection">
+    <Select.Trigger class="w-full h-16 bg-transparent border-neutral-100 dark:border-neutral-900 rounded-none text-base font-light tracking-widest hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-all duration-500 hover:zen-dashed" aria-label="Algorithm Selection">
       {triggerContent}
     </Select.Trigger>
     <Select.Content class="rounded-none border-neutral-100 dark:border-neutral-900 bg-background/95 backdrop-blur-xl">
       {#each algorithms as algo}
         <Select.Item value={algo.value} class="rounded-none focus:bg-neutral-50 dark:focus:bg-neutral-900 py-4">
-          <div class="flex-1">
-            <p class="font-light text-sm tracking-wide">{algo.label}</p>
+          <div class="flex flex-col gap-0.5">
+            <span class="font-light text-sm tracking-wide">{algo.label}</span>
+            <span class="text-[10px] uppercase tracking-wider text-neutral-400 opacity-70">{algo.description}</span>
           </div>
         </Select.Item>
       {/each}

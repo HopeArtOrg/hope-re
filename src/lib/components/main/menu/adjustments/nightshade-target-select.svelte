@@ -1,8 +1,6 @@
 <script lang="ts">
   import type { NightshadeTargetSelectProps } from "../types";
 
-  import { CrosshairIcon } from "@lucide/svelte";
-
   import * as Select from "$lib/components/ui/select";
   import { nightshadeTargets } from "$lib/constants";
 
@@ -13,34 +11,25 @@
   );
 </script>
 
-<div class="space-y-3">
-  <div class="flex items-center gap-2">
-    <div class="p-1.5 rounded-lg bg-rose-500/10">
-      <CrosshairIcon class="size-4 text-rose-600 dark:text-rose-400" />
-    </div>
-    <span class="text-sm font-medium">Poison Target</span>
+<div class="space-y-8">
+  <div class="flex items-center justify-between">
+    <span class="text-base font-medium text-neutral-600 dark:text-neutral-300">Poison Target</span>
+    <span class="text-[11px] uppercase tracking-[0.2em] text-neutral-400 font-light">Concept Misclassification</span>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full hover:border-foreground/20 transition-colors" aria-label="Nightshade target selection">
+    <Select.Trigger class="w-full h-16 bg-transparent border-neutral-100 dark:border-neutral-900 rounded-none text-base font-light tracking-widest hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-all duration-500 hover:zen-dashed" aria-label="Nightshade target selection">
       {contentTrigger}
     </Select.Trigger>
-    <Select.Content>
+    <Select.Content class="rounded-none border-neutral-100 dark:border-neutral-900 bg-background/95 backdrop-blur-xl">
       {#each nightshadeTargets as target}
-        <Select.Item value={target.value}>
-          <div class="flex items-center gap-3 py-1">
-            <span class="text-base">{target.emoji}</span>
-            <div class="flex flex-col gap-0.5">
-              <span class="font-medium text-sm">{target.label}</span>
-              <span class="text-xs text-muted-foreground">{target.description}</span>
-            </div>
+        <Select.Item value={target.value} class="rounded-none focus:bg-neutral-50 dark:focus:bg-neutral-900 py-4">
+          <div class="flex flex-col gap-0.5">
+            <span class="font-light text-sm tracking-wide">{target.label}</span>
+            <span class="text-[10px] uppercase tracking-wider text-neutral-400 opacity-70">{target.description}</span>
           </div>
         </Select.Item>
       {/each}
     </Select.Content>
   </Select.Root>
-
-  <p class="text-xs text-muted-foreground">
-    AI models will misclassify your image as this target concept.
-  </p>
 </div>
