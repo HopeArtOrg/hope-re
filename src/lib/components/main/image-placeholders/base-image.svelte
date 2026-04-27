@@ -34,13 +34,9 @@
       <FileDropZoneTrigger class="flex-1">
         <div class={cn(
           "relative w-full aspect-square overflow-hidden transition-all duration-700",
-          !imageSrc && "cursor-pointer hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30",
-          imageSrc ? "bg-neutral-100 dark:bg-neutral-900/50" : "bg-neutral-50/30 dark:bg-neutral-950/20 zen-dashed-border",
+          !imageSrc && "cursor-pointer hover:bg-neutral-100/50 dark:hover:bg-neutral-900/50",
+          imageSrc ? "bg-neutral-100 dark:bg-neutral-900/50" : "bg-neutral-50/20 dark:bg-neutral-950/10 zen-dashed-container",
         )}>
-          {#if !imageSrc}
-            <div class="absolute inset-0 opacity-40 dark:opacity-20 bg-[radial-gradient(circle_at_center,var(--color-primary)_0%,transparent_70%)]"></div>
-          {/if}
-
           {#if imageSrc}
             <div class="absolute inset-0 flex items-center justify-center p-8">
               <img src={imageSrc}
@@ -49,8 +45,8 @@
             </div>
           {:else}
             <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-              <UploadIcon class="size-8 text-neutral-300 dark:text-neutral-700 mb-4 font-light" />
-              <p class="text-[11px] uppercase tracking-[0.2em] font-light text-neutral-400">
+              <UploadIcon class="size-8 text-neutral-300 dark:text-neutral-700 mb-4 font-light opacity-50" />
+              <p class="text-[10px] uppercase tracking-[0.3em] font-light text-neutral-400">
                 <span class="hidden md:inline">Drop to Load</span>
                 <span class="md:hidden">Select Image</span>
               </p>
@@ -62,12 +58,8 @@
   {:else}
     <div class={cn(
       "relative w-full aspect-square overflow-hidden transition-all duration-700",
-      imageSrc ? "bg-neutral-100 dark:bg-neutral-900/50" : "bg-neutral-50/30 dark:bg-neutral-950/20 zen-dashed-border",
+      imageSrc ? "bg-neutral-100 dark:bg-neutral-900/50" : "bg-neutral-50/20 dark:bg-neutral-950/10 zen-dashed-container",
     )}>
-      {#if !imageSrc}
-        <div class="absolute inset-0 opacity-40 dark:opacity-20 bg-[radial-gradient(circle_at_center,var(--color-primary)_0%,transparent_70%)]"></div>
-      {/if}
-
       {#if imageSrc}
         <div class="absolute inset-0 flex items-center justify-center p-8">
           <img src={imageSrc}
@@ -78,8 +70,8 @@
         {@render children?.()}
       {:else}
         <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-          <ImageIcon class="size-8 text-neutral-200 dark:text-neutral-800 mb-4" />
-          <p class="text-[11px] uppercase tracking-[0.2em] font-light text-neutral-400">
+          <ImageIcon class="size-8 text-neutral-200 dark:text-neutral-800 mb-4 opacity-50" />
+          <p class="text-[10px] uppercase tracking-[0.3em] font-light text-neutral-400">
             Pending Result
           </p>
         </div>
@@ -89,19 +81,32 @@
 </div>
 
 <style>
-  .zen-dashed-border {
-    background-image:
-      repeating-linear-gradient(0deg, var(--color-border), var(--color-border) 8px, transparent 8px, transparent 16px),
-      repeating-linear-gradient(90deg, var(--color-border), var(--color-border) 8px, transparent 8px, transparent 16px),
-      repeating-linear-gradient(180deg, var(--color-border), var(--color-border) 8px, transparent 8px, transparent 16px),
-      repeating-linear-gradient(270deg, var(--color-border), var(--color-border) 8px, transparent 8px, transparent 16px);
-    background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
-    background-position: 0 0, 0 0, 100% 0, 0 100%;
-    background-repeat: no-repeat;
-    opacity: 0.8;
+  .zen-dashed-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    padding: 1px;
+    background: linear-gradient(135deg,
+      var(--color-border) 0%,
+      transparent 25%,
+      transparent 75%,
+      var(--color-border) 100%
+    );
+    -webkit-mask:
+      repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px) left / 1px 100% no-repeat,
+      repeating-linear-gradient(90deg, black, black 10px, transparent 10px, transparent 20px) top / 100% 1px no-repeat,
+      repeating-linear-gradient(180deg, black, black 10px, transparent 10px, transparent 20px) right / 1px 100% no-repeat,
+      repeating-linear-gradient(270deg, black, black 10px, transparent 10px, transparent 20px) bottom / 100% 1px no-repeat;
+    mask:
+      repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px) left / 1px 100% no-repeat,
+      repeating-linear-gradient(90deg, black, black 10px, transparent 10px, transparent 20px) top / 100% 1px no-repeat,
+      repeating-linear-gradient(180deg, black, black 10px, transparent 10px, transparent 20px) right / 1px 100% no-repeat,
+      repeating-linear-gradient(270deg, black, black 10px, transparent 10px, transparent 20px) bottom / 100% 1px no-repeat;    opacity: 0.5;
+    transition: opacity 0.5s ease;
   }
 
-  .zen-dashed-border:hover {
+  .zen-dashed-container:hover::after {
     opacity: 1;
   }
 </style>
