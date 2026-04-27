@@ -21,7 +21,7 @@
       </div>
       <span class="text-lg font-bold text-neutral-700 dark:text-neutral-200 tracking-tight">Poison Target</span>
     </div>
-    <div class="px-4 py-1.5 rounded-full bg-secondary border border-border shadow-sm">
+    <div class="px-4 py-1.5 rounded-full bg-secondary border border-border shadow-sm flex items-center justify-center">
       <span class="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold">Poison Concept</span>
     </div>
   </div>

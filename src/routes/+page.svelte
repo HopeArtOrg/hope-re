@@ -146,7 +146,7 @@
         </div>
       {/if}
 
-      <div class="w-full max-w-5xl mx-auto bg-card/30 backdrop-blur-sm p-12 rounded-3xl border border-border/50">
+      <div class="w-full max-w-5xl mx-auto bg-card/30 backdrop-blur-sm p-6 md:p-12 rounded-3xl border border-border/50">
         <ProtectionMenu bind:algorithm={protection.algorithm}
                         bind:glazeStyle={protection.glazeStyle}
                         bind:nightshadeTarget={protection.nightshadeTarget}
@@ -160,11 +160,11 @@
       </div>
 
       {#if isSuccess && inferenceData}
-        <div class="text-[10px] text-muted-foreground font-medium tracking-[0.2em] uppercase flex items-center justify-center gap-8 opacity-80">
-          <span class="bg-secondary px-3 py-1 rounded-full border border-border">System Active</span>
-          <div class="flex flex-wrap gap-6">
+        <div class="text-[10px] text-muted-foreground font-medium tracking-[0.2em] uppercase flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 opacity-80">
+          <span class="bg-secondary px-3 py-1 rounded-full border border-border inline-flex items-center justify-center">System Active</span>
+          <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6">
             {#each inferenceData.providers as provider}
-              <span class="flex items-center gap-2">
+              <span class="flex items-center justify-center gap-2">
                 <span class="size-2 bg-primary rounded-full animate-pulse"></span>
                 {provider.name}
               </span>
@@ -173,7 +173,7 @@
         </div>
       {/if}
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 pb-16 pt-8 max-w-5xl mx-auto w-full">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10 pb-12 md:pb-16 pt-4 max-w-5xl mx-auto w-full">
         <Button
           size="lg"
           class="h-20 bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 rounded-2xl border-none shadow-xl shadow-primary/20 text-sm font-bold uppercase tracking-[0.3em] disabled:opacity-30"
