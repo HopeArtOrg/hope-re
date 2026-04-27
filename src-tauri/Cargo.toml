@@ -34,7 +34,7 @@ tauri-plugin-process = "2"
 sysinfo = "0.36.1"
 image = "0.25"
 base64 = "0.22"
-ndarray = "0.16"
+ndarray = { version = "0.17", features = [ "std" ] }
 reqwest = { version = "0.12", default-features = false, features = [
   "charset",
   "http2",
