@@ -1,5 +1,4 @@
 @import "@fontsource/be-vietnam-pro";
-@import "@fontsource-variable/jetbrains-mono";
 
 @import "tailwindcss";
 
@@ -118,7 +117,6 @@
 
 @theme {
   --font-be-vietnam-pro: "Be Vietnam Pro", sans-serif;
-  --font-jetbrains-mono: "JetBrains Mono Variable", monospace;
 }
 
 @layer base {

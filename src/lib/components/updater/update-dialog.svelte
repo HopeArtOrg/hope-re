@@ -164,7 +164,6 @@
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
     background-color: var(--muted);
-    font-family: var(--font-jetbrains-mono);
   }
   .release-notes :global(pre) {
     padding: 0.75rem;
