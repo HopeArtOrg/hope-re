@@ -11,14 +11,14 @@
   );
 </script>
 
-<div class="space-y-6">
+<div class="space-y-8">
   <div class="flex items-center justify-between">
-    <span class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Algorithm</span>
-    <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-light">Target Protection</span>
+    <span class="text-base font-medium text-neutral-600 dark:text-neutral-300">Algorithm</span>
+    <span class="text-[11px] uppercase tracking-[0.2em] text-neutral-400 font-light">Target Protection</span>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full h-12 bg-transparent border-neutral-100 dark:border-neutral-900 rounded-none text-sm font-light tracking-wide hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-all duration-500" aria-label="Algorithm Selection">
+    <Select.Trigger class="w-full h-16 bg-transparent border-neutral-100 dark:border-neutral-900 rounded-none text-base font-light tracking-widest hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-all duration-500" aria-label="Algorithm Selection">
       {triggerContent}
     </Select.Trigger>
     <Select.Content class="rounded-none border-neutral-100 dark:border-neutral-900 bg-background/95 backdrop-blur-xl">

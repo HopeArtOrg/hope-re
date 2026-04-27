@@ -130,7 +130,7 @@
         </div>
       {/if}
 
-      <div class="w-full max-w-3xl mx-auto">
+      <div class="w-full max-w-5xl mx-auto">
         <ProtectionMenu bind:algorithm={protection.algorithm}
                         bind:glazeStyle={protection.glazeStyle}
                         bind:nightshadeTarget={protection.nightshadeTarget}

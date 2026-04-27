@@ -14,13 +14,13 @@
   );
 </script>
 
-<div class="space-y-6">
+<div class="space-y-10">
   <div class="flex items-center justify-between">
-    <label for={sliderId} class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Render Quality</label>
-    <span class="text-xs font-light text-neutral-400 uppercase tracking-widest">{currentPreset.label}</span>
+    <label for={sliderId} class="text-base font-medium text-neutral-600 dark:text-neutral-300">Render Quality</label>
+    <span class="text-xs font-light text-neutral-400 uppercase tracking-[0.3em]">{currentPreset.label}</span>
   </div>
 
-  <div class="space-y-6">
+  <div class="space-y-8">
     <Slider type="multiple"
             bind:value
             min={0}
@@ -32,19 +32,19 @@
       {#each qualityPresets as preset}
         <button type="button"
                 class={cn(
-                  "flex flex-col items-center gap-2 text-[10px] transition-all duration-300 uppercase tracking-tighter",
+                  "flex flex-col items-center gap-3 text-[11px] transition-all duration-300 uppercase tracking-tighter",
                   (value[0] === preset.value) && "text-primary font-medium scale-110",
                   (value[0] !== preset.value) && "text-neutral-400 font-light opacity-60 hover:opacity-100",
                 )}
                 onclick={() => value = [preset.value]}>
           <span>{preset.label}</span>
-          <span class="text-[9px] opacity-60 font-mono tracking-normal">{preset.time}</span>
+          <span class="text-[10px] opacity-60 font-mono tracking-normal">{preset.time}</span>
         </button>
       {/each}
     </div>
   </div>
 
-  <p class="text-[11px] font-light text-neutral-400 leading-relaxed max-w-md">
+  <p class="text-xs font-light text-neutral-400 leading-relaxed max-w-2xl">
     Processing precision for Glaze, Nightshade, and Noise algorithms. High quality increases protection efficacy but requires more computation time.
   </p>
 </div>

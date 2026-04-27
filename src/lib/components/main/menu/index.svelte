@@ -28,13 +28,13 @@
   const showNightshadeTarget = $derived(algorithm === "nightshade");
 </script>
 
-<div class="space-y-12 py-8">
-  <div class="space-y-10">
-    <div class="flex items-center gap-3">
-      <h3 class="text-sm font-medium tracking-wide text-neutral-500 uppercase">Protection Settings</h3>
+<div class="space-y-16 py-12">
+  <div class="space-y-12">
+    <div class="flex items-center gap-4">
+      <h3 class="text-[11px] font-medium tracking-[0.3em] text-neutral-500 uppercase">Protection Settings</h3>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-16">
       <AlgorithmSelect bind:value={algorithm} />
 
       {#if showGlazeStyle}
@@ -53,7 +53,7 @@
 
       <OutputQualitySlider bind:value={outputQuality} />
 
-      <div class="md:col-span-2 pt-4">
+      <div class="md:col-span-2 pt-8">
         <RenderQualitySlider bind:value={renderQuality} />
       </div>
     </div>
