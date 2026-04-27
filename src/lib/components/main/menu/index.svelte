@@ -1,10 +1,6 @@
 <script lang="ts">
   import type { ProtectionMenuProps } from "./types";
 
-  import { SlidersVerticalIcon } from "@lucide/svelte";
-
-  import { Separator } from "$lib/components/ui/separator";
-
   import {
     AlgorithmSelect,
     GlazeStyleSelect,
@@ -32,42 +28,31 @@
   const showNightshadeTarget = $derived(algorithm === "nightshade");
 </script>
 
-<div class="space-y-6">
-  <div class="space-y-6 p-6 border rounded-xl bg-card">
+<div class="space-y-12 py-8">
+  <div class="space-y-10">
     <div class="flex items-center gap-3">
-      <div class="p-2 rounded-lg bg-primary/10">
-        <SlidersVerticalIcon class="size-5 text-primary" />
-      </div>
-      <h3 class="text-base font-medium">Protection Settings</h3>
+      <h3 class="text-sm font-medium tracking-wide text-neutral-500 uppercase">Protection Settings</h3>
     </div>
 
-    <Separator />
+    <div class="space-y-12">
+      <AlgorithmSelect bind:value={algorithm} />
 
-    <AlgorithmSelect bind:value={algorithm} />
+      {#if showGlazeStyle}
+        <div class="animate-in fade-in slide-in-from-top-2 duration-500">
+          <GlazeStyleSelect bind:value={glazeStyle} />
+        </div>
+      {:else if showNightshadeTarget}
+        <div class="animate-in fade-in slide-in-from-top-2 duration-500">
+          <NightshadeTargetSelect bind:value={nightshadeTarget} />
+        </div>
+      {/if}
 
-    <Separator />
+      <IntensitySlider bind:value={intensity} />
 
-    {#if showGlazeStyle}
-      <div class="animate-in fade-in slide-in-from-top-2 duration-300">
-        <GlazeStyleSelect bind:value={glazeStyle} />
-      </div>
-    {:else if showNightshadeTarget}
-      <div class="animate-in fade-in slide-in-from-top-2 duration-300">
-        <NightshadeTargetSelect bind:value={nightshadeTarget} />
-      </div>
-    {/if}
+      <OutputQualitySlider bind:value={outputQuality} />
 
-    {#if showGlazeStyle || showNightshadeTarget}
-      <Separator />
-    {/if}
-
-    <IntensitySlider bind:value={intensity} />
-
-    <Separator />
-
-    <OutputQualitySlider bind:value={outputQuality} />
-
-    <RenderQualitySlider bind:value={renderQuality} />
+      <RenderQualitySlider bind:value={renderQuality} />
+    </div>
   </div>
 
   <ProtectionProgress {isProcessing}
