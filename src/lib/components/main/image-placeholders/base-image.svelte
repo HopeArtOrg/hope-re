@@ -33,7 +33,7 @@
                   onFileRejected={handleFileRejected}>
       <FileDropZoneTrigger class="flex-1">
         <div class={cn(
-          "relative flex-1 overflow-hidden bg-neutral-100 dark:bg-neutral-900/50 min-h-[300px] md:min-h-[500px] transition-all duration-700",
+          "relative w-full aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-900/50 transition-all duration-700",
           !imageSrc && "cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-900",
         )}>
           {#if imageSrc}
@@ -56,7 +56,7 @@
     </FileDropZone>
   {:else}
     <div class={cn(
-      "relative flex-1 overflow-hidden bg-neutral-100 dark:bg-neutral-900/50 min-h-[300px] md:min-h-[500px] transition-all duration-700",
+      "relative w-full aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-900/50 transition-all duration-700",
     )}>
       {#if imageSrc}
         <div class="absolute inset-0 flex items-center justify-center p-8">
