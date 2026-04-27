@@ -16,15 +16,17 @@
   );
 </script>
 
-<div class="space-y-10">
+<div class="space-y-12">
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="p-2 bg-neutral-100 dark:bg-neutral-900 zen-dashed rounded-none">
-        <ClockIcon class="size-4 opacity-70 text-sky-600 dark:text-sky-400" />
+    <div class="flex items-center gap-4">
+      <div class="p-3 bg-sky-500/10 rounded-2xl shadow-sm border border-sky-500/10">
+        <ClockIcon class="size-5 text-sky-600 dark:text-sky-400" />
       </div>
-      <label for={sliderId} class="text-base font-medium text-neutral-600 dark:text-neutral-300">Render Quality</label>
+      <label for={sliderId} class="text-lg font-bold text-neutral-700 dark:text-neutral-200 tracking-tight">Render Quality</label>
     </div>
-    <span class="text-xs font-light text-neutral-400 uppercase tracking-[0.3em]">{currentPreset.label}</span>
+    <div class="px-4 py-1.5 rounded-full bg-secondary border border-border shadow-sm">
+      <span class="text-[10px] uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400 font-bold">{currentPreset.label}</span>
+    </div>
   </div>
 
   <div class="space-y-8">

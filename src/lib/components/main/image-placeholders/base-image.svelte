@@ -31,24 +31,25 @@
                   fileCount={0}
                   accept={ACCEPT_IMAGE}
                   onFileRejected={handleFileRejected}>
-      <FileDropZoneTrigger class="flex-1">
+      <FileDropZoneTrigger class="flex-1 group">
         <div class={cn(
-          "relative w-full aspect-square overflow-hidden transition-all duration-700",
-          !imageSrc && "cursor-pointer hover:bg-neutral-200/50 dark:hover:bg-neutral-900/50 zen-dashed",
-          imageSrc ? "bg-neutral-100 dark:bg-neutral-900/50" : "bg-neutral-50/40 dark:bg-neutral-950/20",
+          "relative w-full aspect-square overflow-hidden transition-all duration-500 rounded-[2.5rem] border-2 border-transparent",
+          !imageSrc && "cursor-pointer bg-secondary/30 group-hover:bg-secondary/50 group-hover:border-primary/30 group-hover:scale-[1.01] active:scale-[0.99] zen-dashed",
+          imageSrc ? "bg-card shadow-inner" : "shadow-sm",
         )}>
           {#if imageSrc}
-            <div class="absolute inset-0 flex items-center justify-center p-8">
+            <div class="absolute inset-0 flex items-center justify-center p-10">
               <img src={imageSrc}
                    alt={label}
-                   class="relative z-10 max-w-full max-h-full object-contain shadow-2xl shadow-black/5" />
+                   class="relative z-10 max-w-full max-h-full object-contain rounded-2xl shadow-2xl shadow-black/10 transition-transform duration-500 group-hover:scale-[1.02]" />
             </div>
           {:else}
             <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-              <UploadIcon class="size-8 text-neutral-400 dark:text-neutral-600 mb-4 font-light opacity-50" />
-              <p class="text-[10px] uppercase tracking-[0.3em] font-light text-neutral-400">
-                <span class="hidden md:inline">Drop to Load</span>
-                <span class="md:hidden">Select Image</span>
+              <div class="p-6 rounded-full bg-primary/5 mb-6 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110">
+                <UploadIcon class="size-12 text-primary opacity-40 font-light" />
+              </div>
+              <p class="text-[12px] uppercase tracking-[0.4em] font-bold text-primary/60">
+                Load Artwork
               </p>
             </div>
           {/if}
@@ -57,22 +58,24 @@
     </FileDropZone>
   {:else}
     <div class={cn(
-      "relative w-full aspect-square overflow-hidden transition-all duration-700 zen-dashed",
-      imageSrc ? "bg-neutral-100 dark:bg-neutral-900/50" : "bg-neutral-50/40 dark:bg-neutral-950/20",
+      "relative w-full aspect-square overflow-hidden transition-all duration-500 rounded-[2.5rem] border-2 border-transparent",
+      imageSrc ? "bg-card shadow-inner" : "bg-secondary/20 zen-dashed",
     )}>
       {#if imageSrc}
-        <div class="absolute inset-0 flex items-center justify-center p-8">
+        <div class="absolute inset-0 flex items-center justify-center p-10">
           <img src={imageSrc}
                alt={label}
-               class="relative z-10 max-w-full max-h-full object-contain shadow-2xl shadow-black/5" />
+               class="relative z-10 max-w-full max-h-full object-contain rounded-2xl shadow-2xl shadow-black/10" />
         </div>
 
         {@render children?.()}
       {:else}
         <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-          <ImageIcon class="size-8 text-neutral-300 dark:text-neutral-700 mb-4 opacity-50" />
-          <p class="text-[10px] uppercase tracking-[0.3em] font-light text-neutral-400">
-            Pending Result
+          <div class="p-6 rounded-full bg-muted/20 mb-6">
+            <ImageIcon class="size-12 text-muted-foreground opacity-30" />
+          </div>
+          <p class="text-[12px] uppercase tracking-[0.4em] font-bold text-muted-foreground/40">
+            Pending...
           </p>
         </div>
       {/if}

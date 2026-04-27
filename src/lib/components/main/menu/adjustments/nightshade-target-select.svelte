@@ -13,29 +13,33 @@
   );
 </script>
 
-<div class="space-y-8">
+<div class="space-y-10">
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="p-2 bg-neutral-100 dark:bg-neutral-900 zen-dashed rounded-none">
-        <CrosshairIcon class="size-4 opacity-70 text-rose-600 dark:text-rose-400" />
+    <div class="flex items-center gap-4">
+      <div class="p-3 bg-rose-500/10 rounded-2xl shadow-sm border border-rose-500/10">
+        <CrosshairIcon class="size-5 text-rose-600 dark:text-rose-400" />
       </div>
-      <span class="text-base font-medium text-neutral-600 dark:text-neutral-300">Poison Target</span>
+      <span class="text-lg font-bold text-neutral-700 dark:text-neutral-200 tracking-tight">Poison Target</span>
     </div>
-    <span class="text-[11px] uppercase tracking-[0.2em] text-neutral-400 font-light">Concept Misclassification</span>
+    <div class="px-4 py-1.5 rounded-full bg-secondary border border-border shadow-sm">
+      <span class="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold">Poison Concept</span>
+    </div>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full h-16 bg-transparent border-neutral-100 dark:border-neutral-900 rounded-none text-base font-light tracking-widest hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-all duration-500 hover:zen-dashed" aria-label="Nightshade target selection">
+    <Select.Trigger class="w-full h-20 bg-card/50 border-2 border-transparent rounded-[2.5rem] text-lg font-medium tracking-wide hover:bg-card hover:border-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-sm zen-dashed" aria-label="Nightshade target selection">
       {contentTrigger}
     </Select.Trigger>
-    <Select.Content class="rounded-none border-neutral-100 dark:border-neutral-900 bg-background/95 backdrop-blur-xl">
+    <Select.Content class="rounded-[2rem] border-border bg-background/95 backdrop-blur-xl p-2 shadow-2xl">
       {#each nightshadeTargets as target}
-        <Select.Item value={target.value} class="rounded-none focus:bg-neutral-50 dark:focus:bg-neutral-900 py-4">
-          <div class="flex items-center gap-4">
-            <target.icon class="size-4 opacity-40 text-rose-600 dark:text-rose-400" />
-            <div class="flex flex-col gap-0.5">
-              <span class="font-light text-sm tracking-wide">{target.label}</span>
-              <span class="text-[10px] uppercase tracking-wider text-neutral-400 opacity-70">{target.description}</span>
+        <Select.Item value={target.value} class="rounded-[1.5rem] focus:bg-secondary py-5 px-6">
+          <div class="flex items-center gap-5">
+            <div class="p-2 rounded-xl bg-rose-500/10">
+              <target.icon class="size-5 text-rose-600 dark:text-rose-400" />
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="font-bold text-base tracking-tight">{target.label}</span>
+              <span class="text-xs font-medium text-muted-foreground opacity-80">{target.description}</span>
             </div>
           </div>
         </Select.Item>

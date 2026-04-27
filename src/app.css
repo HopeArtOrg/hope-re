@@ -8,74 +8,74 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --radius: 0.125rem;
-  --background: oklch(0.96 0.005 60);
-  --foreground: oklch(0.25 0.01 60);
-  --card: oklch(0.96 0.005 60);
-  --card-foreground: oklch(0.25 0.01 60);
-  --popover: oklch(0.96 0.005 60);
-  --popover-foreground: oklch(0.25 0.01 60);
-  --primary: oklch(0.35 0.02 60);
-  --primary-foreground: oklch(0.96 0.005 60);
+  --radius: 1rem;
+  --background: oklch(0.97 0.01 80); /* Warm Cream */
+  --foreground: oklch(0.35 0.02 240); /* Soft Slate Blue */
+  --card: oklch(0.97 0.01 80);
+  --card-foreground: oklch(0.35 0.02 240);
+  --popover: oklch(0.98 0.01 80);
+  --popover-foreground: oklch(0.35 0.02 240);
+  --primary: oklch(0.65 0.08 180); /* Calm Sage Green */
+  --primary-foreground: oklch(0.98 0.01 80);
 
-  --secondary: oklch(0.92 0.005 60);
-  --secondary-foreground: oklch(0.35 0.01 60);
-  --muted: oklch(0.92 0.005 60);
-  --muted-foreground: oklch(0.45 0.01 60);
-  --accent: oklch(0.9 0.005 60);
-  --accent-foreground: oklch(0.35 0.01 60);
-  --destructive: oklch(0.5 0.12 25);
-  --border: oklch(0.8 0.01 60 / 60%);
-  --input: oklch(0.8 0.01 60 / 60%);
-  --ring: oklch(0.35 0.02 60);
+  --secondary: oklch(0.92 0.02 240 / 50%);
+  --secondary-foreground: oklch(0.45 0.05 240);
+  --muted: oklch(0.94 0.02 240 / 40%);
+  --muted-foreground: oklch(0.55 0.05 240);
+  --accent: oklch(0.9 0.03 240 / 60%);
+  --accent-foreground: oklch(0.4 0.05 240);
+  --destructive: oklch(0.6 0.12 25);
+  --border: oklch(0.85 0.02 240 / 40%);
+  --input: oklch(0.85 0.02 240 / 40%);
+  --ring: oklch(0.65 0.08 180);
 
-  --chart-1: oklch(0.52 0.035 160);
-  --chart-2: oklch(0.48 0.025 95);
-  --chart-3: oklch(0.42 0.025 240);
-  --chart-4: oklch(0.58 0.03 100);
-  --chart-5: oklch(0.48 0.04 25);
-  --sidebar: oklch(0.96 0.005 60);
-  --sidebar-foreground: oklch(0.25 0.01 95);
-  --sidebar-primary: oklch(0.35 0.02 60);
-  --sidebar-primary-foreground: oklch(0.96 0.005 60);
-  --sidebar-accent: oklch(0.92 0.005 60);
-  --sidebar-accent-foreground: oklch(0.32 0.01 95);
-  --sidebar-border: oklch(0.8 0.01 60 / 60%);
-  --sidebar-ring: oklch(0.35 0.02 60);
+  --chart-1: oklch(0.65 0.08 180);
+  --chart-2: oklch(0.7 0.05 210);
+  --chart-3: oklch(0.6 0.05 240);
+  --chart-4: oklch(0.75 0.05 150);
+  --chart-5: oklch(0.8 0.05 120);
+  --sidebar: oklch(0.97 0.01 80);
+  --sidebar-foreground: oklch(0.35 0.02 240);
+  --sidebar-primary: oklch(0.65 0.08 180);
+  --sidebar-primary-foreground: oklch(0.98 0.01 80);
+  --sidebar-accent: oklch(0.92 0.02 240);
+  --sidebar-accent-foreground: oklch(0.35 0.02 240);
+  --sidebar-border: oklch(0.85 0.02 240 / 40%);
+  --sidebar-ring: oklch(0.65 0.08 180);
 }
 
 .dark {
-  --background: oklch(0.12 0.002 60);
-  --foreground: oklch(0.9 0.005 60);
-  --card: oklch(0.12 0.002 60);
-  --card-foreground: oklch(0.9 0.005 60);
-  --popover: oklch(0.12 0.002 60);
-  --popover-foreground: oklch(0.9 0.005 60);
-  --primary: oklch(0.8 0.01 60);
-  --primary-foreground: oklch(0.12 0.002 60);
-  --secondary: oklch(0.16 0.005 60);
-  --secondary-foreground: oklch(0.85 0.01 60);
-  --muted: oklch(0.16 0.005 60);
-  --muted-foreground: oklch(0.5 0.005 60);
-  --accent: oklch(0.18 0.005 60);
-  --accent-foreground: oklch(0.85 0.01 100);
-  --destructive: oklch(0.6 0.12 25);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.8 0.01 60);
-  --chart-1: oklch(0.58 0.035 160);
-  --chart-2: oklch(0.52 0.025 95);
-  --chart-3: oklch(0.48 0.025 240);
-  --chart-4: oklch(0.62 0.03 100);
-  --chart-5: oklch(0.52 0.04 25);
-  --sidebar: oklch(0.12 0.002 60);
-  --sidebar-foreground: oklch(0.9 0.005 60);
-  --sidebar-primary: oklch(0.8 0.01 60);
-  --sidebar-primary-foreground: oklch(0.12 0.002 60);
-  --sidebar-accent: oklch(0.16 0.005 60);
-  --sidebar-accent-foreground: oklch(0.85 0.01 60);
-  --sidebar-border: oklch(1 0 0 / 12%);
-  --sidebar-ring: oklch(0.8 0.01 60);
+  --background: oklch(0.18 0.02 240); /* Deep Night Navy */
+  --foreground: oklch(0.9 0.02 240);
+  --card: oklch(0.18 0.02 240);
+  --card-foreground: oklch(0.9 0.02 240);
+  --popover: oklch(0.18 0.02 240);
+  --popover-foreground: oklch(0.9 0.02 240);
+  --primary: oklch(0.75 0.06 180); /* Softer Sage */
+  --primary-foreground: oklch(0.18 0.02 240);
+  --secondary: oklch(0.22 0.03 240);
+  --secondary-foreground: oklch(0.85 0.02 240);
+  --muted: oklch(0.22 0.03 240);
+  --muted-foreground: oklch(0.6 0.02 240);
+  --accent: oklch(0.25 0.03 240);
+  --accent-foreground: oklch(0.85 0.02 240);
+  --destructive: oklch(0.5 0.15 30);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.75 0.06 180);
+  --chart-1: oklch(0.75 0.06 180);
+  --chart-2: oklch(0.8 0.04 210);
+  --chart-3: oklch(0.7 0.04 240);
+  --chart-4: oklch(0.85 0.04 150);
+  --chart-5: oklch(0.9 0.04 120);
+  --sidebar: oklch(0.18 0.02 240);
+  --sidebar-foreground: oklch(0.9 0.02 240);
+  --sidebar-primary: oklch(0.75 0.06 180);
+  --sidebar-primary-foreground: oklch(0.18 0.02 240);
+  --sidebar-accent: oklch(0.22 0.03 240);
+  --sidebar-accent-foreground: oklch(0.9 0.02 240);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.75 0.06 180);
 }
 
 @utility zen-dashed {
@@ -83,28 +83,23 @@
   &::after {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -2px;
     pointer-events: none;
-    padding: 1px;
-    background: linear-gradient(
-      135deg,
-      var(--color-border) 0%,
-      transparent 25%,
-      transparent 75%,
-      var(--color-border) 100%
-    );
+    padding: 2px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, transparent 50%, var(--color-primary) 100%);
     mask:
-      repeating-linear-gradient(0deg, black, black 10px, transparent 10px, transparent 20px) left / 1px 100% no-repeat,
-      repeating-linear-gradient(90deg, black, black 10px, transparent 10px, transparent 20px) top / 100% 1px no-repeat,
-      repeating-linear-gradient(180deg, black, black 10px, transparent 10px, transparent 20px) right / 1px 100%
+      repeating-linear-gradient(0deg, black, black 12px, transparent 12px, transparent 24px) left / 2px 100% no-repeat,
+      repeating-linear-gradient(90deg, black, black 12px, transparent 12px, transparent 24px) top / 100% 2px no-repeat,
+      repeating-linear-gradient(180deg, black, black 12px, transparent 12px, transparent 24px) right / 2px 100%
         no-repeat,
-      repeating-linear-gradient(270deg, black, black 10px, transparent 10px, transparent 20px) bottom / 100% 1px
+      repeating-linear-gradient(270deg, black, black 12px, transparent 12px, transparent 24px) bottom / 100% 2px
         no-repeat;
-    opacity: 0.5;
-    transition: opacity 0.5s ease;
+    opacity: 0.3;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   &:hover::after {
-    opacity: 1;
+    opacity: 0.8;
+    inset: -4px;
   }
 }
 

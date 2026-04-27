@@ -16,29 +16,33 @@
   );
 </script>
 
-<div class="space-y-8">
+<div class="space-y-10">
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="p-2 bg-neutral-100 dark:bg-neutral-900 zen-dashed rounded-none">
-        <currentAlgo.icon class={cn("size-4 opacity-70", currentAlgo.colour)} />
+    <div class="flex items-center gap-4">
+      <div class="p-3 bg-indigo-500/10 rounded-2xl shadow-sm border border-indigo-500/10">
+        <currentAlgo.icon class={cn("size-5", currentAlgo.colour)} />
       </div>
-      <span class="text-base font-medium text-neutral-600 dark:text-neutral-300">Algorithm</span>
+      <span class="text-lg font-bold text-neutral-700 dark:text-neutral-200 tracking-tight">Algorithm</span>
     </div>
-    <span class="text-[11px] uppercase tracking-[0.2em] text-neutral-400 font-light">Target Protection</span>
+    <div class="px-4 py-1.5 rounded-full bg-secondary border border-border shadow-sm">
+      <span class="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold">Safety Mode</span>
+    </div>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full h-16 bg-transparent border-neutral-100 dark:border-neutral-900 rounded-none text-base font-light tracking-widest hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-all duration-500 hover:zen-dashed" aria-label="Algorithm Selection">
+    <Select.Trigger class="w-full h-20 bg-card/50 border-2 border-transparent rounded-[2.5rem] text-lg font-medium tracking-wide hover:bg-card hover:border-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-sm zen-dashed" aria-label="Algorithm Selection">
       {triggerContent}
     </Select.Trigger>
-    <Select.Content class="rounded-none border-neutral-100 dark:border-neutral-900 bg-background/95 backdrop-blur-xl">
+    <Select.Content class="rounded-[2rem] border-border bg-background/95 backdrop-blur-xl p-2 shadow-2xl">
       {#each algorithms as algo}
-        <Select.Item value={algo.value} class="rounded-none focus:bg-neutral-50 dark:focus:bg-neutral-900 py-4">
-          <div class="flex items-center gap-4">
-            <algo.icon class={cn("size-4 opacity-40", algo.colour)} />
-            <div class="flex flex-col gap-0.5">
-              <span class="font-light text-sm tracking-wide">{algo.label}</span>
-              <span class="text-[10px] uppercase tracking-wider text-neutral-400 opacity-70">{algo.description}</span>
+        <Select.Item value={algo.value} class="rounded-[1.5rem] focus:bg-secondary py-5 px-6">
+          <div class="flex items-center gap-5">
+            <div class={cn("p-2 rounded-xl", algo.bgColour)}>
+              <algo.icon class={cn("size-5", algo.colour)} />
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="font-bold text-base tracking-tight">{algo.label}</span>
+              <span class="text-xs font-medium text-muted-foreground opacity-80">{algo.description}</span>
             </div>
           </div>
         </Select.Item>

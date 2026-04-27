@@ -12,15 +12,17 @@
   const intensityDisplay = $derived((value[0] / 100).toFixed(2));
 </script>
 
-<div class="space-y-10">
+<div class="space-y-12">
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="p-2 bg-neutral-100 dark:bg-neutral-900 zen-dashed rounded-none">
-        <GaugeIcon class="size-4 opacity-70 text-amber-600 dark:text-amber-400" />
+    <div class="flex items-center gap-4">
+      <div class="p-3 bg-amber-500/10 rounded-2xl shadow-sm border border-amber-500/10">
+        <GaugeIcon class="size-5 text-amber-600 dark:text-amber-400" />
       </div>
-      <label for={sliderId} class="text-base font-medium text-neutral-600 dark:text-neutral-300">Intensity</label>
+      <label for={sliderId} class="text-lg font-bold text-neutral-700 dark:text-neutral-200 tracking-tight">Intensity</label>
     </div>
-    <span class="text-sm font-light text-neutral-400 font-mono tracking-[0.2em]">{intensityDisplay}</span>
+    <div class="px-4 py-1.5 rounded-full bg-secondary border border-border shadow-sm">
+      <span class="text-sm font-bold text-amber-600 dark:text-amber-400 font-mono tracking-widest">{intensityDisplay}</span>
+    </div>
   </div>
 
   <div class="space-y-6">
