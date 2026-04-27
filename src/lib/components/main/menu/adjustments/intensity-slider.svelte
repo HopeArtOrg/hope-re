@@ -3,7 +3,6 @@
 
   import { GaugeIcon } from "@lucide/svelte";
 
-  import { Badge } from "$lib/components/ui/badge";
   import { Slider } from "$lib/components/ui/slider";
   import { cn } from "$lib/utils";
 
@@ -31,22 +30,21 @@
       <label for={sliderId} class="text-sm font-medium">Intensity</label>
     </div>
     <div class="flex items-center gap-2">
-      <Badge variant="secondary"
-             class={cn(
-               "text-xs",
-               intensityLevel === "Low" && "text-emerald-600 dark:text-emerald-400",
-               intensityLevel === "Medium" && "text-amber-600 dark:text-amber-400",
-               intensityLevel === "High" && "text-rose-600 dark:text-rose-400",
-             )}>
+      <span class={cn(
+        "text-xs font-medium uppercase tracking-wider",
+        intensityLevel === "Low" && "text-emerald-500/60 dark:text-emerald-400/60",
+        intensityLevel === "Medium" && "text-amber-500/60 dark:text-amber-400/60",
+        intensityLevel === "High" && "text-rose-500/60 dark:text-rose-400/60",
+      )}>
         {intensityLevel}
-      </Badge>
-      <Badge variant="secondary" class="font-jetbrains-mono text-sm">
+      </span>
+      <span class="text-xs text-muted-foreground/60 font-medium">
         {intensityDisplay}
-      </Badge>
+      </span>
     </div>
   </div>
 
-  <div class="space-y-2">
+  <div class="py-1">
     <Slider id={sliderId}
             type="multiple"
             bind:value
@@ -54,12 +52,6 @@
             max={50}
             step={1}
             aria-label="Intensity control" />
-
-    <div class="flex justify-between items-center text-xs text-muted-foreground">
-      <span>0.01</span>
-      <span class="font-medium">0.25</span>
-      <span>0.50</span>
-    </div>
   </div>
 
   <p class="text-xs text-muted-foreground">

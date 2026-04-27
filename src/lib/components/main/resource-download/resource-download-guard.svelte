@@ -4,7 +4,6 @@
   import { DownloadIcon, LoaderCircleIcon, MinusIcon, TriangleAlertIcon } from "@lucide/svelte";
   import { onMount } from "svelte";
 
-  import { Badge } from "$lib/components/ui/badge";
   import { Button } from "$lib/components/ui/button";
   import * as Dialog from "$lib/components/ui/dialog";
   import { Progress } from "$lib/components/ui/progress";
@@ -114,28 +113,30 @@
       <div class="space-y-4">
         <div class="space-y-2">
           <div class="flex items-center justify-between">
-            <span class="text-xs text-muted-foreground">Overall progress</span>
-            <Badge variant="secondary" class="font-jetbrains-mono text-xs">
+            <span class="text-xs text-muted-foreground uppercase tracking-wider font-medium">Overall progress</span>
+            <span class="text-xs text-muted-foreground/60 font-medium tabular-nums">
               {Math.round(models.overallPercent)}&percnt;
-            </Badge>
+            </span>
           </div>
-          <Progress value={models.overallPercent} max={100} />
+          <Progress value={models.overallPercent}
+                    max={100}
+                    class="h-1.5" />
         </div>
 
         <div class="space-y-2">
           {#each models.modelProgress as model}
             {@const displayName = model.name.replace("_algorithm.onnx", "")}
-            <div class="flex items-center gap-3 p-2 rounded-lg bg-muted/30">
+            <div class="flex items-center gap-3 p-2 rounded-lg bg-muted/20 border border-foreground/5">
               <div class={cn(
                 "size-1.5 rounded-full shrink-0",
-                model.percent >= 100 ? "bg-emerald-500" : model.percent > 0 ? "bg-primary animate-pulse" : "bg-muted-foreground/30",
+                model.percent >= 100 ? "bg-emerald-500/40" : model.percent > 0 ? "bg-primary/40 animate-pulse" : "bg-muted-foreground/20",
               )}></div>
 
-              <span class="text-xs text-foreground capitalize flex-1">
+              <span class="text-xs text-muted-foreground/80 font-medium capitalize flex-1">
                 {displayName}
               </span>
 
-              <span class="text-xs text-muted-foreground font-jetbrains-mono tabular-nums">
+              <span class="text-[10px] text-muted-foreground/40 font-medium tabular-nums uppercase">
                 {#if model.percent >= 100}
                   Done
                 {:else if model.totalBytes > 0}

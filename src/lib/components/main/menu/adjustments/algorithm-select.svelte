@@ -27,7 +27,7 @@
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full hover:border-foreground/20 transition-colors" aria-label="Algorithm Selection">
+    <Select.Trigger class="w-full hover:border-foreground/10 transition-colors bg-muted/10 border-foreground/5" aria-label="Algorithm Selection">
       {triggerContent}
     </Select.Trigger>
     <Select.Content>

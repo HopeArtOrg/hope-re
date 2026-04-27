@@ -1,5 +1,6 @@
 <script lang="ts">
   import {
+    CpuIcon,
     LoaderCircleIcon,
     RotateCcwIcon,
     ShieldIcon,
@@ -133,14 +134,17 @@
                       progressMessage={protection.progressMessage} />
 
       {#if isSuccess && inferenceData}
-        <div class="text-xs text-muted-foreground px-2">
-          <span class="font-medium">Inference:</span>
-          {#each inferenceData.providers as provider}
-            <span class="ml-2 inline-flex items-center gap-1">
-              {provider.name}
-              <span class="size-1.5 rounded-full bg-emerald-500"></span>
-            </span>
-          {/each}
+        <div class="flex items-center gap-2 px-2 opacity-30 hover:opacity-100 transition-opacity cursor-help"
+             title="Inference Providers: {inferenceData.providers.map(p => p.name).join(", ")}">
+          <CpuIcon class="size-3 text-muted-foreground" />
+          <div class="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter flex items-center gap-2">
+            {#each inferenceData.providers as provider}
+              <span class="flex items-center gap-1">
+                {provider.name}
+                <span class="size-1 rounded-full bg-emerald-500/50"></span>
+              </span>
+            {/each}
+          </div>
         </div>
       {/if}
 

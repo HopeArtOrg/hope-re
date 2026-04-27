@@ -73,11 +73,11 @@
 
       {#if updater.isDownloading}
         <div class="space-y-2">
-          <div class="flex items-center justify-between text-xs text-muted-foreground">
+          <div class="flex items-center justify-between text-xs text-muted-foreground uppercase tracking-wider font-medium">
             <span>Downloading</span>
-            <span class="font-jetbrains-mono">{updater.downloadProgress}%</span>
+            <span class="tabular-nums opacity-60">{updater.downloadProgress}%</span>
           </div>
-          <Progress value={updater.downloadProgress} />
+          <Progress value={updater.downloadProgress} class="h-1.5" />
         </div>
       {/if}
 

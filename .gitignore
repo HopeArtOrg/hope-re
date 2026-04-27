@@ -32,3 +32,6 @@ opencode.json
 # Gemini
 .gemini/
 GEMINI.md
+
+# SKILLS
+skills-lock.json

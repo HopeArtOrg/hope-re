@@ -33,12 +33,12 @@
 </script>
 
 <div class="space-y-6">
-  <div class="space-y-6 p-6 border rounded-xl bg-card">
+  <div class="space-y-6 p-6 border border-foreground/5 rounded-xl bg-card/50">
     <div class="flex items-center gap-3">
-      <div class="p-2 rounded-lg bg-primary/10">
-        <SlidersVerticalIcon class="size-5 text-primary" />
+      <div class="p-2 rounded-lg bg-muted/20">
+        <SlidersVerticalIcon class="size-5 text-muted-foreground/60" />
       </div>
-      <h3 class="text-base font-medium">Protection Settings</h3>
+      <h3 class="text-base font-medium text-muted-foreground/80">Protection Settings</h3>
     </div>
 
     <Separator />

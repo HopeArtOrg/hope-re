@@ -3,7 +3,6 @@
 
   import { ClockIcon } from "@lucide/svelte";
 
-  import { Badge } from "$lib/components/ui/badge";
   import { Slider } from "$lib/components/ui/slider";
   import { qualityPresets } from "$lib/constants";
   import { cn } from "$lib/utils";
@@ -25,18 +24,19 @@
       </div>
       <label for={sliderId} class="text-sm font-medium">Render Quality</label>
     </div>
-    <Badge variant="secondary" class="gap-1.5">
-      {@const Icon = currentPreset.icon}
-      <Icon class="size-3" />
-      <span class="text-xs font-medium">{currentPreset.label}</span>
-    </Badge>
+    <div class="flex items-center gap-2">
+      <currentPreset.icon class={cn("size-3.5", currentPreset.colour)} />
+      <span class={cn("text-xs font-medium uppercase tracking-wider", currentPreset.colour)}>
+        {currentPreset.label}
+      </span>
+    </div>
   </div>
 
-  <p class="text-xs text-muted-foreground">
+  <p class="text-xs text-muted-foreground/80 leading-relaxed">
     Processing time for Glaze &sol; Nightshade &sol; Noise. Higher &equals; better quality but slower.
   </p>
 
-  <div class="space-y-3">
+  <div class="space-y-4 py-1">
     <Slider type="multiple"
             bind:value
             min={0}
@@ -49,24 +49,21 @@
         {@const Icon = preset.icon}
         <button type="button"
                 class={cn(
-                  "flex flex-col items-center gap-1 text-xs transition-opacity",
+                  "flex flex-col items-center gap-1.5 text-xs transition-opacity group",
                   (value[0] === preset.value) && "opacity-100",
-                  (value[0] !== preset.value) && "opacity-40",
+                  (value[0] !== preset.value) && "opacity-30 hover:opacity-50",
                 )}
                 onclick={() => value = [preset.value]}>
           <Icon class={cn("size-3.5", preset.colour)} />
-          <span class={cn("font-medium whitespace-nowrap", preset.colour)}>
+          <span class={cn("text-[10px] font-medium uppercase tracking-tighter whitespace-nowrap", preset.colour)}>
             {preset.label}
-          </span>
-          <span class="text-muted-foreground whitespace-nowrap">
-            {preset.time}
           </span>
         </button>
       {/each}
     </div>
   </div>
 
-  <div class="p-3 rounded-lg bg-muted/50 border">
+  <div class="p-3 rounded-lg bg-muted/20 border border-foreground/5">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
         <currentPreset.icon class={cn("size-4", currentPreset.colour)} />
@@ -74,7 +71,7 @@
           {currentPreset.label}
         </span>
       </div>
-      <span class="text-sm text-muted-foreground">
+      <span class="text-xs text-muted-foreground/60 font-medium italic">
         {currentPreset.time}
       </span>
     </div>

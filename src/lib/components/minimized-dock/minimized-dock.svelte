@@ -33,7 +33,7 @@
                   class="h-1" />
       </div>
     </div>
-    <span class="text-xs text-muted-foreground font-jetbrains-mono tabular-nums">
+    <span class="text-xs text-muted-foreground font-medium tabular-nums">
       {Math.round(models.overallPercent)}%
     </span>
   </button>
@@ -65,7 +65,7 @@
       {/if}
     </div>
     {#if updater.isDownloading}
-      <span class="text-xs text-muted-foreground font-jetbrains-mono tabular-nums">
+      <span class="text-xs text-muted-foreground font-medium tabular-nums">
         {updater.downloadProgress}%
       </span>
     {/if}

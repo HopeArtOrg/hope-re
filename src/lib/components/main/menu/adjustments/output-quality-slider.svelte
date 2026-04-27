@@ -3,7 +3,6 @@
 
   import { ImageIcon } from "@lucide/svelte";
 
-  import { Badge } from "$lib/components/ui/badge";
   import { Slider } from "$lib/components/ui/slider";
   import { cn } from "$lib/utils";
 
@@ -27,33 +26,26 @@
       <span class="text-sm font-medium">Output Quality</span>
     </div>
     <div class="flex items-center gap-2">
-      <Badge variant="secondary"
-             class={cn(
-               "text-xs",
-               qualityLevel === "Standard" && "text-amber-600 dark:text-amber-400",
-               qualityLevel === "High" && "text-emerald-600 dark:text-emerald-400",
-               qualityLevel === "Best" && "text-sky-600 dark:text-sky-400",
-             )}>
+      <span class={cn(
+        "text-xs font-medium uppercase tracking-wider",
+        qualityLevel === "Standard" && "text-amber-500/60 dark:text-amber-400/60",
+        qualityLevel === "High" && "text-emerald-500/60 dark:text-emerald-400/60",
+        qualityLevel === "Best" && "text-sky-500/60 dark:text-sky-400/60",
+      )}>
         {qualityLevel}
-      </Badge>
-      <Badge variant="secondary" class="font-jetbrains-mono text-sm">
+      </span>
+      <span class="text-xs text-muted-foreground/60 font-medium">
         {value[0]}
-      </Badge>
+      </span>
     </div>
   </div>
 
-  <div class="space-y-2">
+  <div class="py-1">
     <Slider type="multiple"
             bind:value
             min={85}
             max={98}
             step={1} />
-
-    <div class="flex justify-between text-xs text-muted-foreground">
-      <span>85</span>
-      <span class="font-medium">92</span>
-      <span>98</span>
-    </div>
   </div>
 
   <p class="text-xs text-muted-foreground">
