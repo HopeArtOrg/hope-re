@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { RenderQualitySliderProps } from "../types";
 
+  import { ClockIcon } from "@lucide/svelte";
+
   import { Slider } from "$lib/components/ui/slider";
   import { qualityPresets } from "$lib/constants";
   import { cn } from "$lib/utils";
@@ -16,7 +18,12 @@
 
 <div class="space-y-10">
   <div class="flex items-center justify-between">
-    <label for={sliderId} class="text-base font-medium text-neutral-600 dark:text-neutral-300">Render Quality</label>
+    <div class="flex items-center gap-3">
+      <div class="p-2 bg-neutral-100 dark:bg-neutral-900 zen-dashed rounded-none">
+        <ClockIcon class="size-4 opacity-70 text-sky-600 dark:text-sky-400" />
+      </div>
+      <label for={sliderId} class="text-base font-medium text-neutral-600 dark:text-neutral-300">Render Quality</label>
+    </div>
     <span class="text-xs font-light text-neutral-400 uppercase tracking-[0.3em]">{currentPreset.label}</span>
   </div>
 

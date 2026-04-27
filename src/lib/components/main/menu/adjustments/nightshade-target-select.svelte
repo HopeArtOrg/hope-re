@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { NightshadeTargetSelectProps } from "../types";
 
+  import { CrosshairIcon } from "@lucide/svelte";
+
   import * as Select from "$lib/components/ui/select";
   import { nightshadeTargets } from "$lib/constants";
 
@@ -13,7 +15,12 @@
 
 <div class="space-y-8">
   <div class="flex items-center justify-between">
-    <span class="text-base font-medium text-neutral-600 dark:text-neutral-300">Poison Target</span>
+    <div class="flex items-center gap-3">
+      <div class="p-2 bg-neutral-100 dark:bg-neutral-900 zen-dashed rounded-none">
+        <CrosshairIcon class="size-4 opacity-70 text-rose-600 dark:text-rose-400" />
+      </div>
+      <span class="text-base font-medium text-neutral-600 dark:text-neutral-300">Poison Target</span>
+    </div>
     <span class="text-[11px] uppercase tracking-[0.2em] text-neutral-400 font-light">Concept Misclassification</span>
   </div>
 
@@ -24,9 +31,12 @@
     <Select.Content class="rounded-none border-neutral-100 dark:border-neutral-900 bg-background/95 backdrop-blur-xl">
       {#each nightshadeTargets as target}
         <Select.Item value={target.value} class="rounded-none focus:bg-neutral-50 dark:focus:bg-neutral-900 py-4">
-          <div class="flex flex-col gap-0.5">
-            <span class="font-light text-sm tracking-wide">{target.label}</span>
-            <span class="text-[10px] uppercase tracking-wider text-neutral-400 opacity-70">{target.description}</span>
+          <div class="flex items-center gap-4">
+            <target.icon class="size-4 opacity-40 text-rose-600 dark:text-rose-400" />
+            <div class="flex flex-col gap-0.5">
+              <span class="font-light text-sm tracking-wide">{target.label}</span>
+              <span class="text-[10px] uppercase tracking-wider text-neutral-400 opacity-70">{target.description}</span>
+            </div>
           </div>
         </Select.Item>
       {/each}
