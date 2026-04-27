@@ -82,25 +82,29 @@
           {/if}
 
           {#if protection.resultImage}
-            <div class="space-y-6">
+            <div class="space-y-6 flex flex-col items-center">
               <div class="inline-flex px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
                 <span class="text-[11px] uppercase tracking-[0.25em] text-primary font-bold">Protected Image</span>
               </div>
-              <BaseImagePlaceholder imageSrc={protection.resultImage}
-                                    label="Protected Image"
-                                    readonly>
-                <RenderedImageActions onDownload={handleDownload}
-                                      onFullscreen={image.handleFullscreen} />
-              </BaseImagePlaceholder>
+              <div class="w-full">
+                <BaseImagePlaceholder imageSrc={protection.resultImage}
+                                      label="Protected Image"
+                                      readonly>
+                  <RenderedImageActions onDownload={handleDownload}
+                                        onFullscreen={image.handleFullscreen} />
+                </BaseImagePlaceholder>
+              </div>
             </div>
           {:else}
-            <div class="space-y-6">
+            <div class="space-y-6 flex flex-col items-center">
               <div class="inline-flex px-4 py-1.5 rounded-full bg-secondary border border-border">
                 <span class="text-[11px] uppercase tracking-[0.25em] text-muted-foreground font-bold">Original Image</span>
               </div>
-              <BaseImagePlaceholder imageSrc={image.originalImage}
-                                    label="Original Image"
-                                    onUpload={image.handleUpload} />
+              <div class="w-full">
+                <BaseImagePlaceholder imageSrc={image.originalImage}
+                                      label="Original Image"
+                                      onUpload={image.handleUpload} />
+              </div>
             </div>
           {/if}
         </div>
@@ -113,32 +117,36 @@
         {/if}
 
         <div class="grid grid-cols-2 gap-20 flex-1">
-          <div class="space-y-8">
+          <div class="space-y-8 flex flex-col items-center">
             <div class="inline-flex px-5 py-2 rounded-full bg-secondary border border-border shadow-sm">
               <span class="text-[11px] uppercase tracking-[0.25em] text-muted-foreground font-bold">Original Work</span>
             </div>
-            <BaseImagePlaceholder imageSrc={image.originalImage}
-                                  label="Original Image"
-                                  onUpload={image.handleUpload} />
+            <div class="w-full">
+              <BaseImagePlaceholder imageSrc={image.originalImage}
+                                    label="Original Image"
+                                    onUpload={image.handleUpload} />
+            </div>
           </div>
 
-          <div class="space-y-8">
+          <div class="space-y-8 flex flex-col items-center">
             <div class="inline-flex px-5 py-2 rounded-full bg-primary/10 border border-primary/20 shadow-sm">
               <span class="text-[11px] uppercase tracking-[0.25em] text-primary font-bold">Protected Work</span>
             </div>
-            <BaseImagePlaceholder imageSrc={protection.resultImage}
-                                  label="Protected Image"
-                                  readonly>
-              {#if protection.resultImage}
-                <RenderedImageActions onDownload={handleDownload}
-                                      onFullscreen={image.handleFullscreen} />
-              {/if}
-            </BaseImagePlaceholder>
+            <div class="w-full">
+              <BaseImagePlaceholder imageSrc={protection.resultImage}
+                                    label="Protected Image"
+                                    readonly>
+                {#if protection.resultImage}
+                  <RenderedImageActions onDownload={handleDownload}
+                                        onFullscreen={image.handleFullscreen} />
+                {/if}
+              </BaseImagePlaceholder>
+            </div>
           </div>
         </div>
       {/if}
 
-      <div class="w-full max-w-5xl mx-auto bg-card/30 backdrop-blur-sm p-12 rounded-[2rem] border border-border/50">
+      <div class="w-full max-w-5xl mx-auto bg-card/30 backdrop-blur-sm p-12 rounded-3xl border border-border/50">
         <ProtectionMenu bind:algorithm={protection.algorithm}
                         bind:glazeStyle={protection.glazeStyle}
                         bind:nightshadeTarget={protection.nightshadeTarget}
@@ -168,7 +176,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 pb-16 pt-8 max-w-5xl mx-auto w-full">
         <Button
           size="lg"
-          class="h-20 bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 rounded-3xl border-none shadow-xl shadow-primary/20 text-sm font-bold uppercase tracking-[0.3em] disabled:opacity-30"
+          class="h-20 bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 rounded-2xl border-none shadow-xl shadow-primary/20 text-sm font-bold uppercase tracking-[0.3em] disabled:opacity-30"
           onclick={handleProtect}
           disabled={!canProcess}
         >
@@ -183,7 +191,7 @@
         <Button
           variant="ghost"
           size="lg"
-          class="h-20 text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all duration-300 rounded-3xl text-sm font-bold uppercase tracking-[0.3em] disabled:opacity-30"
+          class="h-20 text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all duration-300 rounded-2xl text-sm font-bold uppercase tracking-[0.3em] disabled:opacity-30"
           onclick={handleCancel}
           disabled={!image.hasImage}
         >

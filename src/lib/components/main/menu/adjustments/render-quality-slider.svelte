@@ -16,8 +16,8 @@
   );
 </script>
 
-<div class="space-y-12">
-  <div class="flex items-center justify-between">
+<div class="space-y-12 flex flex-col items-center">
+  <div class="flex items-center justify-between w-full">
     <div class="flex items-center gap-4">
       <div class="p-3 bg-sky-500/10 rounded-2xl shadow-sm border border-sky-500/10">
         <ClockIcon class="size-5 text-sky-600 dark:text-sky-400" />
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div class="space-y-8">
+  <div class="space-y-8 w-full">
     <Slider type="multiple"
             bind:value
             min={0}

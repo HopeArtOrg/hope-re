@@ -8,8 +8,8 @@
   let { value = $bindable([92]) }: OutputQualitySliderProps = $props();
 </script>
 
-<div class="space-y-12">
-  <div class="flex items-center justify-between">
+<div class="space-y-12 flex flex-col items-center">
+  <div class="flex items-center justify-between w-full">
     <div class="flex items-center gap-4">
       <div class="p-3 bg-emerald-500/10 rounded-2xl shadow-sm border border-emerald-500/10">
         <ImageIcon class="size-5 text-emerald-600 dark:text-emerald-400" />
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="space-y-6">
+  <div class="space-y-6 w-full">
     <Slider type="multiple"
             bind:value
             min={85}

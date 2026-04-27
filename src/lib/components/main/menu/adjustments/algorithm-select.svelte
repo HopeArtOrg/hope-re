@@ -16,8 +16,8 @@
   );
 </script>
 
-<div class="space-y-10">
-  <div class="flex items-center justify-between">
+<div class="space-y-10 flex flex-col items-center">
+  <div class="flex items-center justify-between w-full">
     <div class="flex items-center gap-4">
       <div class="p-3 bg-indigo-500/10 rounded-2xl shadow-sm border border-indigo-500/10">
         <currentAlgo.icon class={cn("size-5", currentAlgo.colour)} />
@@ -30,12 +30,12 @@
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full h-20 bg-card/50 border-2 border-transparent rounded-[2.5rem] text-lg font-medium tracking-wide hover:bg-card hover:border-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-sm zen-dashed" aria-label="Algorithm Selection">
+    <Select.Trigger class="w-full h-20 bg-card/50 border-2 border-transparent rounded-2xl text-lg font-medium tracking-wide hover:bg-card hover:border-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 shadow-sm zen-dashed" aria-label="Algorithm Selection">
       {triggerContent}
     </Select.Trigger>
-    <Select.Content class="rounded-[2rem] border-border bg-background/95 backdrop-blur-xl p-2 shadow-2xl">
+    <Select.Content class="rounded-2xl border-border bg-background/95 backdrop-blur-xl p-2 shadow-2xl">
       {#each algorithms as algo}
-        <Select.Item value={algo.value} class="rounded-[1.5rem] focus:bg-secondary py-5 px-6">
+        <Select.Item value={algo.value} class="rounded-xl focus:bg-secondary py-5 px-6">
           <div class="flex items-center gap-5">
             <div class={cn("p-2 rounded-xl", algo.bgColour)}>
               <algo.icon class={cn("size-5", algo.colour)} />
