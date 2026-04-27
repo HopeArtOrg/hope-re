@@ -34,7 +34,7 @@
       <h3 class="text-sm font-medium tracking-wide text-neutral-500 uppercase">Protection Settings</h3>
     </div>
 
-    <div class="space-y-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-12">
       <AlgorithmSelect bind:value={algorithm} />
 
       {#if showGlazeStyle}
@@ -45,13 +45,17 @@
         <div class="animate-in fade-in slide-in-from-top-2 duration-500">
           <NightshadeTargetSelect bind:value={nightshadeTarget} />
         </div>
+      {:else}
+        <div class="hidden md:block"></div>
       {/if}
 
       <IntensitySlider bind:value={intensity} />
 
       <OutputQualitySlider bind:value={outputQuality} />
 
-      <RenderQualitySlider bind:value={renderQuality} />
+      <div class="md:col-span-2 pt-4">
+        <RenderQualitySlider bind:value={renderQuality} />
+      </div>
     </div>
   </div>
 

@@ -130,7 +130,7 @@
         </div>
       {/if}
 
-      <div class="max-w-3xl">
+      <div class="w-full max-w-3xl mx-auto">
         <ProtectionMenu bind:algorithm={protection.algorithm}
                         bind:glazeStyle={protection.glazeStyle}
                         bind:nightshadeTarget={protection.nightshadeTarget}
@@ -144,9 +144,9 @@
       </div>
 
       {#if isSuccess && inferenceData}
-        <div class="text-[9px] text-neutral-400 font-light tracking-widest uppercase flex items-center gap-6 opacity-60">
+        <div class="text-[9px] text-neutral-400 font-light tracking-widest uppercase flex items-center gap-6 opacity-60 px-2">
           <span>Inference Pipeline</span>
-          <div class="flex gap-4">
+          <div class="flex flex-wrap gap-4">
             {#each inferenceData.providers as provider}
               <span class="flex items-center gap-1.5">
                 {provider.name}
@@ -157,7 +157,7 @@
         </div>
       {/if}
 
-      <div class="grid grid-cols-2 gap-8 pb-12 pt-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 pb-12 pt-4">
         <Button
           size="lg"
           class="h-16 bg-primary text-primary-foreground hover:opacity-90 transition-all duration-500 rounded-none border-none shadow-none text-xs font-medium uppercase tracking-[0.3em] disabled:opacity-20"
