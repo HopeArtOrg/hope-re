@@ -79,6 +79,20 @@
   --font-sans: var(--font-patrick-hand);
 }
 
+@utility doodle-line {
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  transition: all var(--transition-slow);
+}
+
+@utility doodle-blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  transition: all var(--transition-slow);
+}
+
+@utility decorative-doodle {
+  @apply select-none pointer-events-none;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/30;
@@ -93,27 +107,12 @@
   }
 }
 
-@layer utilities {
-  @utility doodle-line {
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    transition: all var(--transition-slow);
-  }
-
-  @utility doodle-blob {
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    transition: all var(--transition-slow);
-  }
-
-  @utility decorative-doodle {
-    @apply select-none pointer-events-none;
-  }
-}
-
 @layer components {
   .select-item-hover {
     @apply transition-all duration-200 hover:bg-primary/10 hover:scale-[1.02] active:scale-[0.98] cursor-pointer;
     @apply doodle-line;
   }
+
   .sticky-note {
     @apply bg-sticky-yellow text-foreground p-6 shadow-lg relative;
     border-radius: 2px 2px 30px 4px / 4px 25px 3px 25px;
