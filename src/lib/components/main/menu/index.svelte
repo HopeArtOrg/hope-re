@@ -33,7 +33,7 @@
 <div class="space-y-10">
   <div class="space-y-8 p-10 blue-note relative">
     <!-- Bird Doodle -->
-    <div class="absolute -top-6 left-12 scale-110 opacity-60">
+    <div class="absolute -top-6 left-12 scale-110 opacity-60 decorative-doodle">
       <svg width="30"
            height="30"
            viewBox="0 0 30 30"

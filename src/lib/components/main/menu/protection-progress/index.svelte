@@ -30,7 +30,7 @@
 
 {#if isProcessing || status !== "idle"}
   <div class="space-y-4 p-6 doodle-line border-2 border-foreground/10 bg-white shadow-xl animate-in fade-in slide-in-from-bottom-2 duration-500 relative">
-    <div class="absolute -top-3 left-4 rotate-[5deg] text-[10px] bg-amber-400 text-amber-900 px-2 py-0.5 shadow-sm doodle-line font-bold">LIVE STATUS</div>
+    <div class="absolute -top-3 left-4 rotate-[5deg] text-[10px] bg-amber-400 text-amber-900 px-2 py-0.5 shadow-sm doodle-line font-bold decorative-doodle">LIVE STATUS</div>
 
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-3">

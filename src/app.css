@@ -94,6 +94,9 @@
 }
 
 @layer components {
+  .decorative-doodle {
+    @apply select-none pointer-events-none;
+  }
   .select-item-hover {
     @apply transition-all duration-200 hover:bg-primary/10 hover:scale-[1.02] active:scale-[0.98] cursor-pointer doodle-line;
   }

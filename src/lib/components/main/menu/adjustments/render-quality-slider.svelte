@@ -66,7 +66,7 @@
   </div>
 
   <div class="p-4 doodle-line bg-white/20 dark:bg-black/20 border-2 border-foreground/10 relative">
-    <div class="absolute -top-3 -left-2 rotate-[-12deg] text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line">NOTE!</div>
+    <div class="absolute -top-3 -left-2 rotate-[-12deg] text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line decorative-doodle">NOTE!</div>
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
         <currentPreset.icon class={cn("size-5", currentPreset.colour)} />

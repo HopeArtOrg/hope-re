@@ -38,14 +38,14 @@
 
 <div class={cn("flex flex-col h-full overflow-hidden", containerClass)}>
   {#if isSticky}
-    <div class="absolute top-2 left-1/2 -translate-x-1/2 size-4 rounded-full bg-red-500 shadow-inner z-50">
+    <div class="absolute top-2 left-1/2 -translate-x-1/2 size-4 rounded-full bg-red-500 shadow-inner z-50 decorative-doodle">
       <div class="absolute inset-1 rounded-full bg-red-400 opacity-50"></div>
     </div>
   {/if}
 
   {#if isCanvas}
-    <div class="absolute top-0 left-10 w-8 h-4 bg-zinc-400 rounded-b-sm shadow-sm z-50"></div>
-    <div class="absolute top-0 right-10 w-8 h-4 bg-zinc-400 rounded-b-sm shadow-sm z-50"></div>
+    <div class="absolute top-0 left-10 w-8 h-4 bg-zinc-400 rounded-b-sm shadow-sm z-50 decorative-doodle"></div>
+    <div class="absolute top-0 right-10 w-8 h-4 bg-zinc-400 rounded-b-sm shadow-sm z-50 decorative-doodle"></div>
   {/if}
 
   <div class="mb-3 flex items-center gap-2 relative z-10">
