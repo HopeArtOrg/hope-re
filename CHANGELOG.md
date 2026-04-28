@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Update GitHub workflow actions to latest versions: `actions/checkout@v6` and `actions/setup-node@v6`
+- Update GitHub workflow actions to latest versions: `actions/checkout@v6`, `actions/setup-node@v6`, and `pnpm/action-setup@v6`
 - Bump version to 2.1.12 across package.json, Cargo.toml, and tauri.conf.json
 
 ## [2.1.11] - 2026-04-28
