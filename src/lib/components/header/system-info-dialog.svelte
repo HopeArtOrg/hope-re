@@ -38,101 +38,103 @@
   <Dialog.Trigger>
     <Button variant="outline"
             size="sm"
-            class="flex items-center gap-2 px-3 py-2 rounded-lg border border-border hover:bg-muted/50 hover:cursor-pointer transition-colors"
+            class="flex items-center gap-2 px-3 py-2 doodle-blob border-2 border-foreground/10 bg-white/40 dark:bg-black/40 hover:bg-white/60 dark:hover:bg-black/60 hover:cursor-pointer transition-all shadow-sm"
             aria-label="System Info">
       <InfoIcon class="size-4" />
     </Button>
   </Dialog.Trigger>
 
-  <Dialog.Content class="max-w-md">
+  <Dialog.Content class="max-w-md blue-note border-2 border-foreground/10 p-10">
     <Dialog.Header>
       <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="p-2 rounded-lg bg-primary/10">
-            <MonitorIcon class="size-4" />
+        <div class="flex items-center gap-4">
+          <div class="p-3 doodle-blob bg-primary/10 border-2 border-foreground/5">
+            <MonitorIcon class="size-5 text-primary" />
           </div>
-          <Dialog.DialogTitle class="text-lg font-bold">
-            System Information
+          <Dialog.DialogTitle class="text-xl font-bold tracking-tight">
+            Studio Vitals
           </Dialog.DialogTitle>
         </div>
       </div>
     </Dialog.Header>
 
-    <div class="mt-4">
+    <div class="mt-6">
       {#if isLoading && !info}
         <div class="flex flex-col items-center justify-center py-12">
           <LoaderCircleIcon class="size-10 animate-spin text-primary mb-3" />
-          <p class="text-sm text-muted-foreground">Loading system info...</p>
+          <p class="text-sm font-bold text-muted-foreground">Checking vitals...</p>
         </div>
       {:else if isError}
-        <div class="flex items-start gap-3 p-4 rounded-lg bg-destructive/10 border border-destructive/20">
-          <CircleAlertIcon class="size-5 text-destructive shrink-0 mt-0.5" />
+        <div class="flex items-start gap-4 p-5 doodle-line bg-rose-500/10 border-2 border-rose-500/20">
+          <CircleAlertIcon class="size-6 text-rose-600 shrink-0 mt-0.5" />
           <div>
-            <p class="text-sm font-medium text-destructive">Failed to load system information</p>
-            <p class="text-xs text-muted-foreground mt-1">{error?.message || "Unknown Error"}</p>
+            <p class="text-base font-bold text-rose-700">Studio is offline!</p>
+            <p class="text-xs font-bold text-muted-foreground mt-1">{error?.message || "Unknown Error"}</p>
           </div>
         </div>
       {:else if info}
         <div class={cn(isFetching && "opacity-50 transition-opacity")}>
-          <div class="rounded-lg border bg-card p-6 space-y-4">
-            <div class="pb-4 border-b">
-              <div class="flex items-center gap-2 mb-2">
-                <GlobeIcon class="size-4 text-sky-600 dark:text-sky-400" />
-                <p class="text-xs font-medium text-muted-foreground">Platform</p>
+          <div class="doodle-line border-2 border-foreground/10 bg-white/40 dark:bg-black/20 p-8 space-y-6 shadow-inner relative">
+            <div class="absolute -top-3 -right-2 rotate-[12deg] text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line">SPECS</div>
+
+            <div class="pb-6 border-b-2 border-foreground/5">
+              <div class="flex items-center gap-3 mb-2">
+                <GlobeIcon class="size-5 text-sky-600" />
+                <p class="text-xs font-bold text-muted-foreground uppercase">Environment</p>
               </div>
-              <p class="text-sm font-semibold pl-6">{info.platform.os}</p>
-              <p class="text-xs text-muted-foreground mt-0.5 pl-6">{info.platform.hostname}</p>
+              <p class="text-base font-bold pl-8">{info.platform.os}</p>
+              <p class="text-xs font-bold text-muted-foreground/60 mt-1 pl-8">{info.platform.hostname}</p>
             </div>
 
-            <div class="space-y-3.5">
+            <div class="space-y-4">
               <div class="flex items-start gap-3">
-                <CpuIcon class="size-4 text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
+                <CpuIcon class="size-5 text-indigo-600 shrink-0 mt-0.5" />
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm">
-                    <span class="font-medium text-muted-foreground">CPU: </span>
-                    <span class="font-semibold ml-2">{info.cpu}</span>
+                  <p class="text-sm font-bold">
+                    <span class="text-muted-foreground">Brain:</span>
+                    <span class="ml-2">{info.cpu}</span>
                   </p>
                 </div>
               </div>
 
               <div class="flex items-start gap-3">
-                <MemoryStickIcon class="size-4 text-violet-600 dark:text-violet-400 shrink-0 mt-0.5" />
+                <MemoryStickIcon class="size-5 text-violet-600 shrink-0 mt-0.5" />
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm">
-                    <span class="font-medium text-muted-foreground">Memory:</span>
-                    <span class="font-semibold ml-2">{info.memory}</span>
+                  <p class="text-sm font-bold">
+                    <span class="text-muted-foreground">Short-Term:</span>
+                    <span class="ml-2">{info.memory}</span>
                   </p>
                 </div>
               </div>
 
               <div class="flex items-start gap-3">
-                <ZapIcon class="size-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                <ZapIcon class="size-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm">
-                    <span class="font-medium text-muted-foreground">GPU: </span>
-                    <span class="font-semibold ml-2">{info.gpu}</span>
+                  <p class="text-sm font-bold">
+                    <span class="text-muted-foreground">Brush Power:</span>
+                    <span class="ml-2">{info.gpu}</span>
                   </p>
                 </div>
               </div>
 
               <div class="flex items-start gap-3">
-                <HardDriveIcon class="size-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                <HardDriveIcon class="size-5 text-amber-600 shrink-0 mt-0.5" />
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm">
-                    <span class="font-medium text-muted-foreground">Storage:</span>
-                    <span class="font-semibold ml-2">{info.storage}</span>
+                  <p class="text-sm font-bold">
+                    <span class="text-muted-foreground">Storage:</span>
+                    <span class="ml-2">{info.storage}</span>
                   </p>
                 </div>
               </div>
             </div>
 
-            <div class="pt-4 border-t">
+            <div class="pt-6 border-t-2 border-foreground/5">
               <div class="flex items-start gap-3">
-                <BoxIcon class="size-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
+                <BoxIcon class="size-5 text-rose-600 shrink-0 mt-0.5" />
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm">
-                    <span class="font-medium text-muted-foreground">App Version:</span>
-                    <span class="font-semibold ml-2">v{info.app_version}</span>
+                  <p class="text-sm font-bold">
+                    <span class="text-muted-foreground">Studio Version:</span>
+                    <span class="ml-2">v{info.app_version}</span>
                   </p>
                 </div>
               </div>
@@ -143,19 +145,19 @@
     </div>
 
     {#if info && !isLoading}
-      <div class="flex items-center justify-between pt-4 border-t">
-        <p class="text-xs text-muted-foreground">
-          Last updated: {new Date().toLocaleTimeString()}
+      <div class="flex items-center justify-between mt-8 pt-6 border-t-2 border-foreground/10">
+        <p class="text-xs font-bold text-muted-foreground/60 italic">
+          Last check: {new Date().toLocaleTimeString()}
         </p>
         <Button
           variant="outline"
           size="sm"
           onclick={refetch}
           disabled={isFetching}
-          class="gap-2"
+          class="gap-3 doodle-blob border-2 border-foreground/10 bg-white/40 hover:bg-white/60 h-10 px-4"
         >
-          <RefreshCwIcon class={cn("size-3.5", isFetching && "animate-spin")} />
-          <span>Refresh</span>
+          <RefreshCwIcon class={cn("size-4", isFetching && "animate-spin")} />
+          <span class="font-bold">Check Again</span>
         </Button>
       </div>
     {/if}

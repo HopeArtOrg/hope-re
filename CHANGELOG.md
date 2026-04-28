@@ -4,6 +4,46 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.11] - 2026-04-28
+
+### Features
+
+- **Tactile Studio Environment**: Transform the static UI into a Digitized Art Studio with materials-based textures:
+  - Yellow sticky notes for original image panels
+  - Blue notebook paper for configuration menus with authentic line patterns and vertical margins
+  - Layered canvas sheets with torn bottom edges for rendered results
+  - Realistic studio props: Thumbtacks, butterfly clips, pencil, brush, eraser, and a sleeping cat doodle
+- **Doodle-ized Controls**: Replace standard UI elements with hand-drawn alternatives:
+  - Wobbly "doodle-line" borders and "doodle-blob" shapes for buttons and icons
+  - Custom hand-sketched icons: Quill (Save), Looking Glass (Inspect), and Brush (Reminders)
+  - Thick, tactile slider tracks and hand-drawn blob thumbs
+
+### Improved
+
+- **Typography Overhaul**:
+  - Switch primary font to `Patrick Hand` for a clean, professional hand-written aesthetic
+  - Increase base font size to 1.25rem (20px) for significantly better legibility
+  - Boost label and title sizes (up to 2xl) and description text (to base) across all menus
+- **Accessibility & Contrast**:
+  - Increase text contrast by darkening light-mode foregrounds and brightening dark-mode foregrounds
+  - Soften background pastel colors to reduce eye strain while maintaining material authenticity
+  - Move hardware interface badge (DirectML) to the left to prevent overlap with decorative elements
+- **Performance & Responsiveness**:
+  - Disable transitions during active slider interaction for immediate, lag-free visual feedback
+  - Apply `select-none` and `pointer-events-none` to all decorative elements to ensure they don't interfere with mouse clicks or text selection
+- **Header Refinement**: Doodle-ize the application header with a floating feel and hand-drawn border
+
+### Fixed
+
+- Fix Vite internal server error caused by nested `@utility` directives and definition order in Tailwind CSS v4
+- Fix standard badges rendering as "code-style" blocks; replaced with tactile hand-drawn blobs
+- Fix inconsistent padding and alignment in adjustment menus for better visual balance
+
+### Changed
+
+- Bump version to 2.1.11 across package.json, Cargo.toml, and tauri.conf.json
+- Replace `Google Itim` and `Rubik Spray Paint` font experiments with `@fontsource/patrick-hand`
+
 ## [2.1.9] - 2026-03-05
 
 ### Fixed

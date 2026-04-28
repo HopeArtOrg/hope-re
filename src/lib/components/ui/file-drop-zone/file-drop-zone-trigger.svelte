@@ -28,12 +28,12 @@
     {@render children()}
   {:else}
     <div
-      class="hover:bg-accent/25 flex h-48 flex-col place-items-center justify-center gap-2 rounded-lg border border-dashed p-6 transition-all group-aria-disabled/file-drop-zone-trigger:opacity-50 hover:cursor-pointer group-aria-disabled/file-drop-zone-trigger:hover:cursor-not-allowed"
+      class="hover:bg-accent/25 flex h-48 flex-col place-items-center justify-center gap-2 rounded-lg border border-solid border-foreground/10 bg-muted/20 p-6 transition-all group-aria-disabled/file-drop-zone-trigger:opacity-50 hover:cursor-pointer group-aria-disabled/file-drop-zone-trigger:hover:cursor-not-allowed"
     >
       <div
-        class="border-border text-muted-foreground flex size-14 place-items-center justify-center rounded-full border border-dashed"
+        class="border-border text-muted-foreground/60 flex size-14 place-items-center justify-center rounded-full border border-solid border-foreground/5 bg-muted/30"
       >
-        <UploadIcon class="size-7" />
+        <UploadIcon class="size-7 opacity-40" />
       </div>
       <div class="flex flex-col gap-0.5 text-center">
         <span class="text-muted-foreground font-medium">

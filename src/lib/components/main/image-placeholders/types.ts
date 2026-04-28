@@ -6,6 +6,7 @@ export type BaseImagePlaceholderProps = {
   onUpload?: (files: File[]) => Promise<void>;
   readonly?: boolean;
   children?: Snippet | null;
+  containerClass?: string;
 };
 
 export type ImageFullscreenDialogProps = {

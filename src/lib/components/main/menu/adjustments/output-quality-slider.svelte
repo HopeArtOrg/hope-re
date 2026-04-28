@@ -3,7 +3,6 @@
 
   import { ImageIcon } from "@lucide/svelte";
 
-  import { Badge } from "$lib/components/ui/badge";
   import { Slider } from "$lib/components/ui/slider";
   import { cn } from "$lib/utils";
 
@@ -18,45 +17,38 @@
   );
 </script>
 
-<div class="space-y-3">
+<div class="space-y-4">
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <div class="p-1.5 rounded-lg bg-emerald-500/10">
-        <ImageIcon class="size-4 text-emerald-600 dark:text-emerald-400" />
+    <div class="flex items-center gap-3">
+      <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-emerald-500/10">
+        <ImageIcon class="size-6 text-emerald-600 dark:text-emerald-400" />
       </div>
-      <span class="text-sm font-medium">Output Quality</span>
+      <span class="text-2xl font-bold text-foreground/90 tracking-tight">Final Shine</span>
     </div>
     <div class="flex items-center gap-2">
-      <Badge variant="secondary"
-             class={cn(
-               "text-xs",
-               qualityLevel === "Standard" && "text-amber-600 dark:text-amber-400",
-               qualityLevel === "High" && "text-emerald-600 dark:text-emerald-400",
-               qualityLevel === "Best" && "text-sky-600 dark:text-sky-400",
-             )}>
-        {qualityLevel}
-      </Badge>
-      <Badge variant="secondary" class="font-jetbrains-mono text-sm">
+      <span class={cn(
+        "text-base font-bold uppercase tracking-wider doodle-line border-2 px-3 py-0.5",
+        qualityLevel === "Standard" && "text-amber-700 border-amber-500/40",
+        qualityLevel === "High" && "text-emerald-700 border-emerald-500/40",
+        qualityLevel === "Best" && "text-sky-700 border-sky-500/40",
+      )}>
+        {qualityLevel === "Standard" ? "Rough" : qualityLevel === "High" ? "Polished" : "PRISTINE"}
+      </span>
+      <span class="text-xl text-foreground/70 font-bold">
         {value[0]}
-      </Badge>
+      </span>
     </div>
   </div>
 
-  <div class="space-y-2">
+  <div class="py-2">
     <Slider type="multiple"
             bind:value
             min={85}
             max={98}
             step={1} />
-
-    <div class="flex justify-between text-xs text-muted-foreground">
-      <span>85</span>
-      <span class="font-medium">92</span>
-      <span>98</span>
-    </div>
   </div>
 
-  <p class="text-xs text-muted-foreground">
-    Image compression quality. Higher values &equals; larger file size but better visual quality.
+  <p class="text-base text-foreground/60 font-bold px-1 leading-tight">
+    How detailed the final sheet should be. Higher shine looks better but creates a heavier file.
   </p>
 </div>

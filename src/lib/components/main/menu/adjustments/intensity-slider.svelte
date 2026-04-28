@@ -3,7 +3,6 @@
 
   import { GaugeIcon } from "@lucide/svelte";
 
-  import { Badge } from "$lib/components/ui/badge";
   import { Slider } from "$lib/components/ui/slider";
   import { cn } from "$lib/utils";
 
@@ -22,31 +21,30 @@
   );
 </script>
 
-<div class="space-y-3">
+<div class="space-y-4">
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <div class="p-1.5 rounded-lg bg-amber-500/10">
-        <GaugeIcon class="size-4 text-amber-600 dark:text-amber-400" />
+    <div class="flex items-center gap-3">
+      <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-amber-500/10">
+        <GaugeIcon class="size-6 text-amber-600 dark:text-amber-400" />
       </div>
-      <label for={sliderId} class="text-sm font-medium">Intensity</label>
+      <label for={sliderId} class="text-2xl font-bold text-foreground/90">Protect Power</label>
     </div>
     <div class="flex items-center gap-2">
-      <Badge variant="secondary"
-             class={cn(
-               "text-xs",
-               intensityLevel === "Low" && "text-emerald-600 dark:text-emerald-400",
-               intensityLevel === "Medium" && "text-amber-600 dark:text-amber-400",
-               intensityLevel === "High" && "text-rose-600 dark:text-rose-400",
-             )}>
-        {intensityLevel}
-      </Badge>
-      <Badge variant="secondary" class="font-jetbrains-mono text-sm">
+      <span class={cn(
+        "text-base font-bold uppercase tracking-wider doodle-line border-2 px-3 py-0.5",
+        intensityLevel === "Low" && "text-emerald-700 border-emerald-500/40",
+        intensityLevel === "Medium" && "text-amber-700 border-amber-500/40",
+        intensityLevel === "High" && "text-rose-700 border-rose-500/40",
+      )}>
+        {intensityLevel === "Low" ? "Low Ink" : intensityLevel === "Medium" ? "Nice" : "FULL INK"}
+      </span>
+      <span class="text-xl text-foreground/70 font-bold">
         {intensityDisplay}
-      </Badge>
+      </span>
     </div>
   </div>
 
-  <div class="space-y-2">
+  <div class="py-2">
     <Slider id={sliderId}
             type="multiple"
             bind:value
@@ -54,15 +52,9 @@
             max={50}
             step={1}
             aria-label="Intensity control" />
-
-    <div class="flex justify-between items-center text-xs text-muted-foreground">
-      <span>0.01</span>
-      <span class="font-medium">0.25</span>
-      <span>0.50</span>
-    </div>
   </div>
 
-  <p class="text-xs text-muted-foreground">
-    Controls the strength of protection. Higher values &equals; stronger protection but more visible changes.
+  <p class="text-base text-foreground/60 font-bold px-1 leading-tight">
+    Controls how thick the "ink" is. Higher power means stronger protection, but more visible changes to your sketch.
   </p>
 </div>

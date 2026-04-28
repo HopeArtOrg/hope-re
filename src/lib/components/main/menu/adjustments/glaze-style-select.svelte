@@ -13,26 +13,28 @@
   );
 </script>
 
-<div class="space-y-3">
-  <div class="flex items-center gap-2">
-    <div class="p-1.5 rounded-lg bg-amber-500/10">
-      <TargetIcon class="size-4 text-amber-600 dark:text-amber-400" />
+<div class="space-y-4">
+  <div class="flex items-center gap-3">
+    <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-amber-500/10">
+      <TargetIcon class="size-5 text-amber-600 dark:text-amber-400" />
     </div>
-    <span class="text-sm font-medium">Target Style</span>
+    <span class="text-xl font-bold text-foreground/80 tracking-tight">Style Vibe</span>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full hover:border-foreground/20 transition-colors" aria-label="Glaze style selection">
+    <Select.Trigger class="w-full text-lg" aria-label="Style Vibe Selection">
       {contentTrigger}
     </Select.Trigger>
     <Select.Content>
       {#each glazeStyles as style}
         <Select.Item value={style.value}>
-          <div class="flex items-center gap-3 py-1">
-            <span class="text-base">{style.emoji}</span>
+          <div class="flex items-center gap-4 py-2">
+            <div class="p-2 doodle-blob border border-foreground/5 bg-muted/20">
+              <style.icon class="size-6 text-muted-foreground" />
+            </div>
             <div class="flex flex-col gap-0.5">
-              <span class="font-medium text-sm">{style.label}</span>
-              <span class="text-xs text-muted-foreground">{style.description}</span>
+              <span class="font-bold text-lg">{style.label}</span>
+              <span class="text-sm text-muted-foreground/80">{style.description}</span>
             </div>
           </div>
         </Select.Item>
@@ -40,7 +42,7 @@
     </Select.Content>
   </Select.Root>
 
-  <p class="text-xs text-muted-foreground">
-    Your image will be shifted toward this art style to confuse AI scrapers.
+  <p class="text-sm text-muted-foreground/70 font-bold px-1 leading-tight">
+    Your sheet will be slightly shifted toward this vibe to confuse AI eyes.
   </p>
 </div>

@@ -28,7 +28,7 @@ pub fn load_model(model_path: &std::path::Path) -> Result<Session, String> {
         .with_optimization_level(ort::session::builder::GraphOptimizationLevel::Level3)
         .map_err(|e| format!("Failed to set optimization level: {}", e))?;
 
-    let builder = if !eps.is_empty() {
+    let mut builder = if !eps.is_empty() {
         log::info!("Loading model with {} execution provider(s)", eps.len());
         builder
             .with_execution_providers(eps)

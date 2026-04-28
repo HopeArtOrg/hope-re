@@ -3,8 +3,6 @@
 
   import { SlidersVerticalIcon } from "@lucide/svelte";
 
-  import { Separator } from "$lib/components/ui/separator";
-
   import {
     AlgorithmSelect,
     GlazeStyleSelect,
@@ -32,42 +30,55 @@
   const showNightshadeTarget = $derived(algorithm === "nightshade");
 </script>
 
-<div class="space-y-6">
-  <div class="space-y-6 p-6 border rounded-xl bg-card">
-    <div class="flex items-center gap-3">
-      <div class="p-2 rounded-lg bg-primary/10">
-        <SlidersVerticalIcon class="size-5 text-primary" />
-      </div>
-      <h3 class="text-base font-medium">Protection Settings</h3>
+<div class="space-y-10">
+  <div class="space-y-8 p-10 blue-note relative">
+    <!-- Bird Doodle -->
+    <div class="absolute -top-6 left-12 scale-110 opacity-60 decorative-doodle">
+      <svg width="30"
+           height="30"
+           viewBox="0 0 30 30"
+           fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 20Q15 15 20 20Q25 15 25 10"
+              stroke="currentColor"
+              stroke-width="2" />
+        <path d="M10 20L8 22M12 20L10 22"
+              stroke="currentColor"
+              stroke-width="2" />
+        <circle cx="18"
+                cy="18"
+                r="1"
+                fill="currentColor" />
+      </svg>
     </div>
 
-    <Separator />
-
-    <AlgorithmSelect bind:value={algorithm} />
-
-    <Separator />
-
-    {#if showGlazeStyle}
-      <div class="animate-in fade-in slide-in-from-top-2 duration-300">
-        <GlazeStyleSelect bind:value={glazeStyle} />
+    <div class="flex items-center gap-4">
+      <div class="p-3 rounded-lg bg-primary/10 doodle-blob shadow-sm">
+        <SlidersVerticalIcon class="size-5 text-primary/70" />
       </div>
-    {:else if showNightshadeTarget}
-      <div class="animate-in fade-in slide-in-from-top-2 duration-300">
-        <NightshadeTargetSelect bind:value={nightshadeTarget} />
+      <h3 class="text-lg font-bold text-foreground/80 tracking-tight">Artistic Guidance</h3>
+    </div>
+
+    <div class="space-y-10">
+      <AlgorithmSelect bind:value={algorithm} />
+
+      {#if showGlazeStyle}
+        <div class="animate-in fade-in slide-in-from-top-2 duration-500">
+          <GlazeStyleSelect bind:value={glazeStyle} />
+        </div>
+      {:else if showNightshadeTarget}
+        <div class="animate-in fade-in slide-in-from-top-2 duration-500">
+          <NightshadeTargetSelect bind:value={nightshadeTarget} />
+        </div>
+      {/if}
+
+      <IntensitySlider bind:value={intensity} />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <OutputQualitySlider bind:value={outputQuality} />
+        <RenderQualitySlider bind:value={renderQuality} />
       </div>
-    {/if}
-
-    {#if showGlazeStyle || showNightshadeTarget}
-      <Separator />
-    {/if}
-
-    <IntensitySlider bind:value={intensity} />
-
-    <Separator />
-
-    <OutputQualitySlider bind:value={outputQuality} />
-
-    <RenderQualitySlider bind:value={renderQuality} />
+    </div>
   </div>
 
   <ProtectionProgress {isProcessing}
