@@ -160,12 +160,12 @@
                         progressMessage={protection.progressMessage} />
 
         {#if isSuccess && inferenceData}
-          <div class="absolute -top-12 -right-4 flex items-center gap-2 px-2 opacity-50 hover:opacity-100 transition-opacity cursor-help bg-white/50 backdrop-blur-sm p-2 rounded-lg doodle-line"
+          <div class="absolute -top-14 -left-4 flex items-center gap-3 px-3 opacity-70 hover:opacity-100 transition-opacity cursor-help bg-white/60 backdrop-blur-md p-2 rounded-lg doodle-line border-2 border-foreground/10 shadow-sm"
                title="Inference Providers: {inferenceData.providers.map(p => p.name).join(", ")}">
             <div class="relative group">
-              <CpuIcon class="size-4 text-muted-foreground" />
+              <CpuIcon class="size-5 text-primary/70" />
               <!-- Sleeping Cat Doodle -->
-              <div class="absolute -top-6 -right-6 scale-75 opacity-40 group-hover:opacity-100 transition-opacity">
+              <div class="absolute -top-8 -left-4 scale-90 opacity-40 group-hover:opacity-100 transition-opacity">
                 <svg width="40"
                      height="40"
                      viewBox="0 0 40 40"
@@ -191,11 +191,11 @@
                 </svg>
               </div>
             </div>
-            <div class="text-[11px] text-muted-foreground font-medium flex items-center gap-2">
+            <div class="text-sm text-foreground/80 font-bold flex items-center gap-3">
               {#each inferenceData.providers as provider}
-                <span class="flex items-center gap-1">
+                <span class="flex items-center gap-1.5">
                   {provider.name}
-                  <span class="size-1.5 rounded-full bg-emerald-500/50 doodle-blob"></span>
+                  <span class="size-2 rounded-full bg-emerald-500/60 doodle-blob"></span>
                 </span>
               {/each}
             </div>

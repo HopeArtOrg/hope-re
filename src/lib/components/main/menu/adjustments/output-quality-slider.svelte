@@ -48,7 +48,7 @@
             step={1} />
   </div>
 
-  <p class="text-[11px] text-muted-foreground/60 font-medium px-1 leading-tight">
+  <p class="text-sm text-muted-foreground/70 font-bold px-1 leading-tight">
     How detailed the final sheet should be. Higher shine looks better but creates a heavier file.
   </p>
 </div>

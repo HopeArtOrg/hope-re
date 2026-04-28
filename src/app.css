@@ -2,31 +2,31 @@
 
 @import "tw-animate-css";
 
-@import "@fontsource/rubik-spray-paint";
+@import "@fontsource/patrick-hand";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
   --radius: 0.75rem;
   --background: oklch(0.94 0.015 80);
-  --foreground: oklch(0.25 0.02 80);
+  --foreground: oklch(0.2 0.02 80);
 
   --card: oklch(0.96 0.01 80);
-  --card-foreground: oklch(0.25 0.02 80);
+  --card-foreground: oklch(0.2 0.02 80);
 
   --sticky-yellow: oklch(0.94 0.08 95);
   --sticky-blue: oklch(0.92 0.04 220);
   --canvas-white: oklch(0.97 0.01 85);
 
-  --primary: oklch(0.45 0.05 80);
+  --primary: oklch(0.4 0.05 80);
   --primary-foreground: oklch(0.98 0.01 80);
 
   --muted: oklch(0.88 0.02 80);
-  --muted-foreground: oklch(0.45 0.03 80);
+  --muted-foreground: oklch(0.4 0.03 80);
 
-  --border: oklch(0.25 0.02 80 / 15%);
-  --input: oklch(0.25 0.02 80 / 5%);
-  --ring: oklch(0.45 0.05 80);
+  --border: oklch(0.2 0.02 80 / 15%);
+  --input: oklch(0.2 0.02 80 / 5%);
+  --ring: oklch(0.4 0.05 80);
 
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -75,8 +75,8 @@
 }
 
 @theme {
-  --font-rubik-spray-paint: "Rubik Spray Paint", sans-serif;
-  --font-sans: var(--font-rubik-spray-paint);
+  --font-patrick-hand: "Patrick Hand", cursive;
+  --font-sans: var(--font-patrick-hand);
 }
 
 @layer base {
@@ -84,7 +84,7 @@
     @apply border-border outline-ring/30;
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground font-sans antialiased text-[1.1rem] leading-relaxed tracking-wide;
     background-image: radial-gradient(oklch(0 0 0 / 0.03) 1px, transparent 1px);
     background-size: 24px 24px;
   }

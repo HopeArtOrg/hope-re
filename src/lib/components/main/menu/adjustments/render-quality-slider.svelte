@@ -32,8 +32,8 @@
     </div>
   </div>
 
-  <p class="text-[11px] text-muted-foreground/60 font-medium px-1 leading-tight">
-    How much time we spend inking. Higher patience means better protection but takes longer.
+  <p class="text-sm text-muted-foreground/70 font-bold px-1 leading-tight">
+    How much time we spend inking. Higher patience means better quality but takes longer.
   </p>
 
   <div class="space-y-6 py-2">

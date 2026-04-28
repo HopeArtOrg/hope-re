@@ -54,7 +54,7 @@
             aria-label="Intensity control" />
   </div>
 
-  <p class="text-[11px] text-muted-foreground/60 font-medium px-1 leading-tight">
+  <p class="text-sm text-muted-foreground/70 font-bold px-1 leading-tight">
     Controls how thick the "ink" is. Higher power means stronger protection, but more visible changes to your sketch.
   </p>
 </div>

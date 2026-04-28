@@ -42,7 +42,7 @@
     </Select.Content>
   </Select.Root>
 
-  <p class="text-[11px] text-muted-foreground/60 font-medium px-1 leading-tight">
+  <p class="text-sm text-muted-foreground/70 font-bold px-1 leading-tight">
     AI models will think your sketch is this concept instead. Sneaky!
   </p>
 </div>

@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@fontsource/be-vietnam-pro": "^5.2.8",
-    "@fontsource/rubik-spray-paint": "^5.2.7",
+    "@fontsource/patrick-hand": "^5.2.8",
     "@tailwindcss/vite": "^4.2.4",
     "@tanstack/svelte-query": "^6.1.24",
     "@tanstack/svelte-query-devtools": "^6.1.24",
