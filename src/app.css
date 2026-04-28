@@ -14,9 +14,9 @@
   --card: oklch(0.96 0.01 80);
   --card-foreground: oklch(0.15 0.02 80);
 
-  --sticky-yellow: oklch(0.94 0.08 95);
-  --sticky-blue: oklch(0.92 0.04 220);
-  --canvas-white: oklch(0.97 0.01 85);
+  --sticky-yellow: oklch(0.96 0.03 95);
+  --sticky-blue: oklch(0.96 0.01 220);
+  --canvas-white: oklch(0.98 0.01 85);
 
   --primary: oklch(0.35 0.06 80);
   --primary-foreground: oklch(0.98 0.01 80);
@@ -38,8 +38,8 @@
   --card: oklch(0.28 0.02 80);
   --card-foreground: oklch(0.98 0.01 80);
 
-  --sticky-yellow: oklch(0.35 0.06 95);
-  --sticky-blue: oklch(0.33 0.04 220);
+  --sticky-yellow: oklch(0.32 0.03 95);
+  --sticky-blue: oklch(0.3 0.01 220);
   --canvas-white: oklch(0.38 0.02 85);
 
   --primary: oklch(0.9 0.05 80);
@@ -120,11 +120,15 @@
   }
 
   .blue-note {
-    @apply bg-sticky-blue text-foreground p-6 shadow-md relative;
+    @apply bg-sticky-blue text-foreground p-6 shadow-md relative overflow-hidden;
     border-radius: 4px 25px 3px 25px / 2px 2px 30px 4px;
     background-image: linear-gradient(var(--border) 1px, transparent 1px);
-    background-size: 100% 1.5rem;
+    background-size: 100% 2.2rem;
     transition: all var(--transition-slow);
+  }
+  .blue-note::before {
+    content: "";
+    @apply absolute left-14 top-0 bottom-0 w-[2px] bg-rose-500/10 decorative-doodle;
   }
 
   .canvas-sheet {
