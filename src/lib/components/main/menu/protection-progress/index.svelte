@@ -29,30 +29,32 @@
 </script>
 
 {#if isProcessing || status !== "idle"}
-  <div class="space-y-3 p-4 rounded-lg border border-foreground/5 bg-muted/10 animate-in fade-in slide-in-from-top-2 duration-300">
+  <div class="space-y-4 p-6 doodle-line border-2 border-foreground/10 bg-white shadow-xl animate-in fade-in slide-in-from-bottom-2 duration-500 relative">
+    <div class="absolute -top-3 left-4 rotate-[5deg] text-[10px] bg-amber-400 text-amber-900 px-2 py-0.5 shadow-sm doodle-line font-bold">LIVE STATUS</div>
+
     <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-3">
         {#if status === "processing"}
-          <LoaderCircleIcon class="size-4 text-indigo-500/60 dark:text-indigo-400/60 animate-spin" />
-          <span class="text-sm font-medium text-indigo-500/60 dark:text-indigo-400/60">Protecting...</span>
+          <LoaderCircleIcon class="size-5 text-amber-600 animate-spin" />
+          <span class="text-base font-bold text-amber-700">Protecting...</span>
         {:else if status === "success"}
-          <CircleCheckBigIcon class="size-4 text-emerald-500/60 dark:text-emerald-400/60" />
-          <span class="text-sm font-medium text-emerald-500/60 dark:text-emerald-400/60">Complete</span>
+          <CircleCheckBigIcon class="size-5 text-emerald-600" />
+          <span class="text-base font-bold text-emerald-700">Art is Safe!</span>
         {:else if status === "error"}
-          <CircleAlertIcon class="size-4 text-destructive/60" />
-          <span class="text-sm font-medium text-destructive/60">Error</span>
+          <CircleAlertIcon class="size-5 text-destructive" />
+          <span class="text-base font-bold text-destructive">Ink Spill! (Error)</span>
         {/if}
       </div>
 
-      <span class="text-xs text-muted-foreground/60 font-medium">
-        {progress}&percnt;
+      <span class="text-sm text-muted-foreground font-bold">
+        {progress}%
       </span>
     </div>
 
-    <Progress value={progress} class="h-1.5" />
+    <Progress value={progress} />
 
     {#if message}
-      <p class={cn("text-[10px] uppercase tracking-wider font-medium opacity-60", statusColour)}>
+      <p class={cn("text-xs font-bold opacity-80", statusColour)}>
         {message}
       </p>
     {/if}

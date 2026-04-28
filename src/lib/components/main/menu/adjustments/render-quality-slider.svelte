@@ -19,24 +19,24 @@
 <div class="space-y-4">
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div class="p-2 rounded-lg bg-card shadow-sm border border-foreground/5 bg-sky-500/5">
-        <ClockIcon class="size-4 text-sky-500/60 dark:text-sky-400/60" />
+      <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-sky-500/10">
+        <ClockIcon class="size-5 text-sky-600 dark:text-sky-400" />
       </div>
-      <label for={sliderId} class="text-sm font-medium text-muted-foreground/80">Detail Refinement</label>
+      <label for={sliderId} class="text-base font-bold text-foreground/70">Patience Level</label>
     </div>
     <div class="flex items-center gap-2">
-      <currentPreset.icon class={cn("size-3.5", currentPreset.colour)} />
-      <span class={cn("text-xs font-medium uppercase tracking-wider", currentPreset.colour)}>
+      <currentPreset.icon class={cn("size-4", currentPreset.colour)} />
+      <span class={cn("text-xs font-bold uppercase tracking-wider", currentPreset.colour)}>
         {currentPreset.label}
       </span>
     </div>
   </div>
 
-  <p class="text-xs text-muted-foreground/80 leading-relaxed">
-    Processing time for Glaze &sol; Nightshade &sol; Noise. Higher &equals; better quality but slower.
+  <p class="text-[11px] text-muted-foreground/60 font-medium px-1 leading-tight">
+    How much time we spend inking. Higher patience means better protection but takes longer.
   </p>
 
-  <div class="space-y-4 py-1">
+  <div class="space-y-6 py-2">
     <Slider type="multiple"
             bind:value
             min={0}
@@ -44,18 +44,20 @@
             step={25}
             aria-label="Render quality control" />
 
-    <div class="flex justify-between items-start">
+    <div class="flex justify-between items-start px-2">
       {#each qualityPresets as preset}
         {@const Icon = preset.icon}
         <button type="button"
                 class={cn(
-                  "flex flex-col items-center gap-1.5 text-xs transition-opacity group",
-                  (value[0] === preset.value) && "opacity-100",
+                  "flex flex-col items-center gap-2 text-xs transition-all group",
+                  (value[0] === preset.value) && "opacity-100 scale-110",
                   (value[0] !== preset.value) && "opacity-30 hover:opacity-50",
                 )}
                 onclick={() => value = [preset.value]}>
-          <Icon class={cn("size-3.5", preset.colour)} />
-          <span class={cn("text-[10px] font-medium uppercase tracking-tighter whitespace-nowrap", preset.colour)}>
+          <div class={cn("p-2 doodle-blob border-2 border-transparent transition-all", (value[0] === preset.value) && "border-foreground/10 bg-white/40")}>
+            <Icon class={cn("size-4", preset.colour)} />
+          </div>
+          <span class={cn("text-[10px] font-bold uppercase tracking-tighter whitespace-nowrap", preset.colour)}>
             {preset.label}
           </span>
         </button>
@@ -63,16 +65,17 @@
     </div>
   </div>
 
-  <div class="p-3 rounded-lg bg-muted/20 border border-foreground/5">
+  <div class="p-4 doodle-line bg-white/20 dark:bg-black/20 border-2 border-foreground/10 relative">
+    <div class="absolute -top-3 -left-2 rotate-[-12deg] text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line">NOTE!</div>
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <currentPreset.icon class={cn("size-4", currentPreset.colour)} />
-        <span class={cn("text-sm font-medium", currentPreset.colour)}>
+        <currentPreset.icon class={cn("size-5", currentPreset.colour)} />
+        <span class={cn("text-base font-bold", currentPreset.colour)}>
           {currentPreset.label}
         </span>
       </div>
-      <span class="text-xs text-muted-foreground/60 font-medium italic">
-        {currentPreset.time}
+      <span class="text-xs text-muted-foreground/60 font-bold italic">
+        ~{currentPreset.time}
       </span>
     </div>
   </div>

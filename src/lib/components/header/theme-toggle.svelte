@@ -23,11 +23,11 @@
 <Button variant="outline"
         size="sm"
         onclick={toogleTheme}
-        class="flex items-center gap-2 px-3 py-2 rounded-lg border border-border hover:bg-muted/50 hover:cursor-pointer transition-colors"
+        class="flex items-center gap-2 px-3 py-2 doodle-blob border-2 border-foreground/10 bg-white/40 dark:bg-black/40 hover:bg-white/60 dark:hover:bg-black/60 hover:cursor-pointer transition-all shadow-sm"
         aria-label="Toggle theme">
   {#if isDark}
-    <SunIcon class="size-4 transition-transform duration-300 rotate-0 hover:rotate-90" />
+    <SunIcon class="size-4 text-amber-600 transition-transform duration-300 rotate-0 hover:rotate-90" />
   {:else}
-    <MoonIcon class="size-4 transition-transform duration-300 rotate-0 hover:-rotate-12" />
+    <MoonIcon class="size-4 text-indigo-600 transition-transform duration-300 rotate-0 hover:-rotate-12" />
   {/if}
 </Button>

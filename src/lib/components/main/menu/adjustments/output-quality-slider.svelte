@@ -20,27 +20,27 @@
 <div class="space-y-4">
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div class="p-2 rounded-lg bg-card shadow-sm border border-foreground/5 bg-emerald-500/5">
-        <ImageIcon class="size-4 text-emerald-500/60 dark:text-emerald-400/60" />
+      <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-emerald-500/10">
+        <ImageIcon class="size-5 text-emerald-600 dark:text-emerald-400" />
       </div>
-      <span class="text-sm font-medium text-muted-foreground/80">Detail Refinement</span>
+      <span class="text-base font-bold text-foreground/70 tracking-tight">Final Shine</span>
     </div>
     <div class="flex items-center gap-2">
       <span class={cn(
-        "text-xs font-medium uppercase tracking-wider",
-        qualityLevel === "Standard" && "text-amber-500/60 dark:text-amber-400/60",
-        qualityLevel === "High" && "text-emerald-500/60 dark:text-emerald-400/60",
-        qualityLevel === "Best" && "text-sky-500/60 dark:text-sky-400/60",
+        "text-xs font-bold uppercase tracking-wider doodle-line border-2 px-2 py-0.5",
+        qualityLevel === "Standard" && "text-amber-700 border-amber-500/30",
+        qualityLevel === "High" && "text-emerald-700 border-emerald-500/30",
+        qualityLevel === "Best" && "text-sky-700 border-sky-500/30",
       )}>
-        {qualityLevel}
+        {qualityLevel === "Standard" ? "Rough" : qualityLevel === "High" ? "Polished" : "PRISTINE"}
       </span>
-      <span class="text-xs text-muted-foreground/60 font-medium">
+      <span class="text-sm text-muted-foreground/60 font-bold">
         {value[0]}
       </span>
     </div>
   </div>
 
-  <div class="py-1">
+  <div class="py-2">
     <Slider type="multiple"
             bind:value
             min={85}
@@ -48,7 +48,7 @@
             step={1} />
   </div>
 
-  <p class="text-xs text-muted-foreground">
-    Image compression quality. Higher values &equals; larger file size but better visual quality.
+  <p class="text-[11px] text-muted-foreground/60 font-medium px-1 leading-tight">
+    How detailed the final sheet should be. Higher shine looks better but creates a heavier file.
   </p>
 </div>

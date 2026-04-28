@@ -1,80 +1,55 @@
-@import "@fontsource/be-vietnam-pro";
-
 @import "tailwindcss";
 
 @import "tw-animate-css";
 
+@import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --radius: 0.25rem;
-  --background: oklch(0.904 0.016 103);
-  --foreground: oklch(0.18 0 95);
-  --card: oklch(0.915 0.014 103);
-  --card-foreground: oklch(0.25 0.01 95);
-  --popover: oklch(0.915 0.014 103);
-  --popover-foreground: oklch(0.25 0.01 95);
-  --primary: oklch(0.35 0.03 255);
-  --primary-foreground: oklch(0.93 0.012 103);
+  --radius: 0.75rem;
+  --background: oklch(0.94 0.015 80);
+  --foreground: oklch(0.25 0.02 80);
 
-  --secondary: oklch(0.87 0.014 100);
-  --secondary-foreground: oklch(0.32 0.01 95);
-  --muted: oklch(0.87 0.014 100);
-  --muted-foreground: oklch(0.52 0.012 95);
-  --accent: oklch(0.88 0.013 100);
-  --accent-foreground: oklch(0.32 0.01 95);
-  --destructive: oklch(0.5 0.12 25);
-  --border: oklch(0.83 0.014 100 / 5%);
-  --input: oklch(0.83 0.014 100 / 10%);
-  --ring: oklch(0.45 0.03 255);
+  --card: oklch(0.96 0.01 80);
+  --card-foreground: oklch(0.25 0.02 80);
 
-  --chart-1: oklch(0.52 0.035 160);
-  --chart-2: oklch(0.48 0.025 95);
-  --chart-3: oklch(0.42 0.025 240);
-  --chart-4: oklch(0.58 0.03 100);
-  --chart-5: oklch(0.48 0.04 25);
-  --sidebar: oklch(0.89 0.015 103);
-  --sidebar-foreground: oklch(0.25 0.01 95);
-  --sidebar-primary: oklch(0.35 0.03 255);
-  --sidebar-primary-foreground: oklch(0.93 0.012 103);
-  --sidebar-accent: oklch(0.87 0.014 100);
-  --sidebar-accent-foreground: oklch(0.32 0.01 95);
-  --sidebar-border: oklch(0.83 0.014 100 / 5%);
-  --sidebar-ring: oklch(0.45 0.03 255);
+  --sticky-yellow: oklch(0.94 0.08 95);
+  --sticky-blue: oklch(0.92 0.04 220);
+  --canvas-white: oklch(0.97 0.01 85);
+
+  --primary: oklch(0.45 0.05 80);
+  --primary-foreground: oklch(0.98 0.01 80);
+
+  --muted: oklch(0.88 0.02 80);
+  --muted-foreground: oklch(0.45 0.03 80);
+
+  --border: oklch(0.25 0.02 80 / 15%);
+  --input: oklch(0.25 0.02 80 / 5%);
+  --ring: oklch(0.45 0.05 80);
+
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dark {
-  --background: oklch(0.228 0.002 60);
-  --foreground: oklch(0.88 0.012 100);
-  --card: oklch(0.26 0.004 60);
-  --card-foreground: oklch(0.88 0.012 100);
-  --popover: oklch(0.26 0.004 60);
-  --popover-foreground: oklch(0.88 0.012 100);
-  --primary: oklch(0.68 0.04 255);
-  --primary-foreground: oklch(0.228 0.002 60);
-  --secondary: oklch(0.3 0.005 60);
-  --secondary-foreground: oklch(0.85 0.01 100);
-  --muted: oklch(0.3 0.005 60);
-  --muted-foreground: oklch(0.62 0.01 95);
-  --accent: oklch(0.3 0.005 60);
-  --accent-foreground: oklch(0.85 0.01 100);
-  --destructive: oklch(0.6 0.12 25);
-  --border: oklch(0.88 0.012 100 / 3%);
-  --input: oklch(0.88 0.012 100 / 5%);
-  --ring: oklch(0.6 0.04 255);
-  --chart-1: oklch(0.58 0.035 160);
-  --chart-2: oklch(0.52 0.025 95);
-  --chart-3: oklch(0.48 0.025 240);
-  --chart-4: oklch(0.62 0.03 100);
-  --chart-5: oklch(0.52 0.04 25);
-  --sidebar: oklch(0.26 0.004 60);
-  --sidebar-foreground: oklch(0.88 0.012 100);
-  --sidebar-primary: oklch(0.68 0.04 255);
-  --sidebar-primary-foreground: oklch(0.228 0.002 60);
-  --sidebar-accent: oklch(0.3 0.005 60);
-  --sidebar-accent-foreground: oklch(0.85 0.01 100);
-  --sidebar-border: oklch(0.88 0.012 100 / 3%);
-  --sidebar-ring: oklch(0.6 0.04 255);
+  --background: oklch(0.28 0.02 80);
+  --foreground: oklch(0.92 0.02 80);
+
+  --card: oklch(0.32 0.02 80);
+  --card-foreground: oklch(0.92 0.02 80);
+
+  --sticky-yellow: oklch(0.35 0.06 95);
+  --sticky-blue: oklch(0.33 0.04 220);
+  --canvas-white: oklch(0.38 0.02 85);
+
+  --primary: oklch(0.85 0.05 80);
+  --primary-foreground: oklch(0.25 0.02 80);
+
+  --muted: oklch(0.42 0.02 80);
+  --muted-foreground: oklch(0.75 0.02 80);
+
+  --border: oklch(0.92 0.02 80 / 15%);
+  --input: oklch(0.92 0.02 80 / 5%);
 }
 
 @theme inline {
@@ -86,50 +61,65 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-sticky-yellow: var(--sticky-yellow);
+  --color-sticky-blue: var(--sticky-blue);
+  --color-canvas: var(--canvas-white);
 }
 
 @theme {
-  --font-be-vietnam-pro: "Be Vietnam Pro", sans-serif;
-  --font-sans: var(--font-be-vietnam-pro);
+  --font-itim: "Itim", cursive;
+  --font-sans: var(--font-itim);
 }
 
 @layer base {
   * {
-    @apply border-border/5 outline-ring/30 transition-all duration-300;
+    @apply border-border outline-ring/30 transition-all;
+    transition-duration: var(--transition-slow);
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    background-image: radial-gradient(oklch(0 0 0 / 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
   .panel-float {
-    @apply border-none shadow-inner bg-card/40 backdrop-blur-sm;
-    box-shadow: inset 0 2px 4px 0 oklch(0 0 0 / 0.02);
+    @apply border-2 border-foreground/10 shadow-xl;
+  }
+}
+
+@layer components {
+  .sticky-note {
+    @apply bg-sticky-yellow text-foreground p-6 shadow-lg relative;
+    border-radius: 2px 2px 30px 4px / 4px 25px 3px 25px;
+  }
+
+  .blue-note {
+    @apply bg-sticky-blue text-foreground p-6 shadow-md relative;
+    border-radius: 4px 25px 3px 25px / 2px 2px 30px 4px;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px);
+    background-size: 100% 1.5rem;
+  }
+
+  .canvas-sheet {
+    @apply bg-canvas text-foreground shadow-2xl relative;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L100,0 L100,90 Q95,92 90,90 Q85,88 80,90 Q75,92 70,90 Q65,88 60,90 Q55,92 50,90 Q45,88 40,90 Q35,92 30,90 Q25,88 20,90 Q15,92 10,90 Q5,88 0,90 Z' fill='black'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+  }
+
+  .doodle-line {
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  }
+
+  .doodle-blob {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   }
 }
 
