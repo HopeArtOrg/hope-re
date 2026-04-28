@@ -18,11 +18,11 @@
     <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-amber-500/10">
       <TargetIcon class="size-5 text-amber-600 dark:text-amber-400" />
     </div>
-    <span class="text-base font-bold text-foreground/70 tracking-tight">Style Vibe</span>
+    <span class="text-xl font-bold text-foreground/80 tracking-tight">Style Vibe</span>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full" aria-label="Style Vibe Selection">
+    <Select.Trigger class="w-full text-lg" aria-label="Style Vibe Selection">
       {contentTrigger}
     </Select.Trigger>
     <Select.Content>
@@ -30,11 +30,11 @@
         <Select.Item value={style.value}>
           <div class="flex items-center gap-4 py-2">
             <div class="p-2 doodle-blob border border-foreground/5 bg-muted/20">
-              <style.icon class="size-5 text-muted-foreground" />
+              <style.icon class="size-6 text-muted-foreground" />
             </div>
             <div class="flex flex-col gap-0.5">
-              <span class="font-bold text-base">{style.label}</span>
-              <span class="text-xs text-muted-foreground/80">{style.description}</span>
+              <span class="font-bold text-lg">{style.label}</span>
+              <span class="text-sm text-muted-foreground/80">{style.description}</span>
             </div>
           </div>
         </Select.Item>

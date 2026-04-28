@@ -84,7 +84,7 @@
     @apply border-border outline-ring/30;
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased text-[1.1rem] leading-relaxed tracking-wide;
+    @apply bg-background text-foreground font-sans antialiased text-[1.25rem] leading-relaxed tracking-wide;
     background-image: radial-gradient(oklch(0 0 0 / 0.03) 1px, transparent 1px);
     background-size: 24px 24px;
   }
@@ -94,6 +94,9 @@
 }
 
 @layer components {
+  .select-item-hover {
+    @apply transition-all duration-200 hover:bg-primary/10 hover:scale-[1.02] active:scale-[0.98] cursor-pointer doodle-line;
+  }
   .sticky-note {
     @apply bg-sticky-yellow text-foreground p-6 shadow-lg relative;
     border-radius: 2px 2px 30px 4px / 4px 25px 3px 25px;

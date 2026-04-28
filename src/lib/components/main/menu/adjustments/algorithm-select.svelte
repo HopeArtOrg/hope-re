@@ -23,11 +23,11 @@
     <div class={cn("p-2.5 doodle-blob bg-card border-2 border-foreground/10", currentAlgo.bgColour)}>
       <PaletteIcon class={cn("size-5", currentAlgo.colour)} />
     </div>
-    <span class="text-base font-bold text-foreground/70">Creative Idea</span>
+    <span class="text-xl font-bold text-foreground/80">Creative Idea</span>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full" aria-label="Creative Idea Selection">
+    <Select.Trigger class="w-full text-lg" aria-label="Creative Idea Selection">
       {triggerContent}
     </Select.Trigger>
     <Select.Content>
@@ -35,11 +35,11 @@
         <Select.Item value={algo.value}>
           <div class="flex items-center gap-4 py-2">
             <div class={cn("p-2 doodle-blob border border-foreground/5", algo.bgColour)}>
-              <PaletteIcon class={cn("size-5", algo.colour)} />
+              <PaletteIcon class={cn("size-6", algo.colour)} />
             </div>
             <div class="flex-1">
-              <p class="font-bold text-base">{algo.label}</p>
-              <p class="text-xs text-muted-foreground/80">{algo.description}</p>
+              <p class="font-bold text-lg">{algo.label}</p>
+              <p class="text-sm text-muted-foreground/80">{algo.description}</p>
             </div>
           </div>
         </Select.Item>

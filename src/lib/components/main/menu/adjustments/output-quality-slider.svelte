@@ -23,18 +23,18 @@
       <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-emerald-500/10">
         <ImageIcon class="size-5 text-emerald-600 dark:text-emerald-400" />
       </div>
-      <span class="text-base font-bold text-foreground/70 tracking-tight">Final Shine</span>
+      <span class="text-xl font-bold text-foreground/80 tracking-tight">Final Shine</span>
     </div>
     <div class="flex items-center gap-2">
       <span class={cn(
-        "text-xs font-bold uppercase tracking-wider doodle-line border-2 px-2 py-0.5",
+        "text-sm font-bold uppercase tracking-wider doodle-line border-2 px-2 py-0.5",
         qualityLevel === "Standard" && "text-amber-700 border-amber-500/30",
         qualityLevel === "High" && "text-emerald-700 border-emerald-500/30",
         qualityLevel === "Best" && "text-sky-700 border-sky-500/30",
       )}>
         {qualityLevel === "Standard" ? "Rough" : qualityLevel === "High" ? "Polished" : "PRISTINE"}
       </span>
-      <span class="text-sm text-muted-foreground/60 font-bold">
+      <span class="text-base text-muted-foreground/60 font-bold">
         {value[0]}
       </span>
     </div>
