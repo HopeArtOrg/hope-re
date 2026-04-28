@@ -11,6 +11,9 @@ importers:
       '@fontsource/be-vietnam-pro':
         specifier: ^5.2.8
         version: 5.2.8
+      '@fontsource/rubik-spray-paint':
+        specifier: ^5.2.7
+        version: 5.2.7
       '@tailwindcss/vite':
         specifier: ^4.2.4
         version: 4.2.4(vite@8.0.10(esbuild@0.27.3)(jiti@2.6.1)(yaml@2.8.3))
@@ -477,6 +480,9 @@ packages:
 
   '@fontsource/be-vietnam-pro@5.2.8':
     resolution: {integrity: sha512-lqTtfpkAy0GdFH0fqwR0sW4VP+3CNGaQV6SpW2TSZaNmixZMlou+2dp5ErGidrS1MPiDDPfPbfW2i358PVFLZA==}
+
+  '@fontsource/rubik-spray-paint@5.2.7':
+    resolution: {integrity: sha512-NCo3x+LqPcfaaWy59EzFsDWgEIftfAyfM9mUPT95rusQohQlembJWy1v4sXIYc3WEn3fpS3Jr5ClRa5wntVeFw==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -3130,6 +3136,8 @@ snapshots:
   '@floating-ui/utils@0.2.11': {}
 
   '@fontsource/be-vietnam-pro@5.2.8': {}
+
+  '@fontsource/rubik-spray-paint@5.2.7': {}
 
   '@humanfs/core@0.19.2':
     dependencies:

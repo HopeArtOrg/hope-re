@@ -40,7 +40,7 @@ get along, so we shut typescript up by casting `value` to `never`.
       <SliderPrimitive.Range
         data-slot="slider-range"
         class={cn(
-          "bg-primary/60 absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full doodle-line",
+          "bg-primary/60 absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full doodle-line transition-none",
         )}
       />
     </span>
@@ -48,7 +48,7 @@ get along, so we shut typescript up by casting `value` to `never`.
       <SliderPrimitive.Thumb
         data-slot="slider-thumb"
         index={thumb}
-        class="border-2 border-foreground/20 ring-ring/20 block size-6 shrink-0 doodle-blob bg-card shadow-md transition-all duration-300 hover:scale-110 hover:ring-8 focus-visible:ring-8 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
+        class="border-2 border-foreground/20 ring-ring/20 block size-6 shrink-0 doodle-blob bg-card shadow-md transition-none hover:scale-110 hover:ring-8 focus-visible:ring-8 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
       />
     {/each}
   {/snippet}
