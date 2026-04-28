@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.12] - 2026-04-28
+
+### Changed
+
+- Update GitHub workflow actions to latest versions: `actions/checkout@v6` and `actions/setup-node@v6`
+- Bump version to 2.1.12 across package.json, Cargo.toml, and tauri.conf.json
+
 ## [2.1.11] - 2026-04-28
 
 ### Features
