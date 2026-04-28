@@ -21,20 +21,20 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
       <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-emerald-500/10">
-        <ImageIcon class="size-5 text-emerald-600 dark:text-emerald-400" />
+        <ImageIcon class="size-6 text-emerald-600 dark:text-emerald-400" />
       </div>
-      <span class="text-xl font-bold text-foreground/80 tracking-tight">Final Shine</span>
+      <span class="text-2xl font-bold text-foreground/90 tracking-tight">Final Shine</span>
     </div>
     <div class="flex items-center gap-2">
       <span class={cn(
-        "text-sm font-bold uppercase tracking-wider doodle-line border-2 px-2 py-0.5",
-        qualityLevel === "Standard" && "text-amber-700 border-amber-500/30",
-        qualityLevel === "High" && "text-emerald-700 border-emerald-500/30",
-        qualityLevel === "Best" && "text-sky-700 border-sky-500/30",
+        "text-base font-bold uppercase tracking-wider doodle-line border-2 px-3 py-0.5",
+        qualityLevel === "Standard" && "text-amber-700 border-amber-500/40",
+        qualityLevel === "High" && "text-emerald-700 border-emerald-500/40",
+        qualityLevel === "Best" && "text-sky-700 border-sky-500/40",
       )}>
         {qualityLevel === "Standard" ? "Rough" : qualityLevel === "High" ? "Polished" : "PRISTINE"}
       </span>
-      <span class="text-base text-muted-foreground/60 font-bold">
+      <span class="text-xl text-foreground/70 font-bold">
         {value[0]}
       </span>
     </div>
@@ -48,7 +48,7 @@
             step={1} />
   </div>
 
-  <p class="text-sm text-muted-foreground/70 font-bold px-1 leading-tight">
+  <p class="text-base text-foreground/60 font-bold px-1 leading-tight">
     How detailed the final sheet should be. Higher shine looks better but creates a heavier file.
   </p>
 </div>

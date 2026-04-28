@@ -20,19 +20,19 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
       <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-sky-500/10">
-        <ClockIcon class="size-5 text-sky-600 dark:text-sky-400" />
+        <ClockIcon class="size-6 text-sky-600 dark:text-sky-400" />
       </div>
-      <label for={sliderId} class="text-base font-bold text-foreground/70">Patience Level</label>
+      <label for={sliderId} class="text-2xl font-bold text-foreground/90">Patience Level</label>
     </div>
     <div class="flex items-center gap-2">
-      <currentPreset.icon class={cn("size-4", currentPreset.colour)} />
-      <span class={cn("text-xs font-bold uppercase tracking-wider", currentPreset.colour)}>
+      <currentPreset.icon class={cn("size-5", currentPreset.colour)} />
+      <span class={cn("text-base font-bold uppercase tracking-wider", currentPreset.colour)}>
         {currentPreset.label}
       </span>
     </div>
   </div>
 
-  <p class="text-sm text-muted-foreground/70 font-bold px-1 leading-tight">
+  <p class="text-base text-foreground/60 font-bold px-1 leading-tight">
     How much time we spend inking. Higher patience means better quality but takes longer.
   </p>
 
@@ -49,15 +49,15 @@
         {@const Icon = preset.icon}
         <button type="button"
                 class={cn(
-                  "flex flex-col items-center gap-2 text-xs transition-all group",
+                  "flex flex-col items-center gap-2 text-sm transition-all group",
                   (value[0] === preset.value) && "opacity-100 scale-110",
                   (value[0] !== preset.value) && "opacity-30 hover:opacity-50",
                 )}
                 onclick={() => value = [preset.value]}>
           <div class={cn("p-2 doodle-blob border-2 border-transparent transition-all", (value[0] === preset.value) && "border-foreground/10 bg-white/40")}>
-            <Icon class={cn("size-4", preset.colour)} />
+            <Icon class={cn("size-5", preset.colour)} />
           </div>
-          <span class={cn("text-[10px] font-bold uppercase tracking-tighter whitespace-nowrap", preset.colour)}>
+          <span class={cn("text-[11px] font-bold uppercase tracking-tighter whitespace-nowrap", preset.colour)}>
             {preset.label}
           </span>
         </button>
@@ -69,12 +69,12 @@
     <div class="absolute -top-3 -left-2 rotate-[-12deg] text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line decorative-doodle">NOTE!</div>
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <currentPreset.icon class={cn("size-5", currentPreset.colour)} />
-        <span class={cn("text-base font-bold", currentPreset.colour)}>
+        <currentPreset.icon class={cn("size-6", currentPreset.colour)} />
+        <span class={cn("text-lg font-bold", currentPreset.colour)}>
           {currentPreset.label}
         </span>
       </div>
-      <span class="text-xs text-muted-foreground/60 font-bold italic">
+      <span class="text-base text-foreground/60 font-bold italic">
         ~{currentPreset.time}
       </span>
     </div>

@@ -25,20 +25,20 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
       <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-amber-500/10">
-        <GaugeIcon class="size-5 text-amber-600 dark:text-amber-400" />
+        <GaugeIcon class="size-6 text-amber-600 dark:text-amber-400" />
       </div>
-      <label for={sliderId} class="text-xl font-bold text-foreground/80">Protect Power</label>
+      <label for={sliderId} class="text-2xl font-bold text-foreground/90">Protect Power</label>
     </div>
     <div class="flex items-center gap-2">
       <span class={cn(
-        "text-sm font-bold uppercase tracking-wider doodle-line border-2 px-2 py-0.5",
-        intensityLevel === "Low" && "text-emerald-700 border-emerald-500/30",
-        intensityLevel === "Medium" && "text-amber-700 border-amber-500/30",
-        intensityLevel === "High" && "text-rose-700 border-rose-500/30",
+        "text-base font-bold uppercase tracking-wider doodle-line border-2 px-3 py-0.5",
+        intensityLevel === "Low" && "text-emerald-700 border-emerald-500/40",
+        intensityLevel === "Medium" && "text-amber-700 border-amber-500/40",
+        intensityLevel === "High" && "text-rose-700 border-rose-500/40",
       )}>
         {intensityLevel === "Low" ? "Low Ink" : intensityLevel === "Medium" ? "Nice" : "FULL INK"}
       </span>
-      <span class="text-base text-muted-foreground/60 font-bold">
+      <span class="text-xl text-foreground/70 font-bold">
         {intensityDisplay}
       </span>
     </div>
@@ -54,7 +54,7 @@
             aria-label="Intensity control" />
   </div>
 
-  <p class="text-sm text-muted-foreground/70 font-bold px-1 leading-tight">
+  <p class="text-base text-foreground/60 font-bold px-1 leading-tight">
     Controls how thick the "ink" is. Higher power means stronger protection, but more visible changes to your sketch.
   </p>
 </div>
