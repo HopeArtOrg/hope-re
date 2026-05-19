@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Bump Tauri crate to v2.11.0 to match @tauri-apps/api v2.11.0 (resolves version mismatch warning)
+- Bump Tauri crate to v2.11.2 and tauri-build to v2.6.2 to match @tauri-apps/api v2.11.0 (resolves version mismatch warning)
 - Bump @tailwindcss/vite from 4.2.4 to 4.3.0
 - Bump @tanstack/svelte-query and devtools from 6.1.24 to 6.1.29
 - Bump @tauri-apps/api from 2.10.1 to 2.11.0
@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
+- Fix all ESLint errors: add keys to {#each} blocks, replace mutable Date with SvelteDate, disable resolve() check for generic button component
 - Fix app crash when applying Glaze or Nightshade protection by correcting ONNX model input tensor data type from i32 to i64 for style and target indices
 
 ## [2.1.12] - 2026-04-28
