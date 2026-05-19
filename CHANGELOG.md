@@ -29,11 +29,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Bump svelte-check from 4.4.6 to 4.4.8
 - Bump tailwind-merge from 3.5.0 to 3.6.0
 - Bump vite from 8.0.10 to 8.0.13
+- Enable error-level logging in release builds (Info in debug) for production troubleshooting
 
 ### Fixed
 
 - Fix all ESLint errors: add keys to {#each} blocks, replace mutable Date with SvelteDate, disable resolve() check for generic button component
 - Fix app crash when applying Glaze or Nightshade protection by correcting ONNX model input tensor data type from i32 to i64 for style and target indices
+- Fix CRITICAL: SPSA tile shape mismatch by replacing silent fallback with proper error propagation in spsa_pgd_on_tile
+- Fix NaN propagation in edge weight calculations by clamping inverse edge values to [0.5, 1.5]
+- Fix download race condition with concurrent model downloads by using UUID-based temporary file naming
+- Fix unvalidated float operations by adding AlgorithmParams.validate() for epsilon, alpha_multiplier, and perceptual_weight range checks
+- Fix integer overflow in pixel indexing for large images by using checked arithmetic for 4K+ resolution handling
+- Fix ownership issue in SPSA tile array construction by cloning data before Array::from_shape_vec
+
+### Security
+
+- Remove path information disclosure: eliminate models_dir from ModelsCheckResult API response
+- Add SHA256 integrity verification for downloaded ONNX models to detect corruption or tampering
+- Add uuid crate for cryptographic random temporary file naming during model downloads
 
 ## [2.1.12] - 2026-04-28
 
