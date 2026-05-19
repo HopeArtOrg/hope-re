@@ -124,7 +124,7 @@
         </div>
 
         <div class="space-y-2">
-          {#each models.modelProgress as model}
+          {#each models.modelProgress as model (model.name)}
             {@const displayName = model.name.replace("_algorithm.onnx", "")}
             <div class="flex items-center gap-3 p-2 rounded-lg bg-muted/20 border border-foreground/5">
               <div class={cn(

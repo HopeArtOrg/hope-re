@@ -26,7 +26,7 @@
       {contentTrigger}
     </Select.Trigger>
     <Select.Content>
-      {#each glazeStyles as style}
+      {#each glazeStyles as style (style.value)}
         <Select.Item value={style.value}>
           <div class="flex items-center gap-4 py-2">
             <div class="p-2 doodle-blob border border-foreground/5 bg-muted/20">

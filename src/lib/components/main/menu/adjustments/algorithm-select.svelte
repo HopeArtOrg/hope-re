@@ -31,7 +31,7 @@
       {triggerContent}
     </Select.Trigger>
     <Select.Content>
-      {#each algorithms as algo}
+      {#each algorithms as algo (algo.value)}
         <Select.Item value={algo.value}>
           <div class="flex items-center gap-4 py-2">
             <div class={cn("p-2 doodle-blob border border-foreground/5", algo.bgColour)}>

@@ -219,7 +219,7 @@
               </div>
             </div>
             <div class="text-sm text-foreground/80 font-bold flex items-center gap-3">
-              {#each inferenceData.providers as provider}
+              {#each inferenceData.providers as provider (provider.name)}
                 <span class="flex items-center gap-1.5">
                   {provider.name}
                   <span class="size-2 rounded-full bg-emerald-500/60 doodle-blob"></span>
