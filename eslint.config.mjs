@@ -74,4 +74,9 @@ export default antfu({
   rules: {
     "svelte/no-at-html-tags": "off",
   },
+}, {
+  files: ["src/lib/components/ui/button/button.svelte"],
+  rules: {
+    "svelte/no-navigation-without-resolve": "off",
+  },
 });
