@@ -79,4 +79,9 @@ export default antfu({
   rules: {
     "svelte/no-navigation-without-resolve": "off",
   },
+}, {
+  files: ["src/lib/stores/use-image.svelte.ts"],
+  rules: {
+    "svelte/prefer-svelte-reactivity": "off",
+  },
 });
