@@ -26,7 +26,7 @@
       {contentTrigger}
     </Select.Trigger>
     <Select.Content>
-      {#each nightshadeTargets as target}
+      {#each nightshadeTargets as target (target.value)}
         <Select.Item value={target.value}>
           <div class="flex items-center gap-4 py-2">
             <div class="p-2 doodle-blob border border-foreground/5 bg-muted/20">

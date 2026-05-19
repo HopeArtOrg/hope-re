@@ -29,8 +29,12 @@ fn blend_tile_direct(
         for px in 0..region.w {
             let dst_x = region.x + px;
             let dst_y = region.y + py;
-            let dst_pixel = (dst_y * width + dst_x) as usize;
-            let dst_idx = dst_pixel * 3;
+            let dst_pixel = (dst_y as u64)
+                .checked_mul(width as u64)
+                .and_then(|dy_times_w| dy_times_w.checked_add(dst_x as u64))
+                .map(|p| p as usize)
+                .unwrap_or(usize::MAX);
+            let dst_idx = dst_pixel.saturating_mul(3);
 
             let edge_x = px.min(region.w - 1 - px).min(TILE_OVERLAP) as f32 / TILE_OVERLAP as f32;
             let edge_y = py.min(region.h - 1 - py).min(TILE_OVERLAP) as f32 / TILE_OVERLAP as f32;
@@ -74,7 +78,9 @@ fn blend_tile_direct(
                 }
             }
 
-            weight_accum[dst_pixel] += weight;
+            if dst_pixel < weight_accum.len() {
+                weight_accum[dst_pixel] += weight;
+            }
         }
     }
 }
@@ -87,6 +93,8 @@ pub fn apply_model_protection(
     run_model: &mut ModelRunFn,
     app: &tauri::AppHandle,
 ) -> Result<DynamicImage, String> {
+    params.validate()?;
+
     let width = img.width();
     let height = img.height();
     let stride = TILE_SIZE - TILE_OVERLAP;
@@ -171,24 +179,37 @@ pub fn apply_model_protection(
 
     for y in 0..height {
         for x in 0..width {
-            let pixel_idx = (y * width + x) as usize;
-            let rgb_idx = pixel_idx * 3;
-            let rgba_idx = pixel_idx * 4;
+            let pixel_idx = (y as u64)
+                .checked_mul(width as u64)
+                .and_then(|py_times_w| py_times_w.checked_add(x as u64))
+                .ok_or_else(|| "Integer overflow in pixel indexing".to_string())?
+                as usize;
+            let rgb_idx = pixel_idx
+                .checked_mul(3)
+                .ok_or_else(|| "Integer overflow in RGB index".to_string())?;
+            let rgba_idx = pixel_idx
+                .checked_mul(4)
+                .ok_or_else(|| "Integer overflow in RGBA index".to_string())?;
             let original = original_rgba.get_pixel(x, y);
 
-            if weight_accum[pixel_idx] > 0.0 {
-                let w = weight_accum[pixel_idx];
-                result_pixels[rgba_idx] = (result_accum[rgb_idx] / w).clamp(0.0, 255.0) as u8;
-                result_pixels[rgba_idx + 1] =
-                    (result_accum[rgb_idx + 1] / w).clamp(0.0, 255.0) as u8;
-                result_pixels[rgba_idx + 2] =
-                    (result_accum[rgb_idx + 2] / w).clamp(0.0, 255.0) as u8;
-            } else {
-                result_pixels[rgba_idx] = original[0];
-                result_pixels[rgba_idx + 1] = original[1];
-                result_pixels[rgba_idx + 2] = original[2];
+            if pixel_idx < weight_accum.len()
+                && rgb_idx + 2 < result_accum.len()
+                && rgba_idx + 3 < result_pixels.len()
+            {
+                if weight_accum[pixel_idx] > 0.0 {
+                    let w = weight_accum[pixel_idx];
+                    result_pixels[rgba_idx] = (result_accum[rgb_idx] / w).clamp(0.0, 255.0) as u8;
+                    result_pixels[rgba_idx + 1] =
+                        (result_accum[rgb_idx + 1] / w).clamp(0.0, 255.0) as u8;
+                    result_pixels[rgba_idx + 2] =
+                        (result_accum[rgb_idx + 2] / w).clamp(0.0, 255.0) as u8;
+                } else {
+                    result_pixels[rgba_idx] = original[0];
+                    result_pixels[rgba_idx + 1] = original[1];
+                    result_pixels[rgba_idx + 2] = original[2];
+                }
+                result_pixels[rgba_idx + 3] = original[3];
             }
-            result_pixels[rgba_idx + 3] = original[3];
         }
     }
 

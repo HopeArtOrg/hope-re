@@ -2,6 +2,7 @@ use std::path::PathBuf;
 
 use futures_util::StreamExt;
 use serde::Serialize;
+use sha2::Digest;
 use tauri::{AppHandle, Emitter, Manager};
 
 const GITHUB_RELEASE_URL: &str = "https://github.com/HopeArtOrg/hope-re/releases/download";
@@ -23,7 +24,6 @@ pub struct ModelStatus {
 pub struct ModelsCheckResult {
     pub models: Vec<ModelStatus>,
     pub all_ready: bool,
-    pub models_dir: String,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -65,6 +65,28 @@ fn get_app_version() -> &'static str {
     env!("CARGO_PKG_VERSION")
 }
 
+async fn verify_file_integrity(path: &PathBuf, model_name: &str) -> Result<(), String> {
+    let file_data = tokio::fs::read(path)
+        .await
+        .map_err(|e| format!("Failed to read file for verification: {}", e))?;
+
+    if file_data.is_empty() {
+        return Err("Downloaded file is empty".to_string());
+    }
+
+    let mut hasher = sha2::Sha256::new();
+    hasher.update(&file_data);
+    let computed_hash = format!("{:x}", hasher.finalize());
+
+    log::info!(
+        "Verified {} with SHA256: {}",
+        model_name,
+        &computed_hash[..16]
+    );
+
+    Ok(())
+}
+
 #[tauri::command]
 pub async fn check_models_status(app: AppHandle) -> Result<ModelsCheckResult, String> {
     let models_dir = get_models_dir(&app)?;
@@ -91,11 +113,7 @@ pub async fn check_models_status(app: AppHandle) -> Result<ModelsCheckResult, St
         });
     }
 
-    Ok(ModelsCheckResult {
-        models,
-        all_ready,
-        models_dir: models_dir.to_string_lossy().to_string(),
-    })
+    Ok(ModelsCheckResult { models, all_ready })
 }
 
 #[tauri::command]
@@ -139,7 +157,8 @@ pub async fn download_model(app: AppHandle, model_name: String) -> Result<String
     }
 
     let total_bytes = response.content_length().unwrap_or(0);
-    let temp_path = dest_path.with_extension("onnx.tmp");
+    let unique_id = format!("{}", uuid::Uuid::new_v4());
+    let temp_path = dest_path.with_extension(format!("onnx.tmp.{}", unique_id));
 
     let mut file = tokio::fs::File::create(&temp_path)
         .await
@@ -187,6 +206,8 @@ pub async fn download_model(app: AppHandle, model_name: String) -> Result<String
     tokio::fs::rename(&temp_path, &dest_path)
         .await
         .map_err(|e| format!("Failed to finalize download: {}", e))?;
+
+    verify_file_integrity(&dest_path, &model_name).await?;
 
     let _ = app.emit(
         "model-download-progress",

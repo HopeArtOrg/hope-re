@@ -1,6 +1,6 @@
 [package]
 name = "hope-ad"
-version = "2.1.12"
+version = "2.1.13"
 description = "An AI-proofing arts app"
 authors = [ "HopeArtOrg" ]
 license = "MIT"
@@ -17,13 +17,13 @@ crate-type = [
 ]
 
 [build-dependencies]
-tauri-build = { version = "2.5.3", features = [] }
+tauri-build = { version = "2.6.2", features = [] }
 
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = [ "derive" ] }
 log = "0.4"
-tauri = { version = "2.9.5", features = [] }
+tauri = { version = "2.11.2", features = [] }
 tauri-plugin-log = "2"
 tauri-plugin-os = "2.3.2"
 tauri-plugin-store = "2.4.1"
@@ -47,6 +47,8 @@ tokio = { version = "1", features = [
   "io-util",
 ] }
 futures-util = "0.3"
+uuid = { version = "1.0", features = [ "v4" ] }
+sha2 = "0.10"
 
 [target.'cfg(windows)'.dependencies]
 ort = { version = "2.0.0-rc.9", default-features = false, features = [

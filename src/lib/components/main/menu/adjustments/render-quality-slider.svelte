@@ -45,7 +45,7 @@
             aria-label="Render quality control" />
 
     <div class="flex justify-between items-start px-2">
-      {#each qualityPresets as preset}
+      {#each qualityPresets as preset (preset.value)}
         {@const Icon = preset.icon}
         <button type="button"
                 class={cn(

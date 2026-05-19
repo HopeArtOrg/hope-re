@@ -105,10 +105,20 @@ pub fn spsa_pgd_on_tile(
     let mut momentum = vec![0.0f32; num_elements];
 
     let tile_shape = (shape[0], shape[1], shape[2], shape[3]);
-    let mut plus_tile =
-        Array::from_shape_vec(tile_shape, plus_data.clone()).unwrap_or_else(|_| base_tile.clone());
-    let mut minus_tile =
-        Array::from_shape_vec(tile_shape, minus_data.clone()).unwrap_or_else(|_| base_tile.clone());
+    let plus_tile = Array::from_shape_vec(tile_shape, plus_data.clone()).map_err(|e| {
+        format!(
+            "Failed to create plus_tile with shape {:?}: {}",
+            tile_shape, e
+        )
+    })?;
+    let minus_tile = Array::from_shape_vec(tile_shape, minus_data.clone()).map_err(|e| {
+        format!(
+            "Failed to create minus_tile with shape {:?}: {}",
+            tile_shape, e
+        )
+    })?;
+    let mut plus_tile = plus_tile.to_owned();
+    let mut minus_tile = minus_tile.to_owned();
 
     let mut consecutive_failures = 0u32;
     let max_consecutive_failures = 5u32;
@@ -138,7 +148,7 @@ pub fn spsa_pgd_on_tile(
                 for i in 0..num_elements {
                     let diff_plus = plus_data[i] - base_flat[i];
                     let diff_minus = minus_data[i] - base_flat[i];
-                    let inv_edge = 1.5 - edge_flat[i];
+                    let inv_edge = (1.5 - edge_flat[i]).clamp(0.5, 1.5);
                     p_diff_accum += (diff_plus * diff_plus - diff_minus * diff_minus) * inv_edge;
                 }
                 perceptual_weight * p_diff_accum * inv_n * 100.0
