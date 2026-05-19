@@ -31,7 +31,7 @@ pub fn get_nightshade_params(intensity: f32) -> AlgorithmParams {
     }
 }
 
-pub fn get_glaze_style_index(style: &str) -> i32 {
+pub fn get_glaze_style_index(style: &str) -> i64 {
     match style {
         "abstract" => 0,
         "impressionist" => 1,
@@ -42,7 +42,7 @@ pub fn get_glaze_style_index(style: &str) -> i32 {
     }
 }
 
-pub fn get_nightshade_target_index(target: &str) -> i32 {
+pub fn get_nightshade_target_index(target: &str) -> i64 {
     match target {
         "dog" => 0,
         "cat" => 1,
@@ -81,7 +81,7 @@ pub fn run_noise_model(session: &mut Session, input: &Array4<f32>) -> Result<f32
 pub fn run_glaze_model(
     session: &mut Session,
     input: &Array4<f32>,
-    style_index: i32,
+    style_index: i64,
 ) -> Result<f32, String> {
     let input_tensor = create_image_tensor(input)?;
 
@@ -100,7 +100,7 @@ pub fn run_glaze_model(
 pub fn run_nightshade_model(
     session: &mut Session,
     input: &Array4<f32>,
-    target_index: i32,
+    target_index: i64,
 ) -> Result<f32, String> {
     let input_tensor = create_image_tensor(input)?;
 

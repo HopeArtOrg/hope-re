@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.13] - 2026-05-20
+
+### Fixed
+
+- Fix app crash when applying Glaze or Nightshade protection by correcting ONNX model input tensor data type from i32 to i64 for style and target indices
+
 ## [2.1.12] - 2026-04-28
 
 ### Changed
