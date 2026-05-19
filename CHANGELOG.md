@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [2.1.13] - 2026-05-20
 
+### Changed
+
+- Bump Tauri crate to v2.11.0 to match @tauri-apps/api v2.11.0 (resolves version mismatch warning)
+- Bump @tailwindcss/vite from 4.2.4 to 4.3.0
+- Bump @tanstack/svelte-query and devtools from 6.1.24 to 6.1.29
+- Bump @tauri-apps/api from 2.10.1 to 2.11.0
+- Bump @tauri-apps/plugin-dialog from 2.7.0 to 2.7.1
+- Bump @tauri-apps/plugin-fs from 2.5.0 to 2.5.1
+- Bump @tauri-apps/plugin-store from 2.4.2 to 2.4.3
+- Bump marked from 18.0.2 to 18.0.3
+- Bump tailwindcss from 4.2.4 to 4.3.0
+- Bump @antfu/eslint-config from 8.2.0 to 9.0.0
+- Bump @lucide/svelte from 1.11.0 to 1.16.0
+- Bump @sveltejs/kit from 2.58.0 to 2.60.1
+- Bump @sveltejs/vite-plugin-svelte from 7.0.0 to 7.1.2
+- Bump @tauri-apps/cli from 2.10.1 to 2.11.2
+- Bump bits-ui from 2.18.0 to 2.18.1
+- Bump eslint from 10.2.1 to 10.4.0
+- Bump lint-staged from 16.4.0 to 17.0.5
+- Bump svelte from 5.55.5 to 5.55.8
+- Bump svelte-check from 4.4.6 to 4.4.8
+- Bump tailwind-merge from 3.5.0 to 3.6.0
+- Bump vite from 8.0.10 to 8.0.13
+
 ### Fixed
 
 - Fix app crash when applying Glaze or Nightshade protection by correcting ONNX model input tensor data type from i32 to i64 for style and target indices
