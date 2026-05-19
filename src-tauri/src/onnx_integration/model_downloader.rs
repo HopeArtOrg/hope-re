@@ -139,7 +139,8 @@ pub async fn download_model(app: AppHandle, model_name: String) -> Result<String
     }
 
     let total_bytes = response.content_length().unwrap_or(0);
-    let temp_path = dest_path.with_extension("onnx.tmp");
+    let unique_id = format!("{}", uuid::Uuid::new_v4());
+    let temp_path = dest_path.with_extension(format!("onnx.tmp.{}", unique_id));
 
     let mut file = tokio::fs::File::create(&temp_path)
         .await

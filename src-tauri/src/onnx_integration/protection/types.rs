@@ -39,6 +39,40 @@ pub struct AlgorithmParams {
     pub perceptual_weight: f32,
 }
 
+impl AlgorithmParams {
+    pub fn validate(&self) -> Result<(), String> {
+        if !self.epsilon.is_finite() || self.epsilon <= 0.0 {
+            return Err(format!(
+                "epsilon must be a positive finite number, got {}",
+                self.epsilon
+            ));
+        }
+
+        if !self.alpha_multiplier.is_finite() || self.alpha_multiplier <= 0.0 {
+            return Err(format!(
+                "alpha_multiplier must be a positive finite number, got {}",
+                self.alpha_multiplier
+            ));
+        }
+
+        if !self.perceptual_weight.is_finite() {
+            return Err(format!(
+                "perceptual_weight must be a finite number, got {}",
+                self.perceptual_weight
+            ));
+        }
+
+        if self.perceptual_weight < 0.0 || self.perceptual_weight > 1.0 {
+            return Err(format!(
+                "perceptual_weight must be in range [0.0, 1.0], got {}",
+                self.perceptual_weight
+            ));
+        }
+
+        Ok(())
+    }
+}
+
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct ProtectionProgress {
     pub stage: String,
