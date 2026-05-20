@@ -92,7 +92,10 @@ pub fn run_glaze_model(
     let style_tensor = create_index_tensor(style_index as i32)?;
 
     let outputs = session
-        .run(ort::inputs![input_tensor, style_tensor])
+        .run(ort::inputs![
+            "input" => input_tensor.view(),
+            "style_index" => style_tensor.view()
+        ])
         .map_err(|e| {
             log::error!("Glaze model error: {}", e);
             format!("Failed to run glaze model: {}", e)
@@ -112,7 +115,10 @@ pub fn run_nightshade_model(
     let target_tensor = create_index_tensor(target_index as i32)?;
 
     let outputs = session
-        .run(ort::inputs![input_tensor, target_tensor])
+        .run(ort::inputs![
+            "input" => input_tensor.view(),
+            "target_index" => target_tensor.view()
+        ])
         .map_err(|e| {
             log::error!("Nightshade model error: {}", e);
             format!("Failed to run nightshade model: {}", e)
