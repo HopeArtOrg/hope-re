@@ -145,7 +145,7 @@
 
         <div class="grid grid-cols-2 gap-10 flex-1">
           <div class="relative group">
-            <div class="absolute -top-8 -left-6 rotate-[-5deg] text-base text-muted-foreground/40 font-bold decorative-doodle flex items-center gap-2">
+            <div class="absolute -top-8 -left-6 -rotate-5 text-base text-muted-foreground/40 font-bold decorative-doodle flex items-center gap-2">
               <BrushIcon class="size-5" />
               Don't forget perspective!
             </div>
@@ -168,7 +168,7 @@
                                       onFullscreen={image.handleFullscreen} />
               {/if}
             </BaseImagePlaceholder>
-            <div class="absolute -bottom-4 -right-4 rotate-[15deg] text-base bg-primary text-primary-foreground px-4 py-1 shadow-md border-2 border-primary-foreground/20 doodle-line decorative-doodle">WOW!</div>
+            <div class="absolute -bottom-4 -right-4 rotate-15 text-base bg-primary text-primary-foreground px-4 py-1 shadow-md border-2 border-primary-foreground/20 doodle-line decorative-doodle">WOW!</div>
             <div class="absolute top-1/2 -right-12 opacity-10 decorative-doodle -rotate-90">
               <StickyNoteIcon class="size-16 text-foreground" />
             </div>
