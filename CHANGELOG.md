@@ -23,6 +23,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Re-enable DirectML execution provider on Windows to boost performance for users without NVIDIA GPUs, relying on the memory safety fixes to prevent previous crashes
 - Increase SPSA progress reporting frequency for better UI feedback during long-running protection tasks
 
+## [2.1.13] - 2026-05-20
+
+### Changed
+
 - Bump Tauri crate to v2.11.2 and tauri-build to v2.6.2 to match @tauri-apps/api v2.11.0 (resolves version mismatch warning)
 - Bump @tailwindcss/vite from 4.2.4 to 4.3.0
 - Bump @tanstack/svelte-query and devtools from 6.1.24 to 6.1.29
