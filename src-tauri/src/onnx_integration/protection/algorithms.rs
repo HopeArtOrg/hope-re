@@ -66,7 +66,9 @@ fn create_image_tensor(input: &Array4<f32>) -> Result<Tensor<f32>, String> {
 }
 
 fn create_index_tensor(index: i64) -> Result<Tensor<i32>, String> {
-    Tensor::from_array(([1_usize], vec![index as i32].into_boxed_slice()))
+    let value = index as i32;
+    let data: Box<[i32]> = Box::new([value]);
+    Tensor::from_array(([1_usize], data))
         .map_err(|e| format!("Failed to create index tensor: {}", e))
 }
 
