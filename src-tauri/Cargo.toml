@@ -51,7 +51,7 @@ uuid = { version = "1.0", features = [ "v4" ] }
 sha2 = "0.10"
 
 [target.'cfg(windows)'.dependencies]
-ort = { version = "2.0.0-rc.9", default-features = false, features = [
+ort = { version = "2.0.0-rc.12", default-features = false, features = [
   "ndarray",
   "copy-dylibs",
   "download-binaries",
@@ -65,7 +65,7 @@ windows = { version = "0.61.3", features = [
 ] }
 
 [target.'cfg(all(target_os = "linux", not(target_os = "android")))'.dependencies]
-ort = { version = "2.0.0-rc.9", default-features = false, features = [
+ort = { version = "2.0.0-rc.12", default-features = false, features = [
   "ndarray",
   "copy-dylibs",
   "download-binaries",
@@ -75,7 +75,7 @@ ort = { version = "2.0.0-rc.9", default-features = false, features = [
 ] }
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
-ort = { version = "2.0.0-rc.9", default-features = false, features = [
+ort = { version = "2.0.0-rc.12", default-features = false, features = [
   "ndarray",
   "copy-dylibs",
   "download-binaries",
@@ -84,7 +84,7 @@ ort = { version = "2.0.0-rc.9", default-features = false, features = [
 ] }
 
 [target.'cfg(all(target_os = "android", target_arch = "aarch64"))'.dependencies]
-ort = { version = "2.0.0-rc.9", default-features = false, features = [
+ort = { version = "2.0.0-rc.12", default-features = false, features = [
   "ndarray",
   "copy-dylibs",
   "download-binaries",
