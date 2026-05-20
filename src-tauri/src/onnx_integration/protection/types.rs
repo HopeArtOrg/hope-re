@@ -91,6 +91,7 @@ pub struct ProtectionProgress {
     pub percent: f64,
 }
 
+#[allow(dead_code)]
 pub struct ProtectionState {
     pub is_cancelled: AtomicBool,
 }

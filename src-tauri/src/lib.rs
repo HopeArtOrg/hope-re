@@ -24,12 +24,14 @@ pub fn run() {
             get_inference_capabilities,
             create_ort_session,
             protect_image,
+            #[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
             cancel_protection,
             check_models_status,
             download_model
         ])
         .setup(|app| {
             use tauri::Manager;
+            #[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
             app.manage(onnx_integration::protection::ProtectionState::default());
 
             #[cfg(target_os = "windows")]
