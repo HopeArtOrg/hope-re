@@ -96,8 +96,11 @@ pub fn run_glaze_model(
         .map_err(|e| format!("Failed to create style index tensor: {}", e))?;
 
     let outputs = session
-        .run(ort::inputs!["input" => input_tensor, "style_index" => style_tensor])
-        .map_err(|e| format!("Failed to run glaze model: {}", e))?;
+        .run(ort::inputs!["images" => input_tensor, "style_index" => style_tensor])
+        .map_err(|e| {
+            log::error!("Glaze model input error: {}", e);
+            format!("Failed to run glaze model: {}", e)
+        })?;
 
     outputs[0]
         .try_extract_scalar::<f32>()
@@ -122,8 +125,11 @@ pub fn run_nightshade_model(
         .map_err(|e| format!("Failed to create target index tensor: {}", e))?;
 
     let outputs = session
-        .run(ort::inputs!["input" => input_tensor, "target_index" => target_tensor])
-        .map_err(|e| format!("Failed to run nightshade model: {}", e))?;
+        .run(ort::inputs!["images" => input_tensor, "target_index" => target_tensor])
+        .map_err(|e| {
+            log::error!("Nightshade model input error: {}", e);
+            format!("Failed to run nightshade model: {}", e)
+        })?;
 
     outputs[0]
         .try_extract_scalar::<f32>()
