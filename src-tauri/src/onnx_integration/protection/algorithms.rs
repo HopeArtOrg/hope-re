@@ -85,7 +85,8 @@ pub fn run_glaze_model(
 ) -> Result<f32, String> {
     let input_tensor = create_image_tensor(input)?;
 
-    let style_tensor = Tensor::from_array(([1_usize], vec![style_index as i32]))
+    let style_data = vec![style_index as i32];
+    let style_tensor = Tensor::from_array(([1_usize], style_data.into_boxed_slice()))
         .map_err(|e| format!("Failed to create style index tensor: {}", e))?;
 
     let outputs = session
@@ -104,7 +105,8 @@ pub fn run_nightshade_model(
 ) -> Result<f32, String> {
     let input_tensor = create_image_tensor(input)?;
 
-    let target_tensor = Tensor::from_array(([1_usize], vec![target_index as i32]))
+    let target_data = vec![target_index as i32];
+    let target_tensor = Tensor::from_array(([1_usize], target_data.into_boxed_slice()))
         .map_err(|e| format!("Failed to create target index tensor: {}", e))?;
 
     let outputs = session
