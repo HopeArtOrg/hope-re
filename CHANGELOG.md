@@ -15,11 +15,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fix STATUS_ACCESS_VIOLATION crash during Glaze/Nightshade inference by using boxed slices for proper tensor data ownership and lifetime management
 - Fix use-after-free in ONNX tensor creation by inlining image tensor creation in Glaze/Nightshade model runners to ensure backing data remains valid throughout session.run() execution
 - Fix ORT input mapping by using positional inputs instead of named inputs to work with ONNX model tensor ordering
+- Fix protection process stuck at 0% on CPU by increasing progress update frequency (every 5 iterations) and reducing SPSA directions from 12 to 4 for faster inference
 - Add enhanced error logging for ONNX model input/output diagnostics to help troubleshoot tensor mapping issues
 
-## [2.1.13] - 2026-05-20
-
 ### Changed
+
+- Re-enable DirectML execution provider on Windows to boost performance for users without NVIDIA GPUs, relying on the memory safety fixes to prevent previous crashes
+- Increase SPSA progress reporting frequency for better UI feedback during long-running protection tasks
 
 - Bump Tauri crate to v2.11.2 and tauri-build to v2.6.2 to match @tauri-apps/api v2.11.0 (resolves version mismatch warning)
 - Bump @tailwindcss/vite from 4.2.4 to 4.3.0

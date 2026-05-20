@@ -221,7 +221,7 @@ pub fn spsa_pgd_on_tile(
             log::info!("PGD iteration {}/{}", k, iterations);
         }
 
-        if iterations > 0 && k % 20 == 0 {
+        if iterations > 0 && k % 5 == 0 {
             let tile_frac = if progress.tile_total > 0 {
                 (progress.tile_current - 1) as f64 / progress.tile_total as f64
             } else {
