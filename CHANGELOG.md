@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.15] - 2026-05-20
+
+### Features
+
+- Add refined `CatIcon` component to replace the legacy sleeping cat SVG doodle, enhancing the studio aesthetic with higher quality line-art
+
+### Fixed
+
+- Remove developer comments from `+page.svelte` and `download-icon.svelte` for cleaner source code production
+
 ## [2.1.14] - 2026-05-20
 
 ### Fixed
