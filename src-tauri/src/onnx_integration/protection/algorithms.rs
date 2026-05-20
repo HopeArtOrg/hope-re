@@ -99,7 +99,7 @@ pub fn run_glaze_model(
 
     let outputs = session
         .run(ort::inputs![
-            "images" => input_tensor.view(),
+            "input" => input_tensor.view(),
             "style_index" => style_tensor.view()
         ])
         .map_err(|e| {
@@ -129,7 +129,7 @@ pub fn run_nightshade_model(
 
     let outputs = session
         .run(ort::inputs![
-            "images" => input_tensor.view(),
+            "input" => input_tensor.view(),
             "target_index" => target_tensor.view()
         ])
         .map_err(|e| {
