@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fix input type mismatch for Glaze and Nightshade ONNX models: cast style_index and target_index from i64 to i32 to match model specification
 - Fix STATUS_ACCESS_VIOLATION crash during Glaze/Nightshade inference by using boxed slices for proper tensor data ownership and lifetime management
 - Fix use-after-free in ONNX tensor creation by inlining image tensor creation in Glaze/Nightshade model runners to ensure backing data remains valid throughout session.run() execution
+- Fix ORT input mapping for multi-input models by switching from positional to named tensor inputs (e.g., "input" => input_tensor)
 
 ## [2.1.13] - 2026-05-20
 
