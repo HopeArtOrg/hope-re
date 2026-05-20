@@ -33,14 +33,16 @@ pub fn load_model(model_path: &std::path::Path) -> Result<Session, String> {
 
     let builder = Session::builder()
         .map_err(|e| format!("Failed to create session builder: {}", e))?
-        .with_optimization_level(ort::session::builder::GraphOptimizationLevel::Level1)
+        .with_optimization_level(ort::session::builder::GraphOptimizationLevel::Level0)
         .map_err(|e| format!("Failed to set optimization level: {}", e))?
         .with_intra_threads(1)
         .map_err(|e| format!("Failed to set intra threads: {}", e))?
         .with_inter_threads(1)
         .map_err(|e| format!("Failed to set inter threads: {}", e))?
         .with_parallel_execution(false)
-        .map_err(|e| format!("Failed to set parallel execution: {}", e))?;
+        .map_err(|e| format!("Failed to set parallel execution: {}", e))?
+        .with_memory_pattern(false)
+        .map_err(|e| format!("Failed to set memory pattern: {}", e))?;
 
     let mut builder = if !eps.is_empty() {
         log::info!("Loading model with {} execution provider(s)", eps.len());
