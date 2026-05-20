@@ -65,7 +65,7 @@ fn create_image_tensor(input: &Array4<f32>) -> Result<Tensor<f32>, String> {
     .map_err(|e| format!("Failed to create input tensor: {}", e))
 }
 
-fn create_index_tensor(index: i32) -> Result<Tensor<i32>, String> {
+fn create_index_tensor(index: i64) -> Result<Tensor<i64>, String> {
     Tensor::from_array(([1_usize], vec![index].into_boxed_slice()))
         .map_err(|e| format!("Failed to create index tensor: {}", e))
 }
@@ -88,7 +88,7 @@ pub fn run_glaze_model(
     style_index: i64,
 ) -> Result<f32, String> {
     let input_tensor = create_image_tensor(input)?;
-    let style_tensor = create_index_tensor(style_index as i32)?;
+    let style_tensor = create_index_tensor(style_index)?;
 
     let outputs = session
         .run(ort::inputs![input_tensor, style_tensor])
@@ -108,7 +108,7 @@ pub fn run_nightshade_model(
     target_index: i64,
 ) -> Result<f32, String> {
     let input_tensor = create_image_tensor(input)?;
-    let target_tensor = create_index_tensor(target_index as i32)?;
+    let target_tensor = create_index_tensor(target_index)?;
 
     let outputs = session
         .run(ort::inputs![input_tensor, target_tensor])
