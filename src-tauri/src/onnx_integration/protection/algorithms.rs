@@ -96,9 +96,15 @@ pub fn run_glaze_model(
         .map_err(|e| format!("Failed to create style index tensor: {}", e))?;
 
     let outputs = session
-        .run(ort::inputs!["images" => input_tensor, "style_index" => style_tensor])
+        .run(ort::inputs![input_tensor, style_tensor])
         .map_err(|e| {
-            log::error!("Glaze model input error: {}", e);
+            let err_str = format!("{}", e);
+            log::error!("Glaze model input error: {}", err_str);
+            if err_str.contains("expected input") || err_str.contains("input name") {
+                log::info!(
+                    "Note: ONNX model may use different input names than positional indices"
+                );
+            }
             format!("Failed to run glaze model: {}", e)
         })?;
 
@@ -125,9 +131,15 @@ pub fn run_nightshade_model(
         .map_err(|e| format!("Failed to create target index tensor: {}", e))?;
 
     let outputs = session
-        .run(ort::inputs!["images" => input_tensor, "target_index" => target_tensor])
+        .run(ort::inputs![input_tensor, target_tensor])
         .map_err(|e| {
-            log::error!("Nightshade model input error: {}", e);
+            let err_str = format!("{}", e);
+            log::error!("Nightshade model input error: {}", err_str);
+            if err_str.contains("expected input") || err_str.contains("input name") {
+                log::info!(
+                    "Note: ONNX model may use different input names than positional indices"
+                );
+            }
             format!("Failed to run nightshade model: {}", e)
         })?;
 
