@@ -147,7 +147,8 @@ export function useProtection() {
       stopProgressListener();
       progress = 0;
       progressStatus = "error";
-      progressMessage = "Failed to protect image. Please try again.";
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      progressMessage = errorMessage || "Failed to protect image. Please try again.";
       toast.error("Protection failed");
       console.error("Protection error:", error);
 

@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.14] - 2026-05-20
+
+### Fixed
+
+- Fix error status bar displaying generic error message instead of actual error details when image protection fails
+- Make AlgorithmParams validation less strict by warning instead of erroring on very small epsilon values, preventing false rejections of valid low-intensity protection settings
+- Improve error reporting by showing actual backend error messages in the UI status bar instead of generic fallback message
+
 ## [2.1.13] - 2026-05-20
 
 ### Changed

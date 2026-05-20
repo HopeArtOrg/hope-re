@@ -41,11 +41,18 @@ pub struct AlgorithmParams {
 
 impl AlgorithmParams {
     pub fn validate(&self) -> Result<(), String> {
-        if !self.epsilon.is_finite() || self.epsilon <= 0.0 {
+        if !self.epsilon.is_finite() {
             return Err(format!(
-                "epsilon must be a positive finite number, got {}",
+                "epsilon must be a finite number, got {}",
                 self.epsilon
             ));
+        }
+
+        if self.epsilon <= 0.0 {
+            log::warn!(
+                "epsilon is very small ({}) which may cause poor protection. Consider increasing intensity.",
+                self.epsilon
+            );
         }
 
         if !self.alpha_multiplier.is_finite() || self.alpha_multiplier <= 0.0 {
