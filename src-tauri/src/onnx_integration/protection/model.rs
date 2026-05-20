@@ -33,8 +33,10 @@ pub fn load_model(model_path: &std::path::Path) -> Result<Session, String> {
 
     let builder = Session::builder()
         .map_err(|e| format!("Failed to create session builder: {}", e))?
-        .with_optimization_level(ort::session::builder::GraphOptimizationLevel::Level3)
-        .map_err(|e| format!("Failed to set optimization level: {}", e))?;
+        .with_optimization_level(ort::session::builder::GraphOptimizationLevel::Level1)
+        .map_err(|e| format!("Failed to set optimization level: {}", e))?
+        .with_execution_mode(ort::session::builder::ExecutionMode::Sequential)
+        .map_err(|e| format!("Failed to set execution mode: {}", e))?;
 
     let mut builder = if !eps.is_empty() {
         log::info!("Loading model with {} execution provider(s)", eps.len());

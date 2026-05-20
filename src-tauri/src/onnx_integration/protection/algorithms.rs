@@ -122,6 +122,7 @@ pub fn run_nightshade_model(
     let target_tensor = Tensor::from_array(([1_usize], target_data))
         .map_err(|e| format!("Failed to create target tensor: {}", e))?;
 
+    log::info!("Running nightshade model session...");
     let outputs = session
         .run(ort::inputs![input_tensor, target_tensor])
         .map_err(|e| {
