@@ -16,7 +16,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fix use-after-free in ONNX tensor creation by inlining image tensor creation in Glaze/Nightshade model runners to ensure backing data remains valid throughout session.run() execution
 - Fix ORT input mapping by using positional inputs instead of named inputs to work with ONNX model tensor ordering
 - Fix protection process stuck at 0% on CPU by increasing progress update frequency (every 5 iterations) and reducing SPSA directions from 12 to 4 for faster inference
+- Fix missing action buttons (save/inspect) on rendered image by adding required group container class to allow hover visibility
+- Fix inability to download artwork while zoomed in by adding download action directly to the fullscreen inspection view
 - Add enhanced error logging for ONNX model input/output diagnostics to help troubleshoot tensor mapping issues
+
+### Features
+
+- Add custom hand-sketched `DownloadIcon` component as part of the digitized art studio aesthetic, replacing standard SVG code with a reusable component
 
 ### Changed
 
