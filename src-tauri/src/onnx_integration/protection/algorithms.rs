@@ -83,7 +83,13 @@ pub fn run_glaze_model(
     input: &Array4<f32>,
     style_index: i64,
 ) -> Result<f32, String> {
-    let input_tensor = create_image_tensor(input)?;
+    let shape = input.shape();
+    let input_data: Vec<f32> = input.iter().copied().collect();
+    let input_tensor = Tensor::from_array((
+        [shape[0], shape[1], shape[2], shape[3]],
+        input_data.into_boxed_slice(),
+    ))
+    .map_err(|e| format!("Failed to create input tensor: {}", e))?;
 
     let style_data = vec![style_index as i32];
     let style_tensor = Tensor::from_array(([1_usize], style_data.into_boxed_slice()))
@@ -103,7 +109,13 @@ pub fn run_nightshade_model(
     input: &Array4<f32>,
     target_index: i64,
 ) -> Result<f32, String> {
-    let input_tensor = create_image_tensor(input)?;
+    let shape = input.shape();
+    let input_data: Vec<f32> = input.iter().copied().collect();
+    let input_tensor = Tensor::from_array((
+        [shape[0], shape[1], shape[2], shape[3]],
+        input_data.into_boxed_slice(),
+    ))
+    .map_err(|e| format!("Failed to create input tensor: {}", e))?;
 
     let target_data = vec![target_index as i32];
     let target_tensor = Tensor::from_array(([1_usize], target_data.into_boxed_slice()))
