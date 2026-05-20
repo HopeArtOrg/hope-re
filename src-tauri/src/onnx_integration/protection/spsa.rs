@@ -1,11 +1,11 @@
 use ndarray::{Array, Array4};
 use ort::session::Session;
+use std::sync::atomic::Ordering;
 use tauri::Emitter;
 
-use std::sync::atomic::Ordering;
 use super::types::{
-    AlgorithmParams, ModelRunFn, ProtectionProgress, ProtectionState, TileProgress,
-    SPSA_DIRECTIONS_PER_ITER, TILE_SIZE,
+    AlgorithmParams, ModelRunFn, ProtectionProgress, ProtectionState, SPSA_DIRECTIONS_PER_ITER,
+    TILE_SIZE, TileProgress,
 };
 
 struct Xoshiro128 {
@@ -46,28 +46,23 @@ impl Xoshiro128 {
     }
 }
 
-fn fill_spsa_direction(buf: &mut [f32], rng: &mut Xoshiro128) {
-    for v in buf.iter_mut() {
-        *v = if rng.next_bool() { 1.0 } else { -1.0 };
-    }
+fn generate_spsa_direction(num_elements: usize, rng: &mut Xoshiro128) -> Vec<f32> {
+    (0..num_elements)
+        .map(|_| if rng.next_bool() { 1.0 } else { -1.0 })
+        .collect()
 }
 
 fn expand_edge_weights(edge_weights: &[f32], num_elements: usize) -> Vec<f32> {
     let tile_pixels = (TILE_SIZE * TILE_SIZE) as usize;
     let mut edge_flat = vec![1.0f32; num_elements];
-    for i in 0..tile_pixels {
-        let ew = if i < edge_weights.len() {
-            edge_weights[i]
-        } else {
-            1.0
-        };
+    edge_weights.iter().enumerate().for_each(|(i, &ew)| {
         let base = i * 3;
         if base + 2 < num_elements {
             edge_flat[base] = ew;
             edge_flat[base + 1] = ew;
             edge_flat[base + 2] = ew;
         }
-    }
+    });
     edge_flat
 }
 
@@ -86,6 +81,8 @@ pub fn spsa_pgd_on_tile(
     let shape = base_tile.shape();
     let num_elements = shape.iter().product::<usize>();
     let mut perturbation = vec![0.0f32; num_elements];
+    let mut momentum = vec![0.0f32; num_elements];
+
     let epsilon = params.epsilon;
     let alpha = epsilon * params.alpha_multiplier / iterations.max(1) as f32;
     let ck_initial = epsilon * 0.1;
@@ -94,167 +91,175 @@ pub fn spsa_pgd_on_tile(
     let edge_flat = expand_edge_weights(edge_weights, num_elements);
     let base_flat: Vec<f32> = base_tile.iter().copied().collect();
 
-    let global_seed = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .unwrap_or_else(|_| std::time::Duration::from_secs(0))
-        .as_nanos() as u64;
-    let mut rng = Xoshiro128::new(global_seed);
-
-    let mut direction = vec![0.0f32; num_elements];
-    let mut plus_data = vec![0.0f32; num_elements];
-    let mut minus_data = vec![0.0f32; num_elements];
-    let mut grad_estimate = vec![0.0f32; num_elements];
-    let mut momentum = vec![0.0f32; num_elements];
-
-    let tile_shape = (shape[0], shape[1], shape[2], shape[3]);
-    let plus_tile = Array::from_shape_vec(tile_shape, plus_data.clone()).map_err(|e| {
-        format!(
-            "Failed to create plus_tile with shape {:?}: {}",
-            tile_shape, e
-        )
-    })?;
-    let minus_tile = Array::from_shape_vec(tile_shape, minus_data.clone()).map_err(|e| {
-        format!(
-            "Failed to create minus_tile with shape {:?}: {}",
-            tile_shape, e
-        )
-    })?;
-    let mut plus_tile = plus_tile.to_owned();
-    let mut minus_tile = minus_tile.to_owned();
-
-    let mut consecutive_failures = 0u32;
-    let max_consecutive_failures = 5u32;
+    let mut rng = Xoshiro128::new(get_nanos_seed());
 
     for k in 0..iterations {
         if state.is_cancelled.load(Ordering::SeqCst) {
             return Err("Protection cancelled".to_string());
         }
+
         let ck = ck_initial / ((k + 1) as f32).powf(0.101);
         let ak = alpha / ((k + 1) as f32).powf(0.602);
 
-        for v in grad_estimate.iter_mut() {
-            *v = 0.0;
-        }
-        let mut valid_directions = 0u32;
-
-        for _d in 0..SPSA_DIRECTIONS_PER_ITER {
-            fill_spsa_direction(&mut direction, &mut rng);
-
-            for i in 0..num_elements {
-                let base_val = base_flat[i] + perturbation[i];
-                let delta = ck * direction[i];
-                plus_data[i] = (base_val + delta).clamp(0.0, 1.0);
-                minus_data[i] = (base_val - delta).clamp(0.0, 1.0);
-            }
-
-            let p_loss_diff = if perceptual_weight > 0.0 {
-                let inv_n = 1.0 / num_elements as f32;
-                let mut p_diff_accum = 0.0f32;
-                for i in 0..num_elements {
-                    let diff_plus = plus_data[i] - base_flat[i];
-                    let diff_minus = minus_data[i] - base_flat[i];
-                    let inv_edge = (1.5 - edge_flat[i]).clamp(0.5, 1.5);
-                    p_diff_accum += (diff_plus * diff_plus - diff_minus * diff_minus) * inv_edge;
+        let (grad_accum, valid_count) = (0..SPSA_DIRECTIONS_PER_ITER).try_fold(
+            (vec![0.0f32; num_elements], 0u32),
+            |(mut acc, mut count), _| {
+                if state.is_cancelled.load(Ordering::SeqCst) {
+                    return Err("Protection cancelled".to_string());
                 }
-                perceptual_weight * p_diff_accum * inv_n * 100.0
-            } else {
-                0.0
-            };
 
-            let plus_slice = plus_tile.as_slice_mut().unwrap();
-            plus_slice.copy_from_slice(&plus_data);
+                let direction = generate_spsa_direction(num_elements, &mut rng);
 
-            let minus_slice = minus_tile.as_slice_mut().unwrap();
-            minus_slice.copy_from_slice(&minus_data);
+                let plus_data: Vec<f32> = base_flat
+                    .iter()
+                    .zip(perturbation.iter())
+                    .zip(direction.iter())
+                    .map(|((b, p), d)| (b + p + ck * d).clamp(0.0, 1.0))
+                    .collect();
 
-            let loss_plus = match run_model(session, &plus_tile) {
-                Ok(v) => v,
-                Err(e) => {
-                    consecutive_failures += 1;
-                    if consecutive_failures >= max_consecutive_failures {
-                        return Err(format!(
-                            "ONNX model inference failed {} times consecutively at iteration {}: {}",
-                            max_consecutive_failures, k, e
-                        ));
-                    }
-                    log::warn!("Model inference failed (plus) at iter {}: {}", k, e);
-                    continue;
-                }
-            };
-            let loss_minus = match run_model(session, &minus_tile) {
-                Ok(v) => v,
-                Err(e) => {
-                    consecutive_failures += 1;
-                    if consecutive_failures >= max_consecutive_failures {
-                        return Err(format!(
-                            "ONNX model inference failed {} times consecutively at iteration {}: {}",
-                            max_consecutive_failures, k, e
-                        ));
-                    }
-                    log::warn!("Model inference failed (minus) at iter {}: {}", k, e);
-                    continue;
-                }
-            };
+                let minus_data: Vec<f32> = base_flat
+                    .iter()
+                    .zip(perturbation.iter())
+                    .zip(direction.iter())
+                    .map(|((b, p), d)| (b + p - ck * d).clamp(0.0, 1.0))
+                    .collect();
 
-            consecutive_failures = 0;
-            valid_directions += 1;
-
-            let diff_over_2ck = (loss_plus - loss_minus + p_loss_diff) / (2.0 * ck);
-            for i in 0..num_elements {
-                grad_estimate[i] += diff_over_2ck * direction[i];
-            }
-        }
-
-        if valid_directions > 0 {
-            let scale = 1.0 / valid_directions as f32;
-            for i in 0..num_elements {
-                let weighted_grad = grad_estimate[i] * scale * edge_flat[i];
-                momentum[i] = MOMENTUM_BETA * momentum[i] + (1.0 - MOMENTUM_BETA) * weighted_grad;
-                let sign = if momentum[i] > 0.0 {
-                    1.0
-                } else if momentum[i] < 0.0 {
-                    -1.0
+                let p_loss_diff = if perceptual_weight > 0.0 {
+                    calculate_perceptual_diff(
+                        &base_flat,
+                        &plus_data,
+                        &minus_data,
+                        &edge_flat,
+                        perceptual_weight,
+                    )
                 } else {
                     0.0
                 };
-                perturbation[i] -= ak * sign;
-                perturbation[i] = perturbation[i].clamp(-epsilon, epsilon);
-            }
-        }
 
-        if cfg!(debug_assertions) && k % 50 == 0 {
-            log::info!("PGD iteration {}/{}", k, iterations);
-        }
+                let tile_shape = (shape[0], shape[1], shape[2], shape[3]);
+                let loss_plus = run_model(
+                    session,
+                    &Array::from_shape_vec(tile_shape, plus_data).map_err(|e| e.to_string())?,
+                )?;
+                let loss_minus = run_model(
+                    session,
+                    &Array::from_shape_vec(tile_shape, minus_data).map_err(|e| e.to_string())?,
+                )?;
 
-        if iterations > 0 && k % 5 == 0 {
-            let tile_frac = if progress.tile_total > 0 {
-                (progress.tile_current - 1) as f64 / progress.tile_total as f64
-            } else {
-                0.0
-            };
-            let iter_frac = (k + 1) as f64 / iterations as f64;
-            let per_tile = 1.0 / progress.tile_total.max(1) as f64;
-            let percent = ((tile_frac + iter_frac * per_tile) * 95.0).min(95.0);
-            let _ = progress.app.emit(
-                "protection-progress",
-                ProtectionProgress {
-                    stage: "processing".to_string(),
-                    tile_current: progress.tile_current,
-                    tile_total: progress.tile_total,
-                    iteration_current: k + 1,
-                    iteration_total: iterations,
-                    percent,
-                },
+                let diff_over_2ck = (loss_plus - loss_minus + p_loss_diff) / (2.0 * ck);
+                acc.iter_mut().zip(direction.iter()).for_each(|(a, d)| {
+                    *a += diff_over_2ck * d;
+                });
+
+                Ok((acc, count + 1))
+            },
+        )?;
+
+        if valid_count > 0 {
+            update_perturbation(
+                &mut perturbation,
+                &mut momentum,
+                &grad_accum,
+                &edge_flat,
+                valid_count,
+                ak,
+                epsilon,
             );
+        }
+
+        if k % 5 == 0 {
+            emit_tile_progress(progress, k + 1, iterations);
         }
     }
 
-    let result_data: Vec<f32> = base_flat
+    let result_data = base_flat
         .iter()
         .zip(perturbation.iter())
-        .map(|(b, p)| (*b + *p).clamp(0.0, 1.0))
+        .map(|(b, p)| (b + p).clamp(0.0, 1.0))
         .collect();
 
     Array::from_shape_vec((shape[0], shape[1], shape[2], shape[3]), result_data)
-        .map_err(|e| format!("Failed to reshape result tile: {}", e))
+        .map_err(|e| format!("Reshape error: {}", e))
+}
+
+fn calculate_perceptual_diff(
+    base: &[f32],
+    plus: &[f32],
+    minus: &[f32],
+    edges: &[f32],
+    weight: f32,
+) -> f32 {
+    let n = base.len() as f32;
+    let diff_sum: f32 = base
+        .iter()
+        .zip(plus.iter())
+        .zip(minus.iter())
+        .zip(edges.iter())
+        .map(|(((b, p), m), e)| {
+            let dp = p - b;
+            let dm = m - b;
+            let inv_edge = (1.5 - e).clamp(0.5, 1.5);
+            (dp * dp - dm * dm) * inv_edge
+        })
+        .sum();
+    weight * diff_sum * (1.0 / n) * 100.0
+}
+
+fn update_perturbation(
+    perturbation: &mut [f32],
+    momentum: &mut [f32],
+    grad_accum: &[f32],
+    edges: &[f32],
+    count: u32,
+    ak: f32,
+    epsilon: f32,
+) {
+    let scale = 1.0 / count as f32;
+    perturbation
+        .iter_mut()
+        .zip(momentum.iter_mut())
+        .zip(grad_accum.iter())
+        .zip(edges.iter())
+        .for_each(|(((p, m), g), e)| {
+            let weighted_grad = g * scale * e;
+            *m = MOMENTUM_BETA * *m + (1.0 - MOMENTUM_BETA) * weighted_grad;
+            let sign = if *m > 0.0 {
+                1.0
+            } else if *m < 0.0 {
+                -1.0
+            } else {
+                0.0
+            };
+            *p = (*p - ak * sign).clamp(-epsilon, epsilon);
+        });
+}
+
+fn emit_tile_progress(progress: &TileProgress, k: u32, iterations: u32) {
+    let tile_frac = if progress.tile_total > 0 {
+        (progress.tile_current - 1) as f64 / progress.tile_total as f64
+    } else {
+        0.0
+    };
+    let iter_frac = k as f64 / iterations as f64;
+    let per_tile = 1.0 / progress.tile_total.max(1) as f64;
+    let percent = ((tile_frac + iter_frac * per_tile) * 95.0).min(95.0);
+
+    let _ = progress.app.emit(
+        "protection-progress",
+        ProtectionProgress {
+            stage: "processing".to_string(),
+            tile_current: progress.tile_current,
+            tile_total: progress.tile_total,
+            iteration_current: k,
+            iteration_total: iterations,
+            percent,
+        },
+    );
+}
+
+fn get_nanos_seed() -> u64 {
+    std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_nanos() as u64
 }

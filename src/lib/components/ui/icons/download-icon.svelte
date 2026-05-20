@@ -9,8 +9,8 @@
      class={cn("size-5", className)}
      {...rest}
      xmlns="http://www.w3.org/2000/svg">
-  <!-- Refined scale and position to match the visual weight of Lucide icons while keeping the quill style -->
-  <g transform="translate(35, 35) scale(0.86)">
+  <!-- Scale increased to match visual weight of the magnifying glass icon -->
+  <g transform="translate(13, 13) scale(0.95)">
     <path d="M511.83,13.758c0.008-0.009-0.632-3.985-1.553-6.093c-2.799-6.451-10.308-9.421-16.828-6.596
       C272.197,97.692,88.099,282.089,0.965,494.313c-2.688,6.554,0.435,14.029,6.963,16.725c1.587,0.648,3.234,0.956,4.855,0.956
       c5.018,0,9.788-3.004,11.819-7.927c8.311-20.25,17.792-40.149,27.87-59.827c0.316,0.06,0.58,0.282,0.896,0.333

@@ -91,11 +91,13 @@ pub struct ProtectionProgress {
     pub percent: f64,
 }
 
+// Construction is managed by Tauri's app.manage() system, which rustc cannot track
 #[allow(unused)]
 pub struct ProtectionState {
     pub is_cancelled: AtomicBool,
 }
 
+// Construction is managed by Tauri's app.manage() system
 #[allow(unused)]
 impl Default for ProtectionState {
     fn default() -> Self {
