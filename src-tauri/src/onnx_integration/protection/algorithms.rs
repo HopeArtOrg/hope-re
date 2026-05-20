@@ -3,27 +3,6 @@ use ort::session::Session;
 use ort::value::Tensor;
 
 use super::types::AlgorithmParams;
-
-pub fn debug_model_io(session: &Session) -> String {
-    let mut info = String::new();
-    info.push_str("Model Inputs: [");
-    for (i, input) in session.inputs().iter().enumerate() {
-        if i > 0 {
-            info.push_str(", ");
-        }
-        info.push_str(&format!("'{}'", input.name()));
-    }
-    info.push_str("], Model Outputs: [");
-    for (i, output) in session.outputs().iter().enumerate() {
-        if i > 0 {
-            info.push_str(", ");
-        }
-        info.push_str(&format!("'{}'", output.name()));
-    }
-    info.push(']');
-    info
-}
-
 pub fn get_noise_params(intensity: f32) -> AlgorithmParams {
     AlgorithmParams {
         epsilon: intensity * 0.24 / 0.5,
