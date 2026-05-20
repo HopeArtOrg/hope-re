@@ -15,16 +15,19 @@ pub struct InferenceCapabilities {
 
 #[cfg(target_os = "windows")]
 pub(super) fn build_execution_providers() -> Vec<ort::ep::ExecutionProviderDispatch> {
-    use ort::ep::{DirectML, ExecutionProvider, CUDA};
+    use ort::ep::{ExecutionProvider, CUDA};
 
     let mut eps: Vec<ort::ep::ExecutionProviderDispatch> = Vec::new();
 
     if has_nvidia_gpu() && CUDA::default().is_available().unwrap_or(false) {
         eps.push(CUDA::default().build());
     }
-    if DirectML::default().is_available().unwrap_or(false) {
-        eps.push(DirectML::default().build());
-    }
+
+    // DirectML is disabled because it causes STATUS_ACCESS_VIOLATION with jax2onnx-exported models
+    // due to partial node assignment and unsupported ops segfaulting during fallback.
+    // if DirectML::default().is_available().unwrap_or(false) {
+    //     eps.push(DirectML::default().build());
+    // }
 
     eps
 }
