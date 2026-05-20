@@ -1,9 +1,10 @@
+use std::sync::atomic::AtomicBool;
 use ndarray::Array4;
 use ort::session::Session;
 
 pub const TILE_SIZE: u32 = 224;
 pub const TILE_OVERLAP: u32 = 32;
-pub const SPSA_DIRECTIONS_PER_ITER: usize = 12;
+pub const SPSA_DIRECTIONS_PER_ITER: usize = 4;
 
 pub type ModelRunFn = dyn FnMut(&mut Session, &Array4<f32>) -> Result<f32, String>;
 
@@ -41,11 +42,18 @@ pub struct AlgorithmParams {
 
 impl AlgorithmParams {
     pub fn validate(&self) -> Result<(), String> {
-        if !self.epsilon.is_finite() || self.epsilon <= 0.0 {
+        if !self.epsilon.is_finite() {
             return Err(format!(
-                "epsilon must be a positive finite number, got {}",
+                "epsilon must be a finite number, got {}",
                 self.epsilon
             ));
+        }
+
+        if self.epsilon <= 0.0 {
+            log::warn!(
+                "epsilon is very small ({}) which may cause poor protection. Consider increasing intensity.",
+                self.epsilon
+            );
         }
 
         if !self.alpha_multiplier.is_finite() || self.alpha_multiplier <= 0.0 {
@@ -81,4 +89,18 @@ pub struct ProtectionProgress {
     pub iteration_current: u32,
     pub iteration_total: u32,
     pub percent: f64,
+}
+
+#[allow(unused)]
+pub struct ProtectionState {
+    pub is_cancelled: AtomicBool,
+}
+
+#[allow(unused)]
+impl Default for ProtectionState {
+    fn default() -> Self {
+        Self {
+            is_cancelled: AtomicBool::new(false),
+        }
+    }
 }

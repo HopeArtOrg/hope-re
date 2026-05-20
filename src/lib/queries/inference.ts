@@ -20,3 +20,7 @@ export function useInferenceCapabilities() {
     retry: 2,
   }));
 }
+
+export async function cancelProtection() {
+  await invoke("cancel_protection");
+}

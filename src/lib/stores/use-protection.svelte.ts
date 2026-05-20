@@ -6,7 +6,7 @@ import type {
 import { listen } from "@tauri-apps/api/event";
 import { toast } from "svelte-sonner";
 
-import { buildProtectionSettings, useProtectImage } from "$lib/queries";
+import { buildProtectionSettings, cancelProtection, useProtectImage } from "$lib/queries";
 
 type ProtectionProgress = {
   stage: string;
@@ -147,7 +147,8 @@ export function useProtection() {
       stopProgressListener();
       progress = 0;
       progressStatus = "error";
-      progressMessage = "Failed to protect image. Please try again.";
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      progressMessage = errorMessage || "Failed to protect image. Please try again.";
       toast.error("Protection failed");
       console.error("Protection error:", error);
 
@@ -169,8 +170,9 @@ export function useProtection() {
     renderQuality = [...DEFAULTS.renderQuality];
   }
 
-  function resetProgress() {
+  async function resetProgress() {
     stopProgressListener();
+    await cancelProtection();
     progress = 0;
     progressStatus = "idle";
     progressMessage = "";

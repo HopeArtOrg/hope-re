@@ -118,13 +118,15 @@
           {/if}
 
           {#if protection.resultImage}
-            <BaseImagePlaceholder imageSrc={protection.resultImage}
-                                  label="Rendered Canvas"
-                                  containerClass="canvas-sheet p-8"
-                                  readonly>
-              <RenderedImageActions onDownload={handleDownload}
-                                    onFullscreen={image.handleFullscreen} />
-            </BaseImagePlaceholder>
+            <div class="relative group">
+              <BaseImagePlaceholder imageSrc={protection.resultImage}
+                                    label="Rendered Canvas"
+                                    containerClass="canvas-sheet p-8"
+                                    readonly>
+                <RenderedImageActions onDownload={handleDownload}
+                                      onFullscreen={image.handleFullscreen} />
+              </BaseImagePlaceholder>
+            </div>
           {:else}
             <BaseImagePlaceholder imageSrc={image.originalImage}
                                   label="Original Canvas"
@@ -156,7 +158,7 @@
             </div>
           </div>
 
-          <div class="relative">
+          <div class="relative group">
             <BaseImagePlaceholder imageSrc={protection.resultImage}
                                   label="Rendered Canvas"
                                   containerClass="canvas-sheet p-10 h-full"
@@ -267,4 +269,5 @@
 </div>
 
 <ImageFullscreenDialog bind:open={image.fullscreenOpen}
-                       imageSrc={protection.resultImage} />
+                       imageSrc={protection.resultImage}
+                       onDownload={handleDownload} />

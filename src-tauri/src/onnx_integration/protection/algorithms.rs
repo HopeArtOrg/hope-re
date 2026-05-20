@@ -3,7 +3,6 @@ use ort::session::Session;
 use ort::value::Tensor;
 
 use super::types::AlgorithmParams;
-
 pub fn get_noise_params(intensity: f32) -> AlgorithmParams {
     AlgorithmParams {
         epsilon: intensity * 0.24 / 0.5,
@@ -56,18 +55,15 @@ pub fn get_nightshade_target_index(target: &str) -> i64 {
     }
 }
 
-fn create_image_tensor(input: &Array4<f32>) -> Result<Tensor<f32>, String> {
-    let shape = input.shape();
-    let data: Vec<f32> = input.iter().copied().collect();
-    Tensor::from_array((
-        [shape[0], shape[1], shape[2], shape[3]],
-        data.into_boxed_slice(),
-    ))
-    .map_err(|e| format!("Failed to create input tensor: {}", e))
-}
-
 pub fn run_noise_model(session: &mut Session, input: &Array4<f32>) -> Result<f32, String> {
-    let input_tensor = create_image_tensor(input)?;
+    let shape = input.shape();
+    let data: Box<[f32]> = input
+        .iter()
+        .copied()
+        .collect::<Vec<f32>>()
+        .into_boxed_slice();
+    let input_tensor = Tensor::from_array(([shape[0], shape[1], shape[2], shape[3]], data))
+        .map_err(|e| format!("Failed to create input tensor: {}", e))?;
 
     let outputs = session
         .run(ort::inputs![input_tensor])
@@ -83,14 +79,25 @@ pub fn run_glaze_model(
     input: &Array4<f32>,
     style_index: i64,
 ) -> Result<f32, String> {
-    let input_tensor = create_image_tensor(input)?;
+    let shape = input.shape();
+    let input_data: Box<[f32]> = input
+        .iter()
+        .copied()
+        .collect::<Vec<f32>>()
+        .into_boxed_slice();
+    let input_tensor = Tensor::from_array(([shape[0], shape[1], shape[2], shape[3]], input_data))
+        .map_err(|e| format!("Failed to create input tensor: {}", e))?;
 
-    let style_tensor = Tensor::from_array(([1_usize], vec![style_index]))
-        .map_err(|e| format!("Failed to create style index tensor: {}", e))?;
+    let style_data: Box<[i32]> = Box::new([style_index as i32]);
+    let style_tensor = Tensor::from_array(([1_usize], style_data))
+        .map_err(|e| format!("Failed to create style tensor: {}", e))?;
 
     let outputs = session
         .run(ort::inputs![input_tensor, style_tensor])
-        .map_err(|e| format!("Failed to run glaze model: {}", e))?;
+        .map_err(|e| {
+            log::error!("Glaze model error: {}", e);
+            format!("Failed to run glaze model: {}", e)
+        })?;
 
     outputs[0]
         .try_extract_scalar::<f32>()
@@ -102,14 +109,25 @@ pub fn run_nightshade_model(
     input: &Array4<f32>,
     target_index: i64,
 ) -> Result<f32, String> {
-    let input_tensor = create_image_tensor(input)?;
+    let shape = input.shape();
+    let input_data: Box<[f32]> = input
+        .iter()
+        .copied()
+        .collect::<Vec<f32>>()
+        .into_boxed_slice();
+    let input_tensor = Tensor::from_array(([shape[0], shape[1], shape[2], shape[3]], input_data))
+        .map_err(|e| format!("Failed to create input tensor: {}", e))?;
 
-    let target_tensor = Tensor::from_array(([1_usize], vec![target_index]))
-        .map_err(|e| format!("Failed to create target index tensor: {}", e))?;
+    let target_data: Box<[i32]> = Box::new([target_index as i32]);
+    let target_tensor = Tensor::from_array(([1_usize], target_data))
+        .map_err(|e| format!("Failed to create target tensor: {}", e))?;
 
     let outputs = session
         .run(ort::inputs![input_tensor, target_tensor])
-        .map_err(|e| format!("Failed to run nightshade model: {}", e))?;
+        .map_err(|e| {
+            log::error!("Nightshade model error: {}", e);
+            format!("Failed to run nightshade model: {}", e)
+        })?;
 
     outputs[0]
         .try_extract_scalar::<f32>()

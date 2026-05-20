@@ -15,10 +15,18 @@ pub fn load_model(model_path: &std::path::Path) -> Result<Session, String> {
 
     if is_git_lfs_pointer(&model_bytes) {
         return Err(format!(
-            "Model at {:?} is a Git LFS pointer ({}B), not an actual ONNX file. Run `git lfs pull` to download the real model",
+            "Model at {:?} is a Git LFS pointer ({}B), not the actual ONNX model.\nThe model files are not downloaded. Please run: git lfs pull\nOr download models from the app settings if Git LFS is not available.",
             model_path,
             model_bytes.len()
         ));
+    }
+
+    if model_bytes.len() < 1000 {
+        log::warn!(
+            "Model file {:?} is suspiciously small ({}B), may not be a valid ONNX file",
+            model_path,
+            model_bytes.len()
+        );
     }
 
     let eps = build_execution_providers();

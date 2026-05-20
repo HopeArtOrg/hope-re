@@ -6,8 +6,8 @@ mod onnx_stubs;
 mod system_info;
 
 use commands::{
-    check_models_status, create_ort_session, download_model, get_inference_capabilities,
-    get_system_info, protect_image,
+    cancel_protection, check_models_status, create_ort_session, download_model,
+    get_inference_capabilities, get_system_info, protect_image,
 };
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -24,13 +24,18 @@ pub fn run() {
             get_inference_capabilities,
             create_ort_session,
             protect_image,
+            #[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
+            cancel_protection,
             check_models_status,
             download_model
         ])
         .setup(|app| {
+            use tauri::Manager;
+            #[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
+            app.manage(onnx_integration::protection::ProtectionState::default());
+
             #[cfg(target_os = "windows")]
             {
-                use tauri::Manager;
                 if let Some(window) = app.get_webview_window("main") {
                     let _ = window.set_decorations(false);
                 }

@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.14] - 2026-05-20
+
+### Fixed
+
+- Fix error status bar displaying generic error message instead of actual error details when image protection fails
+- Make AlgorithmParams validation less strict by warning instead of erroring on very small epsilon values, preventing false rejections of valid low-intensity protection settings
+- Improve error reporting by showing actual backend error messages in the UI status bar instead of generic fallback message
+- Fix input type mismatch for Glaze and Nightshade ONNX models: cast style_index and target_index from i64 to i32 to match model specification
+- Fix STATUS_ACCESS_VIOLATION crash during Glaze/Nightshade inference by using boxed slices for proper tensor data ownership and lifetime management
+- Fix use-after-free in ONNX tensor creation by inlining image tensor creation in Glaze/Nightshade model runners to ensure backing data remains valid throughout session.run() execution
+- Fix ORT input mapping by using positional inputs instead of named inputs to work with ONNX model tensor ordering
+- Fix protection process stuck at 0% on CPU by increasing progress update frequency (every 5 iterations) and reducing SPSA directions from 12 to 4 for faster inference
+- Fix backend processing continuing after cancellation by implementing thread-safe `AtomicBool` checks in all protection loops
+- Fix missing action buttons (save/inspect) on rendered image by adding required group container class to allow hover visibility
+- Fix inability to download artwork while zoomed in by adding download action directly to the fullscreen inspection view
+- Add enhanced error logging for ONNX model input/output diagnostics to help troubleshoot tensor mapping issues
+
+### Features
+
+- Add custom hand-sketched `DownloadIcon` component as part of the digitized art studio aesthetic, using a balanced quill design that matches the visual weight of Lucide icons
+
+### Changed
+
+- Re-disable DirectML execution provider on Windows due to persistent `STATUS_ACCESS_VIOLATION` crashes that occur even with minimal graph optimization and sequential execution; fallback to stable CPU/CUDA inference
+- Refactor backend protection pipeline into a clean functional style using closures, pipelines, and iterator combinators for better maintainability, performance, and lifetime safety
+- Increase SPSA progress reporting frequency for better UI feedback during long-running protection tasks
+
 ## [2.1.13] - 2026-05-20
 
 ### Changed
@@ -541,4 +568,3 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Security
 
 - Update SvelteKit and Svelte packages to avoid CVE from older versions ([#20](https://github.com/HopeArtOrg/hope-re/pull/20))
-

@@ -7,12 +7,14 @@
     ZoomOutIcon,
   } from "@lucide/svelte";
 
+  import { DownloadIcon } from "$lib/components";
   import { Button } from "$lib/components/ui/button";
   import * as Dialog from "$lib/components/ui/dialog";
 
   let {
     open = $bindable(false),
     imageSrc,
+    onDownload,
     onOpenChange,
   }: ImageFullscreenDialogProps = $props();
 
@@ -111,6 +113,17 @@
                   onclick={handleZoomIn}
                   disabled={zoom >= 300}>
             <ZoomInIcon class="size-4" />
+          </Button>
+
+          <div class="w-px h-6 bg-border mx-1"></div>
+
+          <Button variant="ghost"
+                  size="icon"
+                  class="size-8 hover:bg-primary/10 hover:text-primary"
+                  onclick={onDownload}
+                  disabled={!onDownload}
+                  title="Save Artwork">
+            <DownloadIcon class="size-4" />
           </Button>
         </div>
       </div>

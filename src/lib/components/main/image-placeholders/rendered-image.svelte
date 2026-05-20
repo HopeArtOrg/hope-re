@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { RenderedImageActionsProps } from "./types";
 
+  import { DownloadIcon } from "$lib/components";
   import { Button } from "$lib/components/ui/button";
 
   const { onDownload, onFullscreen }: RenderedImageActionsProps = $props();
@@ -12,22 +13,7 @@
           class="size-14 pointer-events-auto doodle-blob bg-white/60 hover:bg-white/80 border-2 border-foreground/10 backdrop-blur-md shadow-lg hover:scale-110"
           onclick={onDownload}
           title="Save Artwork">
-    <!-- Quill SVG -->
-    <svg width="24"
-         height="24"
-         viewBox="0 0 24 24"
-         fill="none"
-         xmlns="http://www.w3.org/2000/svg"
-         class="text-foreground/80">
-      <path d="M20 4C18.5 4 14.5 5.5 12.5 9C10.5 12.5 6.5 15.5 4 17.5M4 17.5L6.5 16.5M4 17.5L5 15M12.5 9L14 7.5L16.5 5L18.5 4"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round" />
-      <path d="M4 20L6 19"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round" />
-    </svg>
+    <DownloadIcon class="size-5 text-foreground/80" />
   </Button>
 
   <Button variant="ghost"
