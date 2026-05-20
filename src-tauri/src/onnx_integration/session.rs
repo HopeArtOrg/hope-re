@@ -13,7 +13,8 @@ pub fn create_ort_session(model_path: String) -> Result<String, String> {
     use std::fs;
 
     let model_bytes = fs::read(model_path).map_err(|e| format!("Failed to read model: {}", e))?;
-    let builder = Session::builder().map_err(|e| format!("Failed to create session builder: {}", e))?;
+    let builder =
+        Session::builder().map_err(|e| format!("Failed to create session builder: {}", e))?;
     let mut builder = builder
         .with_execution_providers(eps)
         .map_err(|e| format!("Failed to set execution providers: {}", e))?;

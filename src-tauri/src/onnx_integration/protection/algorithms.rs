@@ -76,7 +76,7 @@ pub fn run_noise_model(session: &mut Session, input: &Array4<f32>) -> Result<f32
     let input_tensor = create_image_tensor(input)?;
 
     let outputs = session
-        .run(ort::inputs![input_tensor])
+        .run(ort::inputs!["input" => input_tensor.view()])
         .map_err(|e| format!("Failed to run noise model: {}", e))?;
 
     outputs[0]
@@ -93,7 +93,10 @@ pub fn run_glaze_model(
     let style_tensor = create_index_tensor(style_index)?;
 
     let outputs = session
-        .run(ort::inputs![input_tensor, style_tensor])
+        .run(ort::inputs![
+            "input" => input_tensor.view(),
+            "style_index" => style_tensor.view(),
+        ])
         .map_err(|e| {
             log::error!("Glaze model error: {}", e);
             format!("Failed to run glaze model: {}", e)
@@ -113,7 +116,10 @@ pub fn run_nightshade_model(
     let target_tensor = create_index_tensor(target_index)?;
 
     let outputs = session
-        .run(ort::inputs![input_tensor, target_tensor])
+        .run(ort::inputs![
+            "input" => input_tensor.view(),
+            "target_index" => target_tensor.view(),
+        ])
         .map_err(|e| {
             log::error!("Nightshade model error: {}", e);
             format!("Failed to run nightshade model: {}", e)
