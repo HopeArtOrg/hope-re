@@ -2,9 +2,10 @@ use ndarray::{Array, Array4};
 use ort::session::Session;
 use tauri::Emitter;
 
+use std::sync::atomic::Ordering;
 use super::types::{
-    AlgorithmParams, ModelRunFn, ProtectionProgress, TileProgress, SPSA_DIRECTIONS_PER_ITER,
-    TILE_SIZE,
+    AlgorithmParams, ModelRunFn, ProtectionProgress, ProtectionState, TileProgress,
+    SPSA_DIRECTIONS_PER_ITER, TILE_SIZE,
 };
 
 struct Xoshiro128 {
@@ -80,6 +81,7 @@ pub fn spsa_pgd_on_tile(
     run_model: &mut ModelRunFn,
     edge_weights: &[f32],
     progress: &TileProgress,
+    state: &ProtectionState,
 ) -> Result<Array4<f32>, String> {
     let shape = base_tile.shape();
     let num_elements = shape.iter().product::<usize>();
@@ -124,6 +126,9 @@ pub fn spsa_pgd_on_tile(
     let max_consecutive_failures = 5u32;
 
     for k in 0..iterations {
+        if state.is_cancelled.load(Ordering::SeqCst) {
+            return Err("Protection cancelled".to_string());
+        }
         let ck = ck_initial / ((k + 1) as f32).powf(0.101);
         let ak = alpha / ((k + 1) as f32).powf(0.602);
 

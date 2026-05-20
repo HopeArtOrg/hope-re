@@ -123,7 +123,7 @@
                   onclick={onDownload}
                   disabled={!onDownload}
                   title="Save Artwork">
-            <DownloadIcon class="size-5" />
+            <DownloadIcon class="size-4" />
           </Button>
         </div>
       </div>

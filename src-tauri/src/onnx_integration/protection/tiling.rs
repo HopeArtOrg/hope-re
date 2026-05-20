@@ -4,8 +4,10 @@ use tauri::Emitter;
 
 use super::preprocessing::{compute_edge_weight_map, preprocess_tile};
 use super::spsa::spsa_pgd_on_tile;
+use std::sync::atomic::Ordering;
 use super::types::{
-    AlgorithmParams, ModelRunFn, ProtectionProgress, TileProgress, TILE_OVERLAP, TILE_SIZE,
+    AlgorithmParams, ModelRunFn, ProtectionProgress, ProtectionState, TileProgress, TILE_OVERLAP,
+    TILE_SIZE,
 };
 
 struct TileRegion {
@@ -92,6 +94,7 @@ pub fn apply_model_protection(
     iterations: u32,
     run_model: &mut ModelRunFn,
     app: &tauri::AppHandle,
+    state: &ProtectionState,
 ) -> Result<DynamicImage, String> {
     params.validate()?;
 
@@ -118,6 +121,9 @@ pub fn apply_model_protection(
 
     for ty in 0..tiles_y {
         for tx in 0..tiles_x {
+            if state.is_cancelled.load(Ordering::SeqCst) {
+                return Err("Protection cancelled".to_string());
+            }
             let tile_x = (tx * stride).min(width.saturating_sub(TILE_SIZE));
             let tile_y = (ty * stride).min(height.saturating_sub(TILE_SIZE));
             let tile_w = TILE_SIZE.min(width - tile_x);
@@ -145,6 +151,7 @@ pub fn apply_model_protection(
                     tile_current: tile_count + 1,
                     tile_total: total_tiles,
                 },
+                state,
             )?;
 
             blend_tile_direct(

@@ -8,6 +8,7 @@ mod types;
 
 use ndarray::Array4;
 use ort::session::Session;
+use std::sync::atomic::Ordering;
 
 use algorithms::{
     get_glaze_params, get_glaze_style_index, get_nightshade_params, get_nightshade_target_index,
@@ -16,17 +17,27 @@ use algorithms::{
 use encoding::{apply_fallback_noise, encode_image_to_base64};
 use model::{load_model, resolve_model_path};
 use tiling::apply_model_protection;
+pub use types::{ProtectionResult, ProtectionSettings, ProtectionState};
 use types::ProtectionProgress;
-pub use types::{ProtectionResult, ProtectionSettings};
 
 use tauri::Emitter;
+
+#[tauri::command]
+pub fn cancel_protection(state: tauri::State<'_, ProtectionState>) {
+    state.is_cancelled.store(true, Ordering::SeqCst);
+    log::info!("Protection cancellation requested");
+}
 
 #[tauri::command]
 pub async fn protect_image(
     app: tauri::AppHandle,
     image_base64: String,
     settings: ProtectionSettings,
+    state: tauri::State<'_, ProtectionState>,
 ) -> Result<ProtectionResult, String> {
+    // Reset cancellation state at the start of a new protection task
+    state.is_cancelled.store(false, Ordering::SeqCst);
+
     let image_data = base64::Engine::decode(
         &base64::engine::general_purpose::STANDARD,
         image_base64
@@ -77,6 +88,7 @@ pub async fn protect_image(
                         iterations,
                         &mut run,
                         &app,
+                        &state,
                     )?;
                     (
                         result,
@@ -86,6 +98,9 @@ pub async fn protect_image(
                 }
                 Err(e) => {
                     log::error!("Noise ONNX model failed to load: {}", e);
+                    if state.is_cancelled.load(Ordering::SeqCst) {
+                        return Err("Protection cancelled".to_string());
+                    }
                     let seed = std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .unwrap_or_else(|_| std::time::Duration::from_secs(0))
@@ -122,6 +137,7 @@ pub async fn protect_image(
                         iterations,
                         &mut run,
                         &app,
+                        &state,
                     )?;
                     (
                         result,
@@ -131,6 +147,9 @@ pub async fn protect_image(
                 }
                 Err(e) => {
                     log::error!("Glaze ONNX model failed to load: {}", e);
+                    if state.is_cancelled.load(Ordering::SeqCst) {
+                        return Err("Protection cancelled".to_string());
+                    }
                     let seed = get_glaze_style_index(style) as u32;
                     let effective_intensity = intensity * 0.8;
                     let result = apply_fallback_noise(&img, effective_intensity, seed, iterations);
@@ -165,6 +184,7 @@ pub async fn protect_image(
                         iterations,
                         &mut run,
                         &app,
+                        &state,
                     )?;
                     (
                         result,
@@ -174,6 +194,9 @@ pub async fn protect_image(
                 }
                 Err(e) => {
                     log::error!("Nightshade ONNX model failed to load: {}", e);
+                    if state.is_cancelled.load(Ordering::SeqCst) {
+                        return Err("Protection cancelled".to_string());
+                    }
                     let seed = get_nightshade_target_index(target) as u32 + 100;
                     let effective_intensity = intensity * 1.2;
                     let result = apply_fallback_noise(&img, effective_intensity, seed, iterations);
@@ -190,6 +213,10 @@ pub async fn protect_image(
         }
         _ => return Err(format!("Unknown algorithm: {}", settings.algorithm)),
     };
+
+    if state.is_cancelled.load(Ordering::SeqCst) {
+        return Err("Protection cancelled".to_string());
+    }
 
     let _ = app.emit(
         "protection-progress",

@@ -13,7 +13,7 @@
           class="size-14 pointer-events-auto doodle-blob bg-white/60 hover:bg-white/80 border-2 border-foreground/10 backdrop-blur-md shadow-lg hover:scale-110"
           onclick={onDownload}
           title="Save Artwork">
-    <DownloadIcon class="size-7 text-foreground/80" />
+    <DownloadIcon class="size-5 text-foreground/80" />
   </Button>
 
   <Button variant="ghost"

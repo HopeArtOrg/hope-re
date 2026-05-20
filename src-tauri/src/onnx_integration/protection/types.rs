@@ -1,3 +1,4 @@
+use std::sync::atomic::AtomicBool;
 use ndarray::Array4;
 use ort::session::Session;
 
@@ -88,4 +89,16 @@ pub struct ProtectionProgress {
     pub iteration_current: u32,
     pub iteration_total: u32,
     pub percent: f64,
+}
+
+pub struct ProtectionState {
+    pub is_cancelled: AtomicBool,
+}
+
+impl Default for ProtectionState {
+    fn default() -> Self {
+        Self {
+            is_cancelled: AtomicBool::new(false),
+        }
+    }
 }

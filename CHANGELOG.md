@@ -22,7 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Features
 
-- Add custom hand-sketched `DownloadIcon` component as part of the digitized art studio aesthetic, replacing standard SVG code with a reusable component
+- Add custom hand-sketched `DownloadIcon` component as part of the digitized art studio aesthetic, using a smaller and slimmer quill design for better visual elegance
 
 ### Changed
 
