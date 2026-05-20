@@ -90,17 +90,10 @@ pub fn run_glaze_model(
     let input_tensor = create_image_tensor(input)?;
     let style_tensor = create_index_tensor(style_index as i32)?;
 
-    let input_names: Vec<_> = session
-        .inputs()
-        .iter()
-        .map(|i| i.name().to_string())
-        .collect();
-    log::info!("Glaze model inputs: {:?}", input_names);
-
     let outputs = session
         .run(ort::inputs![
-            "input" => input_tensor.view(),
-            "style_index" => style_tensor.view()
+            "in_0" => input_tensor.view(),
+            "in_1" => style_tensor.view()
         ])
         .map_err(|e| {
             log::error!("Glaze model error: {}", e);
@@ -120,17 +113,10 @@ pub fn run_nightshade_model(
     let input_tensor = create_image_tensor(input)?;
     let target_tensor = create_index_tensor(target_index as i32)?;
 
-    let input_names: Vec<_> = session
-        .inputs()
-        .iter()
-        .map(|i| i.name().to_string())
-        .collect();
-    log::info!("Nightshade model inputs: {:?}", input_names);
-
     let outputs = session
         .run(ort::inputs![
-            "input" => input_tensor.view(),
-            "target_index" => target_tensor.view()
+            "in_0" => input_tensor.view(),
+            "in_1" => target_tensor.view()
         ])
         .map_err(|e| {
             log::error!("Nightshade model error: {}", e);
