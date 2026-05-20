@@ -17,6 +17,7 @@
 
   import {
     BaseImagePlaceholder,
+    CatIcon,
     ImageFullscreenDialog,
     ProtectionMenu,
     RenderedImageActions,
@@ -82,7 +83,6 @@
 <div class="w-full bg-background transition-colors duration-500 overflow-x-hidden min-h-screen">
   <div class="container mx-auto p-6 md:p-10 h-full max-w-7xl relative">
 
-    <!-- Desk Decorations -->
     <div class="fixed bottom-10 left-10 opacity-20 decorative-doodle hidden lg:block rotate-12">
       <div class="w-2 h-40 bg-orange-200 rounded-full shadow-md relative">
         <div class="absolute top-0 w-full h-8 bg-black rounded-t-full"></div>
@@ -145,7 +145,7 @@
 
         <div class="grid grid-cols-2 gap-10 flex-1">
           <div class="relative group">
-            <div class="absolute -top-8 -left-6 rotate-[-5deg] text-base text-muted-foreground/40 font-bold decorative-doodle flex items-center gap-2">
+            <div class="absolute -top-8 -left-6 -rotate-5 text-base text-muted-foreground/40 font-bold decorative-doodle flex items-center gap-2">
               <BrushIcon class="size-5" />
               Don't forget perspective!
             </div>
@@ -168,7 +168,7 @@
                                       onFullscreen={image.handleFullscreen} />
               {/if}
             </BaseImagePlaceholder>
-            <div class="absolute -bottom-4 -right-4 rotate-[15deg] text-base bg-primary text-primary-foreground px-4 py-1 shadow-md border-2 border-primary-foreground/20 doodle-line decorative-doodle">WOW!</div>
+            <div class="absolute -bottom-4 -right-4 rotate-15 text-base bg-primary text-primary-foreground px-4 py-1 shadow-md border-2 border-primary-foreground/20 doodle-line decorative-doodle">WOW!</div>
             <div class="absolute top-1/2 -right-12 opacity-10 decorative-doodle -rotate-90">
               <StickyNoteIcon class="size-16 text-foreground" />
             </div>
@@ -193,31 +193,8 @@
                title="Inference Providers: {inferenceData.providers.map(p => p.name).join(", ")}">
             <div class="relative group">
               <CpuIcon class="size-5 text-primary/70" />
-              <!-- Sleeping Cat Doodle -->
-              <div class="absolute -top-8 -left-4 scale-90 opacity-40 group-hover:opacity-100 transition-opacity decorative-doodle">
-                <svg width="40"
-                     height="40"
-                     viewBox="0 0 40 40"
-                     fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 30Q10 20 20 20Q30 20 30 30"
-                        stroke="currentColor"
-                        stroke-width="2" />
-                  <path d="M12 20L8 15M28 20L32 15"
-                        stroke="currentColor"
-                        stroke-width="2" />
-                  <circle cx="18"
-                          cy="25"
-                          r="1"
-                          fill="currentColor" />
-                  <circle cx="22"
-                          cy="25"
-                          r="1"
-                          fill="currentColor" />
-                  <path d="M18 28Q20 30 22 28"
-                        stroke="currentColor"
-                        stroke-width="1.5" />
-                </svg>
+              <div class="absolute -top-10 -left-6 scale-90 opacity-40 group-hover:opacity-100 transition-opacity decorative-doodle">
+                <CatIcon class="size-12 text-foreground" />
               </div>
             </div>
             <div class="text-sm text-foreground/80 font-bold flex items-center gap-3">

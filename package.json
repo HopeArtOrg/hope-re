@@ -1,7 +1,7 @@
 {
   "name": "hope-re",
   "type": "module",
-  "version": "2.1.14",
+  "version": "2.1.15",
   "private": true,
   "scripts": {
     "dev": "vite dev",

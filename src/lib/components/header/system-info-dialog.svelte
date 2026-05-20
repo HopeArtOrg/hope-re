@@ -75,7 +75,7 @@
       {:else if info}
         <div class={cn(isFetching && "opacity-50 transition-opacity")}>
           <div class="doodle-line border-2 border-foreground/10 bg-white/40 dark:bg-black/20 p-8 space-y-6 shadow-inner relative">
-            <div class="absolute -top-3 -right-2 rotate-[12deg] text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line">SPECS</div>
+            <div class="absolute -top-3 -right-2 rotate-12 text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line">SPECS</div>
 
             <div class="pb-6 border-b-2 border-foreground/5">
               <div class="flex items-center gap-3 mb-2">
