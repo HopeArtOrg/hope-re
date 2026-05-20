@@ -5,7 +5,7 @@ use tauri::Emitter;
 
 use super::types::{
     AlgorithmParams, ModelRunFn, ProtectionProgress, ProtectionState, SPSA_DIRECTIONS_PER_ITER,
-    TILE_SIZE, TileProgress,
+    TileProgress,
 };
 
 struct Xoshiro128 {
