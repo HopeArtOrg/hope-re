@@ -12,6 +12,7 @@ export type BaseImagePlaceholderProps = {
 export type ImageFullscreenDialogProps = {
   open?: boolean;
   imageSrc: string | null;
+  onDownload?: () => void;
   onOpenChange?: (open: boolean) => void;
 };
 

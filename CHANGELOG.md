@@ -20,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Re-enable DirectML execution provider on Windows to boost performance for users without NVIDIA GPUs, relying on the memory safety fixes to prevent previous crashes
+- Re-disable DirectML execution provider on Windows due to persistent `STATUS_ACCESS_VIOLATION` crashes that occur even with minimal graph optimization and sequential execution; fallback to stable CPU/CUDA inference
 - Increase SPSA progress reporting frequency for better UI feedback during long-running protection tasks
 
 ## [2.1.13] - 2026-05-20

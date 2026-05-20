@@ -13,6 +13,7 @@
   let {
     open = $bindable(false),
     imageSrc,
+    onDownload,
     onOpenChange,
   }: ImageFullscreenDialogProps = $props();
 
@@ -111,6 +112,30 @@
                   onclick={handleZoomIn}
                   disabled={zoom >= 300}>
             <ZoomInIcon class="size-4" />
+          </Button>
+
+          <div class="w-px h-6 bg-border mx-1"></div>
+
+          <Button variant="ghost"
+                  size="icon"
+                  class="size-8 hover:bg-primary/10 hover:text-primary"
+                  onclick={onDownload}
+                  disabled={!onDownload}
+                  title="Save Artwork">
+            <svg width="18"
+                 height="18"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 4C18.5 4 14.5 5.5 12.5 9C10.5 12.5 6.5 15.5 4 17.5M4 17.5L6.5 16.5M4 17.5L5 15M12.5 9L14 7.5L16.5 5L18.5 4"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round" />
+              <path d="M4 20L6 19"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round" />
+            </svg>
           </Button>
         </div>
       </div>
