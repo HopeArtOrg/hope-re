@@ -166,7 +166,7 @@ fn run_with_model<F, G>(
     intensity: f32,
 ) -> Result<(image::DynamicImage, String, bool), String>
 where
-    F: FnMut(&mut Session, &Array4<f32>) -> Result<f32, String>,
+    F: FnMut(&mut Session, &Array4<f32>) -> Result<f32, String> + 'static,
     G: FnOnce(&image::DynamicImage, f32, u32) -> image::DynamicImage,
 {
     let model_result = resolve_model_path(app, model_name).and_then(|path| load_model(&path));

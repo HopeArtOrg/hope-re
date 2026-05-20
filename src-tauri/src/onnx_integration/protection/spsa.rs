@@ -53,7 +53,6 @@ fn generate_spsa_direction(num_elements: usize, rng: &mut Xoshiro128) -> Vec<f32
 }
 
 fn expand_edge_weights(edge_weights: &[f32], num_elements: usize) -> Vec<f32> {
-    let tile_pixels = (TILE_SIZE * TILE_SIZE) as usize;
     let mut edge_flat = vec![1.0f32; num_elements];
     edge_weights.iter().enumerate().for_each(|(i, &ew)| {
         let base = i * 3;
@@ -103,7 +102,7 @@ pub fn spsa_pgd_on_tile(
 
         let (grad_accum, valid_count) = (0..SPSA_DIRECTIONS_PER_ITER).try_fold(
             (vec![0.0f32; num_elements], 0u32),
-            |(mut acc, mut count), _| {
+            |(mut acc, count), _| {
                 if state.is_cancelled.load(Ordering::SeqCst) {
                     return Err("Protection cancelled".to_string());
                 }
