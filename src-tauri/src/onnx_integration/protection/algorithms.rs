@@ -66,6 +66,11 @@ fn create_image_tensor(input: &Array4<f32>) -> Result<Tensor<f32>, String> {
     .map_err(|e| format!("Failed to create input tensor: {}", e))
 }
 
+fn create_index_tensor(index: i32) -> Result<Tensor<i32>, String> {
+    Tensor::from_array(([1_usize], vec![index].into_boxed_slice()))
+        .map_err(|e| format!("Failed to create index tensor: {}", e))
+}
+
 pub fn run_noise_model(session: &mut Session, input: &Array4<f32>) -> Result<f32, String> {
     let input_tensor = create_image_tensor(input)?;
 
@@ -83,28 +88,13 @@ pub fn run_glaze_model(
     input: &Array4<f32>,
     style_index: i64,
 ) -> Result<f32, String> {
-    let shape = input.shape();
-    let input_data: Vec<f32> = input.iter().copied().collect();
-    let input_tensor = Tensor::from_array((
-        [shape[0], shape[1], shape[2], shape[3]],
-        input_data.into_boxed_slice(),
-    ))
-    .map_err(|e| format!("Failed to create input tensor: {}", e))?;
-
-    let style_data = vec![style_index as i32];
-    let style_tensor = Tensor::from_array(([1_usize], style_data.into_boxed_slice()))
-        .map_err(|e| format!("Failed to create style index tensor: {}", e))?;
+    let input_tensor = create_image_tensor(input)?;
+    let style_tensor = create_index_tensor(style_index as i32)?;
 
     let outputs = session
         .run(ort::inputs![input_tensor, style_tensor])
         .map_err(|e| {
-            let err_str = format!("{}", e);
-            log::error!("Glaze model input error: {}", err_str);
-            if err_str.contains("expected input") || err_str.contains("input name") {
-                log::info!(
-                    "Note: ONNX model may use different input names than positional indices"
-                );
-            }
+            log::error!("Glaze model error: {}", e);
             format!("Failed to run glaze model: {}", e)
         })?;
 
@@ -118,28 +108,13 @@ pub fn run_nightshade_model(
     input: &Array4<f32>,
     target_index: i64,
 ) -> Result<f32, String> {
-    let shape = input.shape();
-    let input_data: Vec<f32> = input.iter().copied().collect();
-    let input_tensor = Tensor::from_array((
-        [shape[0], shape[1], shape[2], shape[3]],
-        input_data.into_boxed_slice(),
-    ))
-    .map_err(|e| format!("Failed to create input tensor: {}", e))?;
-
-    let target_data = vec![target_index as i32];
-    let target_tensor = Tensor::from_array(([1_usize], target_data.into_boxed_slice()))
-        .map_err(|e| format!("Failed to create target index tensor: {}", e))?;
+    let input_tensor = create_image_tensor(input)?;
+    let target_tensor = create_index_tensor(target_index as i32)?;
 
     let outputs = session
         .run(ort::inputs![input_tensor, target_tensor])
         .map_err(|e| {
-            let err_str = format!("{}", e);
-            log::error!("Nightshade model input error: {}", err_str);
-            if err_str.contains("expected input") || err_str.contains("input name") {
-                log::info!(
-                    "Note: ONNX model may use different input names than positional indices"
-                );
-            }
+            log::error!("Nightshade model error: {}", e);
             format!("Failed to run nightshade model: {}", e)
         })?;
 
