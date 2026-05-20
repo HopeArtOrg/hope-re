@@ -28,7 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 - Re-disable DirectML execution provider on Windows due to persistent `STATUS_ACCESS_VIOLATION` crashes that occur even with minimal graph optimization and sequential execution; fallback to stable CPU/CUDA inference
-- Refactor backend protection pipeline into a functional style using closures, pipelines, and iterator combinators for better maintainability and performance
+- Refactor backend protection pipeline into a clean functional style using closures, pipelines, and iterator combinators for better maintainability, performance, and lifetime safety
 - Increase SPSA progress reporting frequency for better UI feedback during long-running protection tasks
 
 ## [2.1.13] - 2026-05-20

@@ -96,7 +96,6 @@ pub struct ProtectionState {
     pub is_cancelled: AtomicBool,
 }
 
-// Construction is managed by Tauri's app.manage() system
 #[allow(unused)]
 impl Default for ProtectionState {
     fn default() -> Self {
