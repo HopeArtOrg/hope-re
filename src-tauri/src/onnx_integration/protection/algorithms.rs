@@ -4,6 +4,26 @@ use ort::value::Tensor;
 
 use super::types::AlgorithmParams;
 
+pub fn debug_model_io(session: &Session) -> String {
+    let mut info = String::new();
+    info.push_str("Model Inputs: [");
+    for (i, input) in session.inputs().iter().enumerate() {
+        if i > 0 {
+            info.push_str(", ");
+        }
+        info.push_str(&format!("'{}'", input.name()));
+    }
+    info.push_str("], Model Outputs: [");
+    for (i, output) in session.outputs().iter().enumerate() {
+        if i > 0 {
+            info.push_str(", ");
+        }
+        info.push_str(&format!("'{}'", output.name()));
+    }
+    info.push(']');
+    info
+}
+
 pub fn get_noise_params(intensity: f32) -> AlgorithmParams {
     AlgorithmParams {
         epsilon: intensity * 0.24 / 0.5,
@@ -91,9 +111,16 @@ pub fn run_glaze_model(
     let input_tensor = create_image_tensor(input)?;
     let style_tensor = create_index_tensor(style_index as i32)?;
 
+    let input_names: Vec<_> = session
+        .inputs()
+        .iter()
+        .map(|i| i.name().to_string())
+        .collect();
+    log::info!("Glaze model inputs: {:?}", input_names);
+
     let outputs = session
         .run(ort::inputs![
-            "input" => input_tensor.view(),
+            "images" => input_tensor.view(),
             "style_index" => style_tensor.view()
         ])
         .map_err(|e| {
@@ -114,9 +141,16 @@ pub fn run_nightshade_model(
     let input_tensor = create_image_tensor(input)?;
     let target_tensor = create_index_tensor(target_index as i32)?;
 
+    let input_names: Vec<_> = session
+        .inputs()
+        .iter()
+        .map(|i| i.name().to_string())
+        .collect();
+    log::info!("Nightshade model inputs: {:?}", input_names);
+
     let outputs = session
         .run(ort::inputs![
-            "input" => input_tensor.view(),
+            "images" => input_tensor.view(),
             "target_index" => target_tensor.view()
         ])
         .map_err(|e| {
