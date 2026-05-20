@@ -91,11 +91,12 @@ pub struct ProtectionProgress {
     pub percent: f64,
 }
 
-#[allow(dead_code)]
+#[allow(unused)]
 pub struct ProtectionState {
     pub is_cancelled: AtomicBool,
 }
 
+#[allow(unused)]
 impl Default for ProtectionState {
     fn default() -> Self {
         Self {
