@@ -18,8 +18,16 @@
 <header class="border-b-2 border-foreground/10 backdrop-blur-md bg-white/30 dark:bg-black/30 shrink-0 z-50 doodle-line">
   <div class={cn("h-[env(safe-area-inset-top)]", isMobile ? "min-h-6" : "")}></div>
   <div class="h-14 px-8 flex items-center justify-end gap-4">
-    <div class="mr-auto">
-      <h1 class="text-xl font-bold text-foreground/80 tracking-tighter">Hope:RE <span class="text-xs opacity-50 font-medium">Studio v2</span></h1>
+    <div class="mr-auto flex items-center gap-3 group">
+      <div class="size-9 p-1.5 doodle-blob bg-primary/10 border-2 border-foreground/5 flex items-center justify-center transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-sm">
+        <img src="/logo.png"
+             alt="Hope:RE Studio Logo"
+             class="size-full object-contain" />
+      </div>
+      <h1 class="text-xl font-bold text-foreground/80 tracking-tighter flex items-baseline gap-1.5">
+        Hope:RE
+        <span class="text-[10px] opacity-40 font-bold uppercase tracking-widest bg-foreground/5 px-2 py-0.5 doodle-line">Studio v2</span>
+      </h1>
     </div>
     <UpdateButton />
     <SystemInfoDialog />
