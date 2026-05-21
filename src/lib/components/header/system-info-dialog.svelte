@@ -154,7 +154,7 @@
           size="sm"
           onclick={refetch}
           disabled={isFetching}
-          class="gap-3 doodle-blob border-2 border-foreground/10 bg-white/40 hover:bg-white/60 h-10 px-4"
+          class="gap-3 doodle-blob border-2 border-foreground/10 bg-white/40 dark:bg-black/40 hover:bg-white/60 dark:hover:bg-black/60 h-10 px-4"
         >
           <RefreshCwIcon class={cn("size-4", isFetching && "animate-spin")} />
           <span class="font-bold">Check Again</span>

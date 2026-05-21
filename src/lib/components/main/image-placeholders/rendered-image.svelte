@@ -10,7 +10,7 @@
 <div class="absolute inset-0 flex items-center justify-center gap-6 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
   <Button variant="ghost"
           size="icon"
-          class="size-14 pointer-events-auto doodle-blob bg-white/60 hover:bg-white/80 border-2 border-foreground/10 backdrop-blur-md shadow-lg hover:scale-110"
+          class="size-14 pointer-events-auto doodle-blob bg-background/60 hover:bg-background/80 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80 border-2 border-foreground/10 backdrop-blur-md shadow-lg hover:scale-110"
           onclick={onDownload}
           title="Save Artwork">
     <DownloadIcon class="size-5 text-foreground/80" />
@@ -18,7 +18,7 @@
 
   <Button variant="ghost"
           size="icon"
-          class="size-14 pointer-events-auto doodle-blob bg-white/60 hover:bg-white/80 border-2 border-foreground/10 backdrop-blur-md shadow-lg hover:scale-110"
+          class="size-14 pointer-events-auto doodle-blob bg-background/60 hover:bg-background/80 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80 border-2 border-foreground/10 backdrop-blur-md shadow-lg hover:scale-110"
           onclick={onFullscreen}
           title="Inspect Canvas">
     <!-- Magnifying Glass SVG -->

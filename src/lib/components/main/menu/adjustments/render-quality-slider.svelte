@@ -54,7 +54,7 @@
                   (value[0] !== preset.value) && "opacity-30 hover:opacity-50",
                 )}
                 onclick={() => value = [preset.value]}>
-          <div class={cn("p-2 doodle-blob border-2 border-transparent transition-all", (value[0] === preset.value) && "border-foreground/10 bg-white/40")}>
+          <div class={cn("p-2 doodle-blob border-2 border-transparent transition-all", (value[0] === preset.value) && "border-foreground/10 bg-white/40 dark:bg-black/40")}>
             <Icon class={cn("size-5", preset.colour)} />
           </div>
           <span class={cn("text-[11px] font-bold uppercase tracking-tighter whitespace-nowrap", preset.colour)}>

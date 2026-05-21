@@ -113,7 +113,7 @@
             <div class="flex items-center gap-3 p-4 blue-note text-sm text-amber-700 animate-in fade-in duration-700 relative">
               <TriangleAlertIcon class="size-4 shrink-0" />
               <span>Basic protection applied. Add AI models in settings for a more refined result.</span>
-              <div class="absolute -top-2 -right-2 rotate-12 text-xs bg-white px-2 py-0.5 shadow-sm border-2 border-foreground/10 doodle-line decorative-doodle">PHEW!</div>
+              <div class="absolute -top-2 -right-2 rotate-12 text-xs bg-white text-black px-2 py-0.5 shadow-sm border-2 border-foreground/10 doodle-line decorative-doodle">PHEW!</div>
             </div>
           {/if}
 
@@ -139,7 +139,7 @@
           <div class="flex items-center gap-3 p-4 blue-note text-sm text-amber-700 animate-in fade-in duration-700 max-w-2xl mx-auto w-full relative">
             <TriangleAlertIcon class="size-4 shrink-0" />
             <span>Basic protection applied. Add AI models in settings for a more refined result.</span>
-            <div class="absolute -top-2 -right-2 rotate-12 text-xs bg-white px-2 py-0.5 shadow-sm border-2 border-foreground/10 doodle-line uppercase font-bold decorative-doodle">Heads up!</div>
+            <div class="absolute -top-2 -right-2 rotate-12 text-xs bg-white text-black px-2 py-0.5 shadow-sm border-2 border-foreground/10 doodle-line uppercase font-bold decorative-doodle">Heads up!</div>
           </div>
         {/if}
 
@@ -189,7 +189,7 @@
                         progressMessage={protection.progressMessage} />
 
         {#if isSuccess && inferenceData}
-          <div class="absolute -top-14 -left-4 flex items-center gap-3 px-3 opacity-70 hover:opacity-100 transition-opacity cursor-help bg-white/60 backdrop-blur-md p-2 rounded-lg doodle-line border-2 border-foreground/10 shadow-sm"
+          <div class="absolute -top-14 -left-4 flex items-center gap-3 px-3 opacity-70 hover:opacity-100 transition-opacity cursor-help bg-card/60 backdrop-blur-md p-2 rounded-lg doodle-line border-2 border-foreground/10 shadow-sm"
                title="Inference Providers: {inferenceData.providers.map(p => p.name).join(", ")}">
             <div class="relative group">
               <CpuIcon class="size-5 text-primary/70" />
