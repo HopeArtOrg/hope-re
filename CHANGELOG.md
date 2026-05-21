@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.16] - 2026-05-21
+
+### Features
+
+- Add official app logo to the header within a hand-drawn "doodle-blob" frame, featuring subtle hover animations to match the digitized studio aesthetic
+
+### Fixed
+
+- Fix invisible UI elements in dark mode: rendered image action buttons (download, inspect), protection progress dialog, and decorative stickers ("PHEW!", "Heads up!") now have proper contrast and theme-aware backgrounds
+- Improve theme consistency across system info dialog and quality preset selectors by adding missing dark mode background variants
+
+### Changed
+
+- Bump version to 2.1.16 across package.json, Cargo.toml, and tauri.conf.json
+
 ## [2.1.15] - 2026-05-20
 
 ### Features
