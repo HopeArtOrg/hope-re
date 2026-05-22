@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.17] - 2026-05-22
+
+### Fixed
+- Resolved rendering issues on Linux Wayland environments by removing hardcoded `libwebkit2gtk-4.1` versions to prevent DMA-BUF conflicts.
+
 ## [2.1.16] - 2026-05-21
 
 ### Features
