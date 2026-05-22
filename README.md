@@ -159,7 +159,7 @@ src-models/                   ML training pipeline
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) 24+ with [pnpm](https://pnpm.io/) 10+
+- [Node.js](https://nodejs.org/) 24+ with [pnpm](https://pnpm.io/) 11+
 - [Rust](https://www.rust-lang.org/tools/install) 1.93+
 - Platform-specific Tauri dependencies
   ([Windows](https://v2.tauri.app/start/prerequisites/#windows),
