@@ -46,7 +46,6 @@
 
     <div class="flex justify-between items-start px-2">
       {#each qualityPresets as preset (preset.value)}
-        {@const Icon = preset.icon}
         <button type="button"
                 class={cn(
                   "flex flex-col items-center gap-2 text-sm transition-all group",
@@ -55,7 +54,7 @@
                 )}
                 onclick={() => value = [preset.value]}>
           <div class={cn("p-2 doodle-blob border-2 border-transparent transition-all", (value[0] === preset.value) && "border-foreground/10 bg-white/40 dark:bg-black/40")}>
-            <Icon class={cn("size-5", preset.colour)} />
+            <preset.icon class={cn("size-5", preset.colour)} />
           </div>
           <span class={cn("text-[11px] font-bold uppercase tracking-tighter whitespace-nowrap", preset.colour)}>
             {preset.label}

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.18] - 2026-05-31
+
+### Changed
+- Refactor UI components to remove legacy Svelte `{@const}` syntax in favor of modern Svelte 5 patterns (dot notation and inlining) for improved performance and maintainability.
+- Bump version to 2.1.18 across package.json, Cargo.toml, and tauri.conf.json.
+
 ## [2.1.17] - 2026-05-22
 
 ### Fixed
