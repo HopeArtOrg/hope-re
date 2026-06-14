@@ -20,6 +20,8 @@ import {
   ZapIcon,
 } from "@lucide/svelte";
 
+export const MODEL_ALGO_SUFFIX = "_algorithm.onnx";
+
 export const algorithms: {
   value: Exclude<ProtectionMenuProps["algorithm"], undefined>;
   label: string;

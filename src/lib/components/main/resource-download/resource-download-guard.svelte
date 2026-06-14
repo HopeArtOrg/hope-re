@@ -7,6 +7,7 @@
   import { Button } from "$lib/components/ui/button";
   import * as Dialog from "$lib/components/ui/dialog";
   import { Progress } from "$lib/components/ui/progress";
+  import { MODEL_ALGO_SUFFIX } from "$lib/constants";
   import { useModelDownload } from "$lib/stores/use-model-download.svelte";
   import { cn } from "$lib/utils";
 
@@ -125,7 +126,7 @@
 
         <div class="space-y-2">
           {#each models.modelProgress as model (model.name)}
-            {const displayName = model.name.replace("_algorithm.onnx", "");}
+            {const displayName = $derived(model.name.replace(MODEL_ALGO_SUFFIX, ""));}
             <div class="flex items-center gap-3 p-2 rounded-lg bg-muted/20 border border-foreground/5">
               <div class={cn(
                 "size-1.5 rounded-full shrink-0",

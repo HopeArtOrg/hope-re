@@ -46,7 +46,7 @@
 
     <div class="flex justify-between items-start px-2">
       {#each qualityPresets as preset (preset.value)}
-        {const Icon = preset.icon;}
+        {const Icon = $derived(preset.icon);}
         <button type="button"
                 class={cn(
                   "flex flex-col items-center gap-2 text-sm transition-all group",
