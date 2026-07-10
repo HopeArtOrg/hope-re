@@ -27,6 +27,10 @@ Hope:RE offers three distinct protection algorithms, each targeting a different 
 - **Nightshade** -- applies data poisoning perturbations that cause AI models trained on the
   protected image to associate it with an incorrect concept. Supports eight target concepts:
   Dog, Cat, Car, Landscape, Person, Building, Food, and Abstract.
+- **Signature Ink (Blind Watermark)** -- embeds a hidden, robust digital signature within the
+  image's frequency coefficients (using a hybrid DWT-DCT-SVD algorithm). The signature is
+  imperceptible to the human eye but remains decodable after cropping, compression, or
+  screenshotting, allowing artists to prove ownership of their work.
 
 All three algorithms operate on the same underlying pipeline: the image is tiled into overlapping
 224x224 patches, each patch is optimized through an SPSA-PGD adversarial loop guided by a
@@ -36,6 +40,29 @@ render quality sliders.
 
 A detailed explanation of the adversarial perturbation mechanism, the SPSA gradient estimation
 approach, and the CLIP loss formulation will be covered in a separate blog post.
+
+## Signature Ink Mechanism
+
+The **Signature Ink (Blind Watermark)** feature uses a Rust-native implementation of a robust blind watermarking algorithm from the [blind-watermark-rust](https://github.com/naganohara-yoshino/blind-watermark-rust) repository (originally ported from Guo Fei's Python implementation).
+
+### How It Works
+
+This feature utilizes a hybrid **DWT-DCT-SVD** (Discrete Wavelet Transform, Discrete Cosine Transform, and Singular Value Decomposition) pipeline to embed digital signatures invisibly and robustly:
+
+1. **Discrete Wavelet Transform (DWT)**:
+   The cover image is decomposed using a 2D wavelet transform to split the image into frequency sub-bands (approximation, horizontal, vertical, and diagonal coefficients).
+2. **Discrete Cosine Transform (DCT)**:
+   A DCT is applied to the low-frequency approximation sub-band. This concentrates the visual energy of the image into a few low-frequency coefficients, making modifications more resistant to lossy compression.
+3. **Singular Value Decomposition (SVD)**:
+   An SVD is performed on the DCT coefficient blocks to factorize them into three matrices ($U, \Sigma, V^T$). The diagonal matrix $\Sigma$ containing the singular values represents the fundamental structural properties of the image block.
+4. **Watermark Perturbation**:
+   The watermark string is converted into a binary bit-stream (which can be pseudo-randomly scrambled using a custom numeric seed key for cryptographic security). The singular values in $\Sigma$ are slightly perturbed to encode these watermark bits.
+5. **Reconstruction**:
+   The inverse singular value decomposition, inverse discrete cosine transform, and inverse discrete wavelet transform are applied sequentially to reconstruct the signed canvas.
+
+During verification, the reverse transformation is performed on the signed image. The singular values are evaluated to reconstruct the bit-stream, which is decrypted using the same seed key to reveal the signature text.
+
+Because the signature is embedded within the core structural singular values of the low-frequency coefficients, it is highly resilient against common edits, resizing, cropping, screenshotting, and lossy JPEG compression.
 
 ## Technology Stack
 
@@ -140,14 +167,15 @@ parameters to ONNX via the standard export path.
 ```
 src/                          SvelteKit frontend
   lib/components/             UI components (shadcn-svelte based)
-  lib/queries/                TanStack Query hooks (protection, models, system info)
-  lib/stores/                 Svelte 5 rune composables (use-*.svelte.ts)
+  lib/queries/                TanStack Query hooks (protection, watermark, models, system info)
+  lib/stores/                 Svelte 5 rune composables and shared states (use-*.svelte.ts)
   lib/constants.ts            Algorithm definitions, presets, UI configuration
   routes/                     SvelteKit routes (single-page, SSR disabled)
 
 src-tauri/                    Rust backend (Tauri v2)
   src/commands/               Tauri command handlers
   src/onnx_integration/       ONNX model loading, SPSA-PGD pipeline, tiling, encoding
+  src/blind_watermark/        DWT-DCT-SVD robust blind watermarking implementation
   src/system_info/            Platform, CPU, GPU, and memory detection
 
 src-models/                   ML training pipeline
