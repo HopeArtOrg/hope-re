@@ -265,7 +265,7 @@
       {/if}
     </div>
 
-    <div class="grid grid-cols-2 gap-6 mt-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
       <Button
         size="lg"
         class="gap-2 h-16 bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white transition-all doodle-line text-lg shadow-lg hover:-translate-y-1 active:translate-y-0.5 disabled:opacity-50"

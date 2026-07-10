@@ -192,14 +192,14 @@
         </div>
       {/if}
 
-      <div class="border-2 border-foreground/10 rounded-2xl p-6 relative overflow-hidden bg-background/60 shadow-inner flex items-center justify-between min-h-[140px] doodle-line gap-4">
+      <div class="border-2 border-foreground/10 rounded-2xl p-6 relative overflow-hidden bg-background/60 shadow-inner flex flex-col sm:flex-row items-center justify-between min-h-[140px] doodle-line gap-6 sm:gap-4 text-center sm:text-left">
         {#if extractedText}
-          <div class="flex flex-col gap-1.5 animate-in slide-in-from-left duration-500 flex-1">
-            <span class="text-xs text-teal-700/70 dark:text-teal-400/70 font-black uppercase tracking-wider flex items-center gap-1.5">
+          <div class="flex flex-col items-center sm:items-start gap-1.5 animate-in slide-in-from-left duration-500 flex-1">
+            <span class="text-xs text-teal-700/70 dark:text-teal-400/70 font-black uppercase tracking-wider flex items-center justify-center sm:justify-start gap-1.5">
               <ShieldCheckIcon class="size-4 text-teal-600 dark:text-teal-400" />
               Signature Decoded
             </span>
-            <p class="text-2xl font-bold text-foreground font-sans border-b-2 border-dashed border-foreground/20 py-1 inline-block">
+            <p class="text-2xl font-bold text-foreground font-sans border-b-2 border-dashed border-foreground/20 py-1 inline-block break-all">
               {extractedText}
             </p>
           </div>
@@ -208,7 +208,7 @@
             <span class="text-2xl font-black leading-tight mt-0.5">証</span>
           </div>
         {:else}
-          <div class="flex flex-col gap-1 text-muted-foreground/80 flex-1">
+          <div class="flex flex-col items-center sm:items-start gap-1 text-muted-foreground/80 flex-1">
             <span class="text-xs font-black uppercase tracking-wider text-muted-foreground/60">Verification Status</span>
             <p class="text-sm font-bold text-muted-foreground/70">No signature scanned yet</p>
             <p class="text-xs text-muted-foreground/50 leading-tight">Upload a canvas, configure settings, and verify.</p>
@@ -221,7 +221,7 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-6 mt-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
       <Button
         size="lg"
         class="gap-2 h-16 bg-teal-600 hover:bg-teal-500 active:bg-teal-700 text-white transition-all doodle-line text-lg shadow-lg hover:-translate-y-1 active:translate-y-0.5 disabled:opacity-50"
