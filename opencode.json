@@ -1,0 +1,53 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "AGENTS.md",
+    ".github/COMMIT_CONVENTION.md"
+  ],
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    }
+  },
+  "formatter": {
+    "eslint": {
+      "command": ["pnpm", "eslint", "--fix", "$FILE"],
+      "extensions": [".ts", ".svelte", ".js", ".mjs"]
+    },
+    "rustfmt": {
+      "command": ["rustfmt", "$FILE"],
+      "extensions": [".rs"]
+    }
+  },
+  "command": {
+    "lint": {
+      "template": "Run `pnpm lint` and fix all errors. Show me a summary of what was fixed.",
+      "description": "Run ESLint and fix all errors"
+    },
+    "check": {
+      "template": "Run `pnpm check` to type-check the Svelte/TypeScript frontend. Fix any type errors found.",
+      "description": "Type-check frontend with svelte-check"
+    },
+    "cargo-check": {
+      "template": "Run `cargo check` in the `src-tauri/` directory. Fix any Rust compilation errors found.",
+      "description": "Type-check Rust backend"
+    }
+  },
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "prompt": "You are working on Hope:RE, an AI art protection desktop app. It uses SvelteKit 2 + Svelte 5 (runes only, no legacy syntax) + TypeScript + Tailwind CSS 4 for the frontend, and Rust with Tauri v2 + ONNX Runtime for the backend.\n\nKey rules:\n- Always use `type`, never `interface`\n- Always use `import type` for type-only imports\n- Use Svelte 5 runes: $props(), $state(), $derived(), $effect()\n- No <style> blocks, use Tailwind CSS utility classes only\n- Files must be kebab-case (except .rs files which are snake_case)\n- Stores follow the `use-*.svelte.ts` composable pattern\n- Rust Tauri commands return `Result<T, String>` with `.map_err()`\n- No comments in code -- no inline, block, or JSDoc comments in any source file\n- No emojis anywhere -- not in markdown, commit messages, toast messages, or logs\n- Run `pnpm lint` before committing\n- Follow Angular conventional commit format: type(scope): subject"
+    },
+    "plan": {
+      "mode": "primary",
+      "prompt": "You are analyzing Hope:RE, an AI art protection desktop app. Analyze code, suggest changes, and create plans without modifying files. The app uses SvelteKit 2 + Svelte 5 + Tailwind CSS 4 frontend and Rust Tauri v2 backend with ONNX Runtime ML inference. Remember: no comments in code, no emojis anywhere in the codebase.",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    }
+  }
+}
