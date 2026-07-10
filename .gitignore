@@ -24,16 +24,3 @@ nul
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# OpenCode
-AGENTS.md
-.opencode/
-opencode.json
-
-# Gemini
-.gemini/
-GEMINI.md
-
-# SKILLS
-SKILL.md
-.agents/
-skills-lock.json

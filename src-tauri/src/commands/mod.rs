@@ -1,15 +1,10 @@
+pub mod blind_watermark;
+pub mod onnx_integration;
 pub mod system_info;
 
+pub use self::blind_watermark::{embed_watermark, extract_watermark};
+pub use self::onnx_integration::{
+    cancel_protection, check_models_status, create_ort_session, download_model,
+    get_inference_capabilities, protect_image,
+};
 pub use self::system_info::get_system_info;
-
-#[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
-pub use crate::onnx_integration::{
-    cancel_protection, check_models_status, create_ort_session, download_model,
-    get_inference_capabilities, protect_image,
-};
-
-#[cfg(all(target_os = "android", not(target_arch = "aarch64")))]
-pub use crate::onnx_stubs::{
-    cancel_protection, check_models_status, create_ort_session, download_model,
-    get_inference_capabilities, protect_image,
-};

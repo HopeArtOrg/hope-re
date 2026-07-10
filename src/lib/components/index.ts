@@ -1,4 +1,5 @@
 export * from "./decoration";
+export * from "./functions";
 export * from "./header";
 export * from "./main";
 export * from "./minimized-dock";

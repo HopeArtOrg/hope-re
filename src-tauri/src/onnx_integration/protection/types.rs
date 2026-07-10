@@ -1,6 +1,6 @@
-use std::sync::atomic::AtomicBool;
 use ndarray::Array4;
 use ort::session::Session;
+use std::sync::atomic::AtomicBool;
 
 pub const TILE_SIZE: u32 = 224;
 pub const TILE_OVERLAP: u32 = 32;

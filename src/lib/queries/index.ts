@@ -3,3 +3,4 @@ export * from "./models";
 export * from "./protection";
 export * from "./system-info";
 export * from "./updater";
+export * from "./watermark";

@@ -17,8 +17,8 @@ use algorithms::{
 use encoding::{apply_fallback_noise, encode_image_to_base64};
 use model::{load_model, resolve_model_path};
 use tiling::apply_model_protection;
-pub use types::{ProtectionResult, ProtectionSettings, ProtectionState};
 use types::{AlgorithmParams, ProtectionProgress};
+pub use types::{ProtectionResult, ProtectionSettings, ProtectionState};
 
 use tauri::Emitter;
 

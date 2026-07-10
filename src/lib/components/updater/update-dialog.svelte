@@ -38,7 +38,7 @@
     {#if updater.isActive}
       <button
         onclick={() => updater.minimize()}
-        class="absolute end-4 top-4 rounded-lg opacity-50 transition-opacity hover:opacity-100 focus-visible:outline-hidden cursor-pointer"
+        class="absolute inset-e-4 top-4 rounded-lg opacity-50 transition-opacity hover:opacity-100 focus-visible:outline-hidden cursor-pointer"
         aria-label="Minimize to dock"
       >
         <MinusIcon class="size-4" />
