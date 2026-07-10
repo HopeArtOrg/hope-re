@@ -19,9 +19,11 @@
   import { Button } from "$lib/components/ui/button";
   import { Input } from "$lib/components/ui/input";
   import { Slider } from "$lib/components/ui/slider";
+  import { useEmbedWatermark } from "$lib/queries";
   import { useImage } from "$lib/stores/use-image.svelte";
 
   const embedImage = useImage();
+  const embedMutation = useEmbedWatermark();
 
   let watermarkText = $state<string>("Hope:RE Protected");
   let useCustomSeed = $state<boolean>(false);
@@ -34,23 +36,7 @@
   let progressStatus = $state<"idle" | "processing" | "success" | "error">("idle");
   let progressMessage = $state<string>("");
 
-  async function simulateProgress(
-    steps: { progress: number; message: string; duration: number }[],
-    onComplete: () => void,
-  ) {
-    isProcessing = true;
-    progressStatus = "processing";
-
-    for (const step of steps) {
-      progress = step.progress;
-      progressMessage = step.message;
-      await new Promise(resolve => setTimeout(resolve, step.duration));
-    }
-
-    onComplete();
-  }
-
-  function handleEmbed() {
+  async function handleEmbed() {
     if (!embedImage.originalImage) {
       toast.error("Please upload an image to sign");
       return;
@@ -61,24 +47,49 @@
       return;
     }
 
+    isProcessing = true;
+    progressStatus = "processing";
+
     const steps = [
-      { progress: 20, message: "Decomposing image frequencies...", duration: 600 },
-      { progress: 55, message: "Embedding secure signature coefficients...", duration: 800 },
-      { progress: 85, message: "Synthesizing output frequencies...", duration: 500 },
-      { progress: 100, message: "Reconstructing final signed canvas...", duration: 400 },
+      { progress: 20, message: "Decomposing image frequencies...", duration: 400 },
+      { progress: 55, message: "Embedding secure signature coefficients...", duration: 600 },
+      { progress: 85, message: "Synthesizing output frequencies...", duration: 400 },
     ];
 
-    simulateProgress(steps, () => {
-      embedResultImage = embedImage.originalImage;
+    for (const step of steps) {
+      progress = step.progress;
+      progressMessage = step.message;
+      await new Promise(resolve => setTimeout(resolve, step.duration));
+    }
+
+    try {
+      progress = 90;
+      progressMessage = "Reconstructing final signed canvas...";
+
+      const seed = useCustomSeed ? Number(seedValue) : undefined;
+      const result = await embedMutation.mutateAsync({
+        imageBase64: embedImage.originalImage,
+        watermark: watermarkText,
+        seed,
+      });
+
+      embedResultImage = result;
+      progress = 100;
       progressStatus = "success";
-      isProcessing = false;
       toast.success("Ink signature embedded successfully");
       setTimeout(() => {
         progressStatus = "idle";
         progress = 0;
         progressMessage = "";
       }, 3000);
-    });
+    }
+    catch (error: any) {
+      progressStatus = "error";
+      toast.error(error instanceof Error ? error.message : String(error));
+    }
+    finally {
+      isProcessing = false;
+    }
   }
 
   function handleCancel() {

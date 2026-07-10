@@ -4,8 +4,8 @@ use std::sync::atomic::Ordering;
 use tauri::Emitter;
 
 use super::types::{
-    AlgorithmParams, ModelRunFn, ProtectionProgress, ProtectionState, SPSA_DIRECTIONS_PER_ITER,
-    TileProgress,
+    AlgorithmParams, ModelRunFn, ProtectionProgress, ProtectionState, TileProgress,
+    SPSA_DIRECTIONS_PER_ITER,
 };
 
 struct Xoshiro128 {

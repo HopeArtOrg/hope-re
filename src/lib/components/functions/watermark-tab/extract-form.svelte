@@ -15,9 +15,11 @@
   } from "$lib/components";
   import { Button } from "$lib/components/ui/button";
   import { Input } from "$lib/components/ui/input";
+  import { useExtractWatermark } from "$lib/queries";
   import { useImage } from "$lib/stores/use-image.svelte";
 
   const extractImage = useImage();
+  const extractMutation = useExtractWatermark();
 
   let useCustomExtractSeed = $state<boolean>(false);
   let extractSeedValue = $state<string>("");
@@ -29,12 +31,19 @@
   let progressStatus = $state<"idle" | "processing" | "success" | "error">("idle");
   let progressMessage = $state<string>("");
 
-  async function simulateProgress(
-    steps: { progress: number; message: string; duration: number }[],
-    onComplete: () => void,
-  ) {
+  async function handleExtract() {
+    if (!extractImage.originalImage) {
+      toast.error("Please upload an image to scan");
+      return;
+    }
+
     isProcessing = true;
     progressStatus = "processing";
+
+    const steps = [
+      { progress: 30, message: "Analyzing digital canvas structure...", duration: 400 },
+      { progress: 65, message: "Scanning watermark coefficients...", duration: 500 },
+    ];
 
     for (const step of steps) {
       progress = step.progress;
@@ -42,32 +51,36 @@
       await new Promise(resolve => setTimeout(resolve, step.duration));
     }
 
-    onComplete();
-  }
+    try {
+      progress = 85;
+      progressMessage = "Decoding hidden signature bits...";
 
-  function handleExtract() {
-    if (!extractImage.originalImage) {
-      toast.error("Please upload an image to scan");
-      return;
-    }
+      const seed = useCustomExtractSeed ? Number(extractSeedValue) : undefined;
+      const watermarkLen = Number(expectedLength) || 20;
 
-    const steps = [
-      { progress: 30, message: "Analyzing digital canvas structure...", duration: 500 },
-      { progress: 65, message: "Scanning watermark coefficients...", duration: 700 },
-      { progress: 100, message: "Decoding hidden signature bits...", duration: 400 },
-    ];
+      const result = await extractMutation.mutateAsync({
+        imageBase64: extractImage.originalImage,
+        watermarkLen,
+        seed,
+      });
 
-    simulateProgress(steps, () => {
-      extractedText = "Hope:RE Protected Signature";
+      extractedText = result;
+      progress = 100;
       progressStatus = "success";
-      isProcessing = false;
       toast.success("Signature revealed successfully");
       setTimeout(() => {
         progressStatus = "idle";
         progress = 0;
         progressMessage = "";
       }, 3000);
-    });
+    }
+    catch (error: any) {
+      progressStatus = "error";
+      toast.error(error instanceof Error ? error.message : String(error));
+    }
+    finally {
+      isProcessing = false;
+    }
   }
 
   function handleCancel() {

@@ -1,3 +1,4 @@
+mod blind_watermark;
 mod commands;
 #[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
 mod onnx_integration;
@@ -6,8 +7,8 @@ mod onnx_stubs;
 mod system_info;
 
 use commands::{
-    cancel_protection, check_models_status, create_ort_session, download_model,
-    get_inference_capabilities, get_system_info, protect_image,
+    cancel_protection, check_models_status, create_ort_session, download_model, embed_watermark,
+    extract_watermark, get_inference_capabilities, get_system_info, protect_image,
 };
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -24,6 +25,8 @@ pub fn run() {
             get_inference_capabilities,
             create_ort_session,
             protect_image,
+            embed_watermark,
+            extract_watermark,
             #[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
             cancel_protection,
             check_models_status,
