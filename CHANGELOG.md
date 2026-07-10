@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.1] - 2026-07-10
+
+### Added
+- Integrate the blind watermarking feature in the Rust Tauri backend using the blind_watermark crate.
+- Expose embed_watermark and extract_watermark Tauri commands asynchronously to prevent main UI thread freezing.
+- Add Svelte Query mutations useEmbedWatermark and useExtractWatermark for watermark processing.
+- Implement the Signature Ink settings tab containing embed-form.svelte and extract-form.svelte.
+- Add use-watermark-state.svelte.ts global store to synchronize seed keys and lengths between embedder and extractor.
+- Create Background.svelte component to encapsulate the drawing doodles and keep the background vibe in sync.
+
+### Changed
+- Refactor +page.svelte to implement vertical, overlapping notebook-divider-style tabs on the left.
+- Refactor glaze-tab.svelte into glaze-tab.svelte and glaze-form.svelte to separate canvas views from settings controls.
+- Bump version to 2.2.1 across package.json, Cargo.toml, and tauri.conf.json.
+
 ## [2.1.19] - 2026-06-14
 
 ### Changed
