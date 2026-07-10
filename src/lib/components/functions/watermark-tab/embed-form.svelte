@@ -155,17 +155,18 @@
           />
         {/if}
       </BaseImagePlaceholder>
-      {#if embedResultImage}
-        <Button
-          variant="secondary"
-          class="w-full mt-4 h-12 border-2 border-dashed border-primary/40 text-primary hover:bg-primary/5 transition-all doodle-line text-base font-bold animate-in fade-in slide-in-from-top-2 duration-300"
-          onclick={handleSendToScanner}
-        >
-          <ScanLineIcon class="size-5 mr-2" />
-          Test Signature Verification
-        </Button>
-      {/if}
     </div>
+
+    {#if embedResultImage}
+      <Button
+        variant="secondary"
+        class="w-full h-12 border-2 border-dashed border-primary/40 text-primary hover:bg-primary/5 transition-all doodle-line text-base font-bold animate-in fade-in slide-in-from-top-2 duration-300"
+        onclick={handleSendToScanner}
+      >
+        <ScanLineIcon class="size-5 mr-2" />
+        Test Signature Verification
+      </Button>
+    {/if}
   </div>
 
   <div class="flex flex-col gap-6">
