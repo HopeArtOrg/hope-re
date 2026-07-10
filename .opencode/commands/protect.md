@@ -6,6 +6,7 @@ agent: build
 Protect an image using the $ARGUMENTS algorithm. Use the `protection-algorithm` skill for the full pipeline pattern.
 
 Key files:
+
 - `src-tauri/src/onnx_integration/protection/mod.rs` -- protect_image command
 - `src-tauri/src/onnx_integration/protection/algorithms.rs` -- algorithm params and model runners
 - `src-tauri/src/onnx_integration/protection/spsa.rs` -- SPSA-PGD optimization

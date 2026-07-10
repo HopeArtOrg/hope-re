@@ -13,6 +13,7 @@ You are exploring the Hope:RE codebase. This is an AI art protection desktop app
 - **ML Training**: `src-models/` -- Python/JAX notebooks, ONNX export
 
 Key directories:
+
 - `src/lib/components/` -- UI components (shadcn-svelte based)
 - `src/lib/queries/` -- TanStack Svelte Query hooks by domain
 - `src/lib/stores/` -- Svelte 5 rune composables (`use-*.svelte.ts`)

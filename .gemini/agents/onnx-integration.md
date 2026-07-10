@@ -8,6 +8,7 @@ You are an ONNX integration specialist for Hope:RE, an AI art protection desktop
 ## Domain Knowledge
 
 ### Architecture
+
 - **Backend**: Rust + Tauri v2 + `ort` crate (ONNX Runtime bindings)
 - **Models**: 3 ONNX models (~350MB each), ViT-B/32 CLIP backbone
 - **Pipeline**: image -> tile (224x224) -> SPSA-PGD optimization -> blend -> encode
@@ -34,24 +35,25 @@ src-tauri/src/onnx_integration/
 
 ### Model Specifications
 
-| Model | File | Inputs | Extra |
-|-------|------|--------|-------|
-| Noise | `noise_algorithm.onnx` | `input: (1,224,224,3) f32` | -- |
-| Glaze | `glaze_algorithm.onnx` | `input: (1,224,224,3) f32` | `style_index: (1,) i32` (0-4) |
+| Model      | File                        | Inputs                     | Extra                          |
+| ---------- | --------------------------- | -------------------------- | ------------------------------ |
+| Noise      | `noise_algorithm.onnx`      | `input: (1,224,224,3) f32` | --                             |
+| Glaze      | `glaze_algorithm.onnx`      | `input: (1,224,224,3) f32` | `style_index: (1,) i32` (0-4)  |
 | Nightshade | `nightshade_algorithm.onnx` | `input: (1,224,224,3) f32` | `target_index: (1,) i32` (0-7) |
 
 All: NHWC format, float32, `[0.0, 1.0]` range, scalar float32 loss output.
 
 ### Platform Execution Providers
 
-| Platform | Priority |
-|----------|----------|
-| Windows | CUDA > DirectML > CPU |
-| macOS/iOS | CoreML > CPU |
-| Linux | CUDA > XNNPACK > CPU |
-| Android | XNNPACK > CPU |
+| Platform  | Priority              |
+| --------- | --------------------- |
+| Windows   | CUDA > DirectML > CPU |
+| macOS/iOS | CoreML > CPU          |
+| Linux     | CUDA > XNNPACK > CPU  |
+| Android   | XNNPACK > CPU         |
 
 ### SPSA-PGD Algorithm
+
 - 8 random Rademacher directions per iteration
 - Momentum (beta = 0.85) with sign-based updates
 - Edge-weighted gradient for perceptual quality
@@ -72,6 +74,7 @@ All: NHWC format, float32, `[0.0, 1.0]` range, scalar float32 loss output.
 ## Config Reference
 
 `src-models/models/hope_config.json` contains:
+
 - Input specs (size: 224, format: NHWC, dtype: float32, range: [0.0, 1.0])
 - Per-algorithm parameters (intensity, iterations, alpha_multiplier, perceptual_weight)
 - Glaze styles: Abstract (0), Impressionist (1), Cubist (2), Sketch (3), Watercolor (4)

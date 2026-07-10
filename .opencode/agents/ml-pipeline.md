@@ -12,6 +12,7 @@ You are an ML pipeline specialist for Hope:RE, an AI art protection desktop app 
 ## Domain Knowledge
 
 ### Architecture
+
 - **Training**: Python/JAX in Google Colab notebooks (`src-models/notebooks/`)
 - **Models**: ONNX format, ~350MB each, stored in `src-models/models/`
 - **Inference**: Rust `ort` crate in `src-tauri/src/onnx_integration/`
@@ -19,19 +20,21 @@ You are an ML pipeline specialist for Hope:RE, an AI art protection desktop app 
 
 ### Three Protection Algorithms
 
-| Algorithm | Loss Function | Extra Input |
-|-----------|--------------|-------------|
-| Noise | maximize chaos similarity, minimize normal similarity | none |
-| Glaze | maximize style similarity (5 styles) | `style_index: (1,) i32` |
-| Nightshade | maximize target class similarity (8 targets) | `target_index: (1,) i32` |
+| Algorithm  | Loss Function                                         | Extra Input              |
+| ---------- | ----------------------------------------------------- | ------------------------ |
+| Noise      | maximize chaos similarity, minimize normal similarity | none                     |
+| Glaze      | maximize style similarity (5 styles)                  | `style_index: (1,) i32`  |
+| Nightshade | maximize target class similarity (8 targets)          | `target_index: (1,) i32` |
 
 All algorithms use ViT-B/32 CLIP as the backbone. CLIP normalization is baked into the model.
 
 ### Model Input/Output Spec
+
 - Input: NHWC `(1, 224, 224, 3)`, float32, range `[0.0, 1.0]`
 - Output: scalar float32 loss value (minimized via SPSA-PGD in Rust)
 
 ### Notebook Pipeline (ordered)
+
 1. `0_setup_colab.ipynb` -- GPU check, JAX+CUDA install
 2. `1_clip_to_jax.ipynb` -- PyTorch CLIP -> numpy weights, pre-compute text embeddings
 3. `2_noise_algorithm.ipynb` -- JAX noise protection model
@@ -40,6 +43,7 @@ All algorithms use ViT-B/32 CLIP as the backbone. CLIP normalization is baked in
 6. `5_export_onnx.ipynb` -- Convert .pkl -> ONNX (jax2onnx, onnxsim, validation)
 
 ### Config Reference
+
 `src-models/models/hope_config.json` contains input specs, algorithm parameters, style/target names, and presets.
 
 ## Key Constraints

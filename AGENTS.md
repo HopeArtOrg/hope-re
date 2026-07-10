@@ -20,6 +20,7 @@ pnpm tauri build           # production desktop build
 ```
 
 Rust backend (run from `src-tauri/`):
+
 ```bash
 cargo build               # build Rust backend
 cargo check               # type check only
@@ -48,30 +49,35 @@ Example: `feat(protection): add nightshade intensity control`
 ## Code Style - TypeScript / Svelte
 
 ### Formatting (enforced by ESLint, Prettier is disabled)
+
 - 2 spaces indent
 - Semicolons always
 - Double quotes
 - Max 2 attributes per line (single-line Svelte), 1 per line (multi-line)
 
 ### File Naming
+
 - **kebab-case** for all `.ts`, `.svelte`, `.css` files (enforced by ESLint)
 - Rust files use **snake_case** (excluded from kebab-case rule)
 - Stores: `use-*.svelte.ts` pattern
 - Component directories: `index.svelte` as entry, `index.ts` for barrel exports
 
 ### Type Definitions
+
 - Always use `type` keyword, never `interface` (enforced: `ts/consistent-type-definitions`)
 - Always use `import type` for type-only imports
 - Export types from co-located `types.ts` files, re-export through barrel `index.ts`
 - PascalCase for type names: `ProtectionSettings`, `AlgorithmParams`
 
 ### Import Order (enforced by `perfectionist/sort-imports`)
+
 1. `import type { ... }` (type-only, separated by blank line)
 2. External packages (`@lucide`, `@tanstack`, `@tauri-apps`, `svelte-sonner`, etc.)
 3. Internal `$lib/...` imports
 4. Relative imports (`./types`, `../utils`)
 
 ### Naming Conventions
+
 - Variables/functions: `camelCase`
 - Event handlers: `handle*` prefix (`handleProtect`, `handleDownload`)
 - Hooks/stores: `use*` prefix (`useImage`, `useProtection`)
@@ -81,6 +87,7 @@ Example: `feat(protection): add nightshade intensity control`
 - Components: PascalCase in exports, kebab-case filenames
 
 ### Svelte 5 Runes (mandatory, no legacy syntax)
+
 - Props: `$props()` with destructuring and defaults; `$bindable()` for two-way
 - State: `$state<T>()` with explicit generic type
 - Derived: `$derived(expression)`
@@ -88,23 +95,27 @@ Example: `feat(protection): add nightshade intensity control`
 - No `<style>` blocks; all styling via Tailwind CSS utility classes
 
 ### State Management
+
 - TanStack Svelte Query for server state (`createQuery`, `createMutation`)
 - Svelte 5 rune-based composables for local state (`use-*.svelte.ts`)
 - Expose reactive state via getters/setters in returned objects (preserves reactivity)
 - Module-level `$state` for singleton stores, function-level for instance stores
 
 ### Error Handling (TypeScript)
+
 - Wrap in `try/catch`, call `toast.error("message")` + `console.error("context:", error)`
 - Extract messages: `e instanceof Error ? e.message : String(e)`
 - `else` and `catch` on new line after closing brace (Allman-ish style)
 
 ### Comments and Emojis
+
 - **No comments in code.** Do not add inline comments, block comments, or JSDoc to TypeScript,
   Svelte, or Rust files. The code should be self-documenting through clear naming.
 - **No emojis in markdown or code.** Never use emoji characters in `.md` files, commit messages,
   toast messages, log messages, or anywhere else in the codebase.
 
 ### Restricted Patterns
+
 - `no-console`: warn (prefer toast for user-facing messages)
 - `node/no-process-env`: error (use Tauri APIs instead)
 - `antfu/no-top-level-await`: off (allowed)
@@ -112,28 +123,34 @@ Example: `feat(protection): add nightshade intensity control`
 ## Code Style - Rust
 
 ### Formatting (`rustfmt.toml`)
+
 - Edition 2021, max width 100, 4 spaces, Unix newlines
 
 ### Module Organization
+
 - `mod.rs` declares submodules and re-exports public API via `pub use`
 - Private submodules: `mod name;` (no `pub`)
 - Files: **snake_case**; Types: **PascalCase**; Constants: **UPPER_SNAKE_CASE**
 
 ### Tauri Commands
+
 - Annotated with `#[tauri::command]`, always return `Result<T, String>`
 - Errors via `.map_err(|e| format!("Descriptive message: {}", e))?`
 - No custom error enums; all errors are `String`-typed
 - Non-critical event emissions: `let _ = app.emit(...);`
 
 ### Structs
+
 - Derive `Debug, Clone, serde::Serialize, serde::Deserialize` for data transfer types
 - Use `Option<T>` for optional fields
 
 ### Platform-Specific Code
+
 - Use `#[cfg(...)]` for conditional compilation (CUDA/DirectML/CoreML/XNNPACK)
 - Stubs in `onnx_stubs.rs` for unsupported platforms
 
 ### Logging
+
 - Use `log::info!`, `log::error!`, etc. (via Tauri log plugin)
 
 ## Project Structure
@@ -168,7 +185,9 @@ Backend: `tauri` 2.x, `ort` (ONNX Runtime), `image`, `ndarray`, `reqwest`, `sysi
 ## ONNX Model Pipeline
 
 ### Model Architecture
+
 Three ONNX models (~350MB each) built on ViT-B/32 CLIP:
+
 - `noise_algorithm.onnx` -- Adversarial noise (input: image only)
 - `glaze_algorithm.onnx` -- Style cloaking (input: image + style_index 0-4)
 - `nightshade_algorithm.onnx` -- Data poisoning (input: image + target_index 0-7)
@@ -177,6 +196,7 @@ All models: NHWC `(1, 224, 224, 3)` float32 in `[0.0, 1.0]`, scalar float32 loss
 CLIP normalization is baked into the model graph.
 
 ### Training Pipeline (Google Colab)
+
 ```
 0_setup_colab.ipynb    -> GPU check, JAX+CUDA install
 1_clip_to_jax.ipynb    -> PyTorch CLIP -> numpy weights, pre-compute text embeddings
@@ -187,6 +207,7 @@ CLIP normalization is baked into the model graph.
 ```
 
 ### Model Distribution Flow
+
 1. Train in Colab, export `.onnx` to `src-models/models/`
 2. Track with Git LFS (`.gitattributes`)
 3. `publish.yml` uploads to GitHub Release after Tauri build
@@ -194,6 +215,7 @@ CLIP normalization is baked into the model graph.
 5. Stored in `app_data_dir/models/`
 
 ### Inference Pipeline (Rust)
+
 ```
 Image -> base64 decode -> tile (224x224, overlap 32px)
   -> preprocess (normalize to [0,1]) -> edge weight map
@@ -202,6 +224,7 @@ Image -> base64 decode -> tile (224x224, overlap 32px)
 ```
 
 ### Config Reference
+
 `src-models/models/hope_config.json` -- input specs, algorithm parameters, presets,
 Glaze styles (Abstract/Impressionist/Cubist/Sketch/Watercolor),
 Nightshade targets (Dog/Cat/Car/Landscape/Person/Building/Food/Abstract).
@@ -214,34 +237,34 @@ Use these skills for specialized tasks. Load with `skill(name)` when starting re
 
 #### Hope:RE Project Skills (`.opencode/skills/`)
 
-| Skill | Description |
-|-------|-------------|
-| `tauri-command` | Create Rust Tauri v2 commands |
-| `svelte-component` | Create Svelte 5 components |
-| `tanstack-query` | Create TanStack Svelte Query hooks |
-| `onnx-rust-integration` | Load and run ONNX models in Rust with `ort` crate |
-| `onnx-export` | Convert JAX models to ONNX in Python/Colab |
-| `protection-algorithm` | Implement SPSA-PGD adversarial perturbation pipeline |
-| `model-distribution` | Handle model distribution via Git LFS and GitHub Releases |
+| Skill                   | Description                                               |
+| ----------------------- | --------------------------------------------------------- |
+| `tauri-command`         | Create Rust Tauri v2 commands                             |
+| `svelte-component`      | Create Svelte 5 components                                |
+| `tanstack-query`        | Create TanStack Svelte Query hooks                        |
+| `onnx-rust-integration` | Load and run ONNX models in Rust with `ort` crate         |
+| `onnx-export`           | Convert JAX models to ONNX in Python/Colab                |
+| `protection-algorithm`  | Implement SPSA-PGD adversarial perturbation pipeline      |
+| `model-distribution`    | Handle model distribution via Git LFS and GitHub Releases |
 
 #### General Skills (`.agents/skills/`)
 
-| Skill | Description |
-|-------|-------------|
-| `chrome-devtools` | Chrome DevTools via MCP for debugging, browser automation, performance analysis |
-| `svelte5-best-practices` | Svelte 5 runes, snippets, SvelteKit patterns, TypeScript |
-| `svelte-code-writer` | CLI tools for Svelte 5 documentation lookup and code analysis |
-| `context7` | Retrieve up-to-date documentation via Context7 API |
-| `rust-best-practices` | Idiomatic Rust code, borrowing, ownership, error handling |
-| `typescript-advanced-types` | Generics, conditional types, mapped types, utility types |
-| `ui-ux-pro-max` | UI/UX design intelligence: 50+ styles, 161 color palettes, typography, accessibility, 10 stacks |
+| Skill                       | Description                                                                                     |
+| --------------------------- | ----------------------------------------------------------------------------------------------- |
+| `chrome-devtools`           | Chrome DevTools via MCP for debugging, browser automation, performance analysis                 |
+| `svelte5-best-practices`    | Svelte 5 runes, snippets, SvelteKit patterns, TypeScript                                        |
+| `svelte-code-writer`        | CLI tools for Svelte 5 documentation lookup and code analysis                                   |
+| `context7`                  | Retrieve up-to-date documentation via Context7 API                                              |
+| `rust-best-practices`       | Idiomatic Rust code, borrowing, ownership, error handling                                       |
+| `typescript-advanced-types` | Generics, conditional types, mapped types, utility types                                        |
+| `ui-ux-pro-max`             | UI/UX design intelligence: 50+ styles, 161 color palettes, typography, accessibility, 10 stacks |
 
 #### Productivity Skills (global)
 
-| Skill | Description |
-|-------|-------------|
+| Skill      | Description                                                     |
+| ---------- | --------------------------------------------------------------- |
 | `ponytail` | Laziest solution that works. Stdlib before custom, minimal code |
-| `caveman` | Ultra-compressed communication mode. 65% token reduction |
+| `caveman`  | Ultra-compressed communication mode. 65% token reduction        |
 
 ### Skill Usage Guide
 
@@ -249,57 +272,61 @@ Always load the appropriate skill when working on related tasks:
 
 #### Frontend Tasks
 
-| Task | Skills to Load |
-|------|----------------|
-| Create Svelte component | `svelte-component`, `svelte5-best-practices` |
-| Add TanStack Query hook | `tanstack-query` |
-| Fix/analyze Svelte code | `svelte-code-writer`, `svelte5-best-practices` |
-| Debug web pages / browser automation | `chrome-devtools` |
-| TypeScript advanced types | `typescript-advanced-types` |
-| UI/UX design decisions | `ui-ux-pro-max` |
+| Task                                 | Skills to Load                                 |
+| ------------------------------------ | ---------------------------------------------- |
+| Create Svelte component              | `svelte-component`, `svelte5-best-practices`   |
+| Add TanStack Query hook              | `tanstack-query`                               |
+| Fix/analyze Svelte code              | `svelte-code-writer`, `svelte5-best-practices` |
+| Debug web pages / browser automation | `chrome-devtools`                              |
+| TypeScript advanced types            | `typescript-advanced-types`                    |
+| UI/UX design decisions               | `ui-ux-pro-max`                                |
 
 #### Backend Tasks
 
-| Task | Skills to Load |
-|------|----------------|
-| Create Tauri command | `tauri-command` |
-| ONNX model integration | `onnx-rust-integration`, `model-distribution` |
-| Protection algorithm | `protection-algorithm`, `onnx-rust-integration` |
-| Rust code review | `rust-best-practices` |
+| Task                   | Skills to Load                                  |
+| ---------------------- | ----------------------------------------------- |
+| Create Tauri command   | `tauri-command`                                 |
+| ONNX model integration | `onnx-rust-integration`, `model-distribution`   |
+| Protection algorithm   | `protection-algorithm`, `onnx-rust-integration` |
+| Rust code review       | `rust-best-practices`                           |
 
 #### ML/Model Tasks
 
-| Task | Skills to Load |
-|------|----------------|
-| Export JAX to ONNX | `onnx-export` |
-| Download models | `model-distribution` |
+| Task               | Skills to Load       |
+| ------------------ | -------------------- |
+| Export JAX to ONNX | `onnx-export`        |
+| Download models    | `model-distribution` |
 
 #### Productivity Modes
 
 **Ponytail** (laziness mode):
+
 - Load for: any coding task where simplicity is desired
 - Use when: user says "ponytail", "be lazy", "simplest solution", "minimal", "yagni"
 - Effect: Forces simplest solution, stdlib over dependencies, minimal code
 
 **Caveman** (terse mode):
+
 - Load for: every response when user requests it
 - Use when: user says "caveman mode", "be brief", "less tokens"
 - Effect: Ultra-compressed prose, same technical accuracy
 
 ### Agents (`.opencode/agents/`)
-| Agent | Description |
-|-------|-------------|
-| `review` | Code review for Svelte/TypeScript and Rust standards |
-| `explore-arch` | Explore codebase architecture and dependencies |
-| `ml-pipeline` | ML notebook pipeline -- JAX training, CLIP extraction, ONNX export |
-| `onnx-integration` | Rust ONNX integration -- model loading, inference, SPSA-PGD |
+
+| Agent              | Description                                                        |
+| ------------------ | ------------------------------------------------------------------ |
+| `review`           | Code review for Svelte/TypeScript and Rust standards               |
+| `explore-arch`     | Explore codebase architecture and dependencies                     |
+| `ml-pipeline`      | ML notebook pipeline -- JAX training, CLIP extraction, ONNX export |
+| `onnx-integration` | Rust ONNX integration -- model loading, inference, SPSA-PGD        |
 
 ### Commands (`.opencode/commands/`)
-| Command | Description |
-|---------|-------------|
-| `component` | Create a new Svelte 5 component |
-| `lint` | Run ESLint and fix errors |
-| `precommit` | Full pre-commit validation pipeline |
-| `typecheck` | Type-check frontend and backend |
-| `protect` | Work with the image protection pipeline |
+
+| Command       | Description                              |
+| ------------- | ---------------------------------------- |
+| `component`   | Create a new Svelte 5 component          |
+| `lint`        | Run ESLint and fix errors                |
+| `precommit`   | Full pre-commit validation pipeline      |
+| `typecheck`   | Type-check frontend and backend          |
+| `protect`     | Work with the image protection pipeline  |
 | `onnx-export` | Work with the ONNX model export pipeline |

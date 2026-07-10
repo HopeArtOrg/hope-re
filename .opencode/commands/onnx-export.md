@@ -6,6 +6,7 @@ agent: build
 Work with the ONNX export pipeline for $ARGUMENTS. Use the `onnx-export` skill for the full pattern.
 
 Key files:
+
 - `src-models/notebooks/5_export_onnx.ipynb` -- JAX to ONNX conversion
 - `src-models/notebooks/1_clip_to_jax.ipynb` -- CLIP weight extraction
 - `src-models/notebooks/2_noise_algorithm.ipynb` -- Noise algorithm training

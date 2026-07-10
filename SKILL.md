@@ -26,11 +26,13 @@ Hope:RE is an AI art protection desktop app using adversarial perturbation via O
 ### Color Palette
 
 Light Mode:
+
 - Background: soft cream `oklch(0.94 0.015 80)`
 - Foreground: charcoal gray `oklch(0.15 0.02 80)`
 - Primary: deep violet `oklch(0.35 0.06 80)`
 
 Dark Mode:
+
 - Background: deep charcoal `oklch(0.25 0.02 80)`
 - Foreground: soft white `oklch(0.98 0.01 80)`
 - Primary: light violet `oklch(0.9 0.05 80)`
@@ -66,6 +68,7 @@ pnpm check            # Type check
 ```
 
 Rust (from `src-tauri/`):
+
 ```bash
 cargo build           # Build backend
 cargo clippy          # Lint Rust
@@ -100,13 +103,13 @@ src-models/           # ML training notebooks
 
 Load specialized skills for specific tasks:
 
-| Task | Skills |
-|------|--------|
+| Task                    | Skills                                       |
+| ----------------------- | -------------------------------------------- |
 | Create Svelte component | `svelte-component`, `svelte5-best-practices` |
-| Create Tauri command | `tauri-command` |
-| ONNX model integration | `onnx-rust-integration` |
-| Protection algorithm | `protection-algorithm` |
-| Debug web pages | `chrome-devtools` |
-| UI/UX design | `ui-ux-pro-max` |
+| Create Tauri command    | `tauri-command`                              |
+| ONNX model integration  | `onnx-rust-integration`                      |
+| Protection algorithm    | `protection-algorithm`                       |
+| Debug web pages         | `chrome-devtools`                            |
+| UI/UX design            | `ui-ux-pro-max`                              |
 
 See `AGENTS.md` for full skill list and usage guide.

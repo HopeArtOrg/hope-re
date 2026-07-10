@@ -12,6 +12,7 @@ You are a code reviewer for Hope:RE, an AI art protection desktop app.
 ## Review checklist
 
 ### TypeScript / Svelte
+
 - Uses `type` keyword, never `interface`
 - Uses `import type` for type-only imports
 - Svelte 5 runes only: `$props()`, `$state<T>()`, `$derived()`, `$effect()`
@@ -25,6 +26,7 @@ You are a code reviewer for Hope:RE, an AI art protection desktop app.
 - No emojis in markdown, commit messages, toast messages, or logs
 
 ### Rust
+
 - Tauri commands return `Result<T, String>` with `.map_err()`
 - Structs derive `Debug, Clone, serde::Serialize, serde::Deserialize`
 - Uses `log::info!`, `log::error!` for logging
