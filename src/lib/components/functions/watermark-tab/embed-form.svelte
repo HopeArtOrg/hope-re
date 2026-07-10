@@ -6,6 +6,7 @@
     KeyIcon,
     LoaderCircleIcon,
     RotateCcwIcon,
+    ScanLineIcon,
     StampIcon,
     TypeIcon,
   } from "@lucide/svelte";
@@ -21,9 +22,11 @@
   import { Slider } from "$lib/components/ui/slider";
   import { useEmbedWatermark } from "$lib/queries";
   import { useImage } from "$lib/stores/use-image.svelte";
+  import { useWatermarkState } from "$lib/stores/use-watermark-state.svelte";
 
   const embedImage = useImage();
   const embedMutation = useEmbedWatermark();
+  const wmState = useWatermarkState();
 
   let watermarkText = $state<string>("Hope:RE Protected");
   let useCustomSeed = $state<boolean>(false);
@@ -74,6 +77,11 @@
       });
 
       embedResultImage = result;
+      wmState.scannableImage = result;
+      wmState.lastWatermarkLength = watermarkText.length;
+      wmState.useSeed = useCustomSeed;
+      wmState.lastSeed = seedValue;
+
       progress = 100;
       progressStatus = "success";
       toast.success("Ink signature embedded successfully");
@@ -108,6 +116,15 @@
     toast.success("Canvas reset complete");
   }
 
+  function handleSendToScanner() {
+    wmState.scannableImage = embedResultImage;
+    wmState.lastWatermarkLength = watermarkText.length;
+    wmState.useSeed = useCustomSeed;
+    wmState.lastSeed = seedValue;
+    wmState.activeSubTab = "extract";
+    toast.success("Signed canvas loaded into Verification scanner");
+  }
+
   function handleDownload() {
     embedImage.handleDownload(embedResultImage, "watermark");
   }
@@ -138,6 +155,16 @@
           />
         {/if}
       </BaseImagePlaceholder>
+      {#if embedResultImage}
+        <Button
+          variant="secondary"
+          class="w-full mt-4 h-12 border-2 border-dashed border-primary/40 text-primary hover:bg-primary/5 transition-all doodle-line text-base font-bold animate-in fade-in slide-in-from-top-2 duration-300"
+          onclick={handleSendToScanner}
+        >
+          <ScanLineIcon class="size-5 mr-2" />
+          Test Signature Verification
+        </Button>
+      {/if}
     </div>
   </div>
 

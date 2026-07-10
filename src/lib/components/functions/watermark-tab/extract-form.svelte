@@ -17,14 +17,28 @@
   import { Input } from "$lib/components/ui/input";
   import { useExtractWatermark } from "$lib/queries";
   import { useImage } from "$lib/stores/use-image.svelte";
+  import { useWatermarkState } from "$lib/stores/use-watermark-state.svelte";
 
   const extractImage = useImage();
   const extractMutation = useExtractWatermark();
+  const wmState = useWatermarkState();
 
   let useCustomExtractSeed = $state<boolean>(false);
   let extractSeedValue = $state<string>("");
-  let expectedLength = $state<string>("20");
+  let expectedLength = $state<string>("17");
   let extractedText = $state<string>("");
+
+  $effect(() => {
+    if (wmState.scannableImage) {
+      extractImage.originalImage = wmState.scannableImage;
+    }
+  });
+
+  $effect(() => {
+    if (wmState.lastWatermarkLength) {
+      expectedLength = String(wmState.lastWatermarkLength);
+    }
+  });
 
   let isProcessing = $state<boolean>(false);
   let progress = $state<number>(0);

@@ -72,6 +72,9 @@ export function useImage() {
     get originalImage() {
       return originalImage;
     },
+    set originalImage(value: string | null) {
+      originalImage = value;
+    },
     get fullscreenOpen() {
       return fullscreenOpen;
     },
