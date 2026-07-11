@@ -8,6 +8,7 @@
 
   import {
     BaseImagePlaceholder,
+    ImageFullscreenDialog,
     RenderedImageActions,
   } from "$lib/components";
   import { useImage } from "$lib/stores/use-image.svelte";
@@ -109,3 +110,7 @@
 
   <GlazeForm {image} {protection} />
 </div>
+
+<ImageFullscreenDialog bind:open={image.fullscreenOpen}
+                       imageSrc={protection.resultImage}
+                       onDownload={handleDownload} />
