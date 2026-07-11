@@ -11,13 +11,15 @@
   import { CatIcon, ProtectionMenu } from "$lib/components";
   import { Button } from "$lib/components/ui/button";
   import { useInferenceCapabilities } from "$lib/queries";
+  import { useImage } from "$lib/stores/use-image.svelte";
+  import { useProtection } from "$lib/stores/use-protection.svelte";
 
-  type Props = {
-    image: any;
-    protection: any;
+  type GlazeFormProps = {
+    image: ReturnType<typeof useImage>;
+    protection: ReturnType<typeof useProtection>;
   };
 
-  const { image, protection }: Props = $props();
+  const { image, protection }: GlazeFormProps = $props();
 
   const {
     data: inferenceData,
