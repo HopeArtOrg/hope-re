@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - Bump version to 2.2.2 across package.json, Cargo.toml, and tauri.conf.json.
+- Remove any type from GlazeForm component props and rename the props type definition to GlazeFormProps.
 
 ## [2.2.1] - 2026-07-10
 
