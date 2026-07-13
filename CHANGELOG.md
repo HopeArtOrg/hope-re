@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 - Prevent false positive watermark verification on normal images using a robust character printability ratio check that filters out unwatermarked garbage (mostly null bytes) without modifying the embedded text. This preserves the original length mapping and backward compatibility.
+- Fix GitHub Actions workflow self-installer crash by reordering the Node.js setup step before the pnpm installation and pinning the pnpm version to 11.11.0.
 
 ### Changed
 - Bump version to 2.2.3 across package.json, Cargo.toml, and tauri.conf.json.
