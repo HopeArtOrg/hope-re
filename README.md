@@ -10,16 +10,21 @@ The application compiles as a native desktop client for Windows, macOS, and Linu
 
 This project is a tribute to the original [Hope](https://github.com/HopeADeff/Hope) app (version 1), rewritten from the ground up with a new architecture and modern toolchain. The original project is archived at [HopeArtOrg/hope-archive](https://github.com/HopeArtOrg/hope-archive).
 
-## Technical Problem and Solution
-
-### The Threat: Unauthorized Style Mimicry and Concept Poisoning
+## The Problem: Unauthorized Style Mimicry and Concept Poisoning
 
 Generative AI models are trained on billions of scraped web images, often without the consent of the original creators. This leads to two major problems for artists:
 
 1. **Artistic Style Mimicry**: Generative models (often fine-tuned via LoRA) can extract the unique artistic representation, brushwork, color palette, and shading of an artist, allowing users to generate new works mimicking their style.
 2. **Concept Association Corruption (Concept Poisoning)**: Text-to-image models associate images with surrounding text labels. Automated scrapers feed these pairs into training runs. If unchecked, this allows models to learn incorrect concepts (e.g. training on a poisoned image labeled "dog" makes the model generate cat-like features when prompted for a "dog").
 
-### The Solution: Adversarial Perturbations in CLIP Space
+## Core Features
+
+- **Noise**: Applies adversarial noise that disrupts AI feature extraction, making the image difficult for models to extract meaningful representations from.
+- **Glaze**: Applies style-transfer perturbations that cloak the artist's visual style, causing AI models to misidentify the stylistic features of the work. Supports five target styles: Abstract, Impressionist, Cubist, Sketch, and Watercolor.
+- **Nightshade**: Applies data poisoning perturbations that cause AI models trained on the protected image to associate it with an incorrect concept. Supports eight target concepts: Dog, Cat, Car, Landscape, Person, Building, Food, and Abstract.
+- **Signature Ink (Blind Watermark)**: Embeds a hidden, robust digital signature within the image's frequency coefficients (using a hybrid DWT-DCT-SVD algorithm). The signature is imperceptible to the human eye but remains decodable after cropping, compression, or screenshotting.
+
+### Adversarial Perturbations in CLIP Space (Noise, Glaze, Nightshade)
 
 Hope:RE mitigates these risks using **adversarial perturbations** that target the feature extraction stage of text-to-image models (specifically, Contrastive Language-Image Pretraining, or CLIP):
 
@@ -29,18 +34,11 @@ Hope:RE mitigates these risks using **adversarial perturbations** that target th
    - **SPSA (Simultaneous Perturbation Stochastic Approximation)**: Because the ONNX model is treated as a black-box or requires gradient estimation over large dimensions on client hardware, SPSA approximates the gradient directions efficiently using a random Rademacher distribution. It requires only two model evaluations per direction per iteration, significantly reducing memory and compute overhead.
 3. **Tiling and Blending**: To process high-resolution images under client VRAM/RAM constraints, the image is decomposed into overlapping 224x224 patches (tiles). Each patch is optimized independently, and they are combined back using a feathered blending mask to eliminate edge seams.
 
-## Core Features
-
-- **Noise**: Applies adversarial noise that disrupts AI feature extraction, making the image difficult for models to extract meaningful representations from.
-- **Glaze**: Applies style-transfer perturbations that cloak the artist's visual style, causing AI models to misidentify the stylistic features of the work. Supports five target styles: Abstract, Impressionist, Cubist, Sketch, and Watercolor.
-- **Nightshade**: Applies data poisoning perturbations that cause AI models trained on the protected image to associate it with an incorrect concept. Supports eight target concepts: Dog, Cat, Car, Landscape, Person, Building, Food, and Abstract.
-- **Signature Ink (Blind Watermark)**: Embeds a hidden, robust digital signature within the image's frequency coefficients (using a hybrid DWT-DCT-SVD algorithm). The signature is imperceptible to the human eye but remains decodable after cropping, compression, or screenshotting.
-
-## Signature Ink Mechanism
+### Signature Ink (Blind Watermark)
 
 The **Signature Ink (Blind Watermark)** feature uses a Rust-native implementation of a robust blind watermarking algorithm from the [blind-watermark-rust](https://github.com/naganohara-yoshino/blind-watermark-rust) repository (originally ported from Guo Fei's Python implementation).
 
-### How It Works
+#### How It Works
 
 This feature utilizes a hybrid DWT-DCT-SVD (Discrete Wavelet Transform, Discrete Cosine Transform, and Singular Value Decomposition) pipeline to embed digital signatures invisibly and robustly:
 
@@ -57,7 +55,7 @@ This feature utilizes a hybrid DWT-DCT-SVD (Discrete Wavelet Transform, Discrete
 
 During verification, the reverse transformation is performed on the signed image. The singular values are evaluated to reconstruct the bit-stream, which is decrypted using the same seed key to reveal the signature text.
 
-### Verification Integrity
+#### Verification Integrity
 
 Because blind watermarking decodes coefficients from any image frequency domain, analyzing an unwatermarked image would normally output random garbage characters and falsely trigger a "Verified" status. To prevent false positives:
 
@@ -109,20 +107,20 @@ Models are tracked with Git LFS, uploaded to GitHub Releases during CI, and down
 
 ## Project Structure
 
-- [src/](file:///D:/git-projects/hope-re/src) -- SvelteKit frontend
-  - [lib/components/](file:///D:/git-projects/hope-re/src/lib/components) -- UI components (shadcn-svelte based)
-  - [lib/queries/](file:///D:/git-projects/hope-re/src/lib/queries) -- TanStack Query hooks (protection, watermark, models, system info)
-  - [lib/stores/](file:///D:/git-projects/hope-re/src/lib/stores) -- Svelte 5 rune composables and shared states (use-*.svelte.ts)
-  - [lib/constants.ts](file:///D:/git-projects/hope-re/src/lib/constants.ts) -- Algorithm definitions, presets, UI configuration
-  - [routes/](file:///D:/git-projects/hope-re/src/routes) -- SvelteKit routes (single-page, SSR disabled)
-- [src-tauri/](file:///D:/git-projects/hope-re/src-tauri) -- Rust backend (Tauri v2)
-  - [src/commands/](file:///D:/git-projects/hope-re/src-tauri/src/commands) -- Tauri command handlers
-  - [src/onnx_integration/](file:///D:/git-projects/hope-re/src-tauri/src/onnx_integration) -- ONNX model loading, SPSA-PGD pipeline, tiling, encoding
-  - [src/blind_watermark/](file:///D:/git-projects/hope-re/src-tauri/src/blind_watermark) -- DWT-DCT-SVD robust blind watermarking implementation
-  - [src/system_info/](file:///D:/git-projects/hope-re/src-tauri/src/system_info) -- Platform, CPU, GPU, and memory detection
-- [src-models/](file:///D:/git-projects/hope-re/src-models) -- ML training pipeline
-  - [notebooks/](file:///D:/git-projects/hope-re/src-models/notebooks) -- Colab notebooks (JAX training, ONNX export)
-  - [models/](file:///D:/git-projects/hope-re/src-models/models) -- Trained ONNX model files (Git LFS)
+- [src/](src) -- SvelteKit frontend
+  - [lib/components/](src/lib/components) -- UI components (shadcn-svelte based)
+  - [lib/queries/](src/lib/queries) -- TanStack Query hooks (protection, watermark, models, system info)
+  - [lib/stores/](src/lib/stores) -- Svelte 5 rune composables and shared states (use-*.svelte.ts)
+  - [lib/constants.ts](src/lib/constants.ts) -- Algorithm definitions, presets, UI configuration
+  - [routes/](src/routes) -- SvelteKit routes (single-page, SSR disabled)
+- [src-tauri/](src-tauri) -- Rust backend (Tauri v2)
+  - [src/commands/](src-tauri/src/commands) -- Tauri command handlers
+  - [src/onnx_integration/](src-tauri/src/onnx_integration) -- ONNX model loading, SPSA-PGD pipeline, tiling, encoding
+  - [src/blind_watermark/](src-tauri/src/blind_watermark) -- DWT-DCT-SVD robust blind watermarking implementation
+  - [src/system_info/](src-tauri/src/system_info) -- Platform, CPU, GPU, and memory detection
+- [src-models/](src-models) -- ML training pipeline
+  - [notebooks/](src-models/notebooks) -- Colab notebooks (JAX training, ONNX export)
+  - [models/](src-models/models) -- Trained ONNX model files (Git LFS)
 
 ## Development
 
