@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - Bump version to 2.2.3 across package.json, Cargo.toml, and tauri.conf.json.
+- Refactor extract-form.svelte to extract the verification status display into a new VerificationStatus component for better separation of concerns.
 
 ## [2.2.2] - 2026-07-11
 
