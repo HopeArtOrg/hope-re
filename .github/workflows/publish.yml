@@ -32,15 +32,16 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          version: 11
-
       - name: Setup node
         uses: actions/setup-node@v6
         with:
           node-version: 24.x
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11.11.0
+          cache: true
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable

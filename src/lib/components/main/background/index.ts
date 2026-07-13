@@ -1,3 +1,1 @@
-import Background from "./background.svelte";
-
-export { Background };
+export { default as Background } from "./background.svelte";
