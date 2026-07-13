@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.2.3] - 2026-07-13
+
+### Fixed
+- Prevent false positive watermark verification on normal images by prepending a secure prefix to embedded watermarks and validating it during extraction.
+
+### Changed
+- Bump version to 2.2.3 across package.json, Cargo.toml, and tauri.conf.json.
+
 ## [2.2.2] - 2026-07-11
 
 ### Fixed
