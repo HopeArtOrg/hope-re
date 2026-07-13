@@ -30,12 +30,12 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v6
-
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
           version: 11
+
+      - uses: actions/checkout@v6
 
       - name: Setup node
         uses: actions/setup-node@v6
