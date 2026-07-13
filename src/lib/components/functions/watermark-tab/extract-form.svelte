@@ -11,13 +11,14 @@
 
   import {
     BaseImagePlaceholder,
-    VerificationStatus,
   } from "$lib/components";
   import { Button } from "$lib/components/ui/button";
   import { Input } from "$lib/components/ui/input";
   import { useExtractWatermark } from "$lib/queries";
   import { useImage } from "$lib/stores/use-image.svelte";
   import { useWatermarkState } from "$lib/stores/use-watermark-state.svelte";
+
+  import VerificationStatus from "./verification-status.svelte";
 
   const extractImage = useImage();
   const extractMutation = useExtractWatermark();

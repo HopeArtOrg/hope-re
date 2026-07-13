@@ -1,3 +1,1 @@
-import GlazeTab from "./glaze-tab.svelte";
-
-export { GlazeTab };
+export { default as GlazeTab } from "./glaze-tab.svelte";
