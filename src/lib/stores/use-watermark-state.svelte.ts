@@ -1,4 +1,4 @@
-let lastWatermarkLength = $state<number>(17);
+let lastWatermarkLength = $state<number>(22);
 let scannableImage = $state<string | null>(null);
 let activeSubTab = $state<string>("embed");
 let lastSeed = $state<string>("");

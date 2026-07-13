@@ -72,13 +72,13 @@
       const seed = useCustomSeed ? Number(seedValue) : undefined;
       const result = await embedMutation.mutateAsync({
         imageBase64: embedImage.originalImage,
-        watermark: watermarkText,
+        watermark: `HOPE:${watermarkText}`,
         seed,
       });
 
       embedResultImage = result;
       wmState.scannableImage = result;
-      wmState.lastWatermarkLength = watermarkText.length;
+      wmState.lastWatermarkLength = watermarkText.length + 5;
       wmState.useSeed = useCustomSeed;
       wmState.lastSeed = seedValue;
 
@@ -118,7 +118,7 @@
 
   function handleSendToScanner() {
     wmState.scannableImage = embedResultImage;
-    wmState.lastWatermarkLength = watermarkText.length;
+    wmState.lastWatermarkLength = watermarkText.length + 5;
     wmState.useSeed = useCustomSeed;
     wmState.lastSeed = seedValue;
     wmState.activeSubTab = "extract";
