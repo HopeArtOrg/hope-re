@@ -26,22 +26,25 @@
 
   let useCustomExtractSeed = $state<boolean>(false);
   let extractSeedValue = $state<string>("");
-  let expectedLength = $state<string>("22");
+  let expectedLength = $state<string>("17");
   let extractedText = $state<string>("");
   let verificationState = $state<"idle" | "verified" | "failed">("idle");
 
-  function isValidPrefix(text: string): boolean {
-    if (text.length < 5) {
+  function isValidWatermark(text: string): boolean {
+    if (!text || text.length === 0) {
       return false;
     }
-    const target = "HOPE:";
-    let matches = 0;
-    for (let i = 0; i < 5; i++) {
-      if (text[i] === target[i]) {
-        matches++;
+    let printableCount = 0;
+    for (let i = 0; i < text.length; i++) {
+      const code = text.charCodeAt(i);
+      if (code >= 32 && code !== 127) {
+        printableCount++;
+      }
+      else if (code === 9 || code === 10 || code === 13) {
+        printableCount++;
       }
     }
-    return matches >= 4;
+    return (printableCount / text.length) >= 0.70;
   }
 
   $effect(() => {
@@ -86,7 +89,7 @@
       progressMessage = "Decoding hidden signature bits...";
 
       const seed = useCustomExtractSeed ? Number(extractSeedValue) : undefined;
-      const watermarkLen = Number(expectedLength) || 22;
+      const watermarkLen = Number(expectedLength) || 17;
 
       const result = await extractMutation.mutateAsync({
         imageBase64: extractImage.originalImage,
@@ -94,8 +97,8 @@
         seed,
       });
 
-      if (isValidPrefix(result)) {
-        extractedText = result.substring(5);
+      if (isValidWatermark(result)) {
+        extractedText = result;
         verificationState = "verified";
         toast.success("Signature revealed successfully");
       }
@@ -133,7 +136,7 @@
     verificationState = "idle";
     useCustomExtractSeed = false;
     extractSeedValue = "";
-    expectedLength = "22";
+    expectedLength = "17";
 
     toast.success("Canvas reset complete");
   }

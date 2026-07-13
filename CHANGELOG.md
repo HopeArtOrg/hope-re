@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [2.2.3] - 2026-07-13
 
 ### Fixed
-- Prevent false positive watermark verification on normal images by prepending a secure prefix to embedded watermarks and validating it during extraction.
+- Prevent false positive watermark verification on normal images using a robust character printability ratio check that filters out unwatermarked garbage (mostly null bytes) without modifying the embedded text. This preserves the original length mapping and backward compatibility.
 
 ### Changed
 - Bump version to 2.2.3 across package.json, Cargo.toml, and tauri.conf.json.
