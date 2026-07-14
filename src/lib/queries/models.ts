@@ -10,7 +10,6 @@ export type ModelStatus = {
 export type ModelsCheckResult = {
   models: ModelStatus[];
   all_ready: boolean;
-  models_dir: string;
 };
 
 export function useModelsStatus() {

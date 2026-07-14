@@ -33,12 +33,12 @@
     protection.handleProtect(image.originalImage);
   }
 
-  function handleCancel() {
+  async function handleCancel() {
     if (protection.isProcessing) {
       toast.info("Protection cancelled");
     }
 
-    protection.resetProgress();
+    await protection.resetProgress();
     protection.resetSettings();
     image.clear();
 

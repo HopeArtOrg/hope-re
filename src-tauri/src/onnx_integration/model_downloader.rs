@@ -50,6 +50,23 @@ fn get_models_dir(app: &AppHandle) -> Result<PathBuf, String> {
     Ok(models_dir)
 }
 
+fn cleanup_stale_temp_files(models_dir: &std::path::Path) {
+    if let Ok(entries) = std::fs::read_dir(models_dir) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            let is_temp = path
+                .file_name()
+                .and_then(|name| name.to_str())
+                .map(|name| name.contains(".onnx.tmp."))
+                .unwrap_or(false);
+
+            if is_temp {
+                let _ = std::fs::remove_file(&path);
+            }
+        }
+    }
+}
+
 pub fn resolve_downloaded_model(app: &AppHandle, model_filename: &str) -> Option<PathBuf> {
     let models_dir = get_models_dir(app).ok()?;
     let path = models_dir.join(model_filename);
@@ -123,6 +140,7 @@ pub async fn download_model(app: AppHandle, model_name: String) -> Result<String
     }
 
     let models_dir = get_models_dir(&app)?;
+    cleanup_stale_temp_files(&models_dir);
     let dest_path = models_dir.join(&model_name);
 
     if dest_path.exists() {
@@ -136,6 +154,8 @@ pub async fn download_model(app: AppHandle, model_name: String) -> Result<String
     let url = format!("{}/{}/{}", GITHUB_RELEASE_URL, version, model_name);
 
     let client = reqwest::Client::builder()
+        .connect_timeout(std::time::Duration::from_secs(30))
+        .read_timeout(std::time::Duration::from_secs(60))
         .redirect(reqwest::redirect::Policy::limited(10))
         .build()
         .map_err(|e| format!("Failed to create HTTP client: {}", e))?;
@@ -203,9 +223,10 @@ pub async fn download_model(app: AppHandle, model_name: String) -> Result<String
 
     drop(file);
 
-    tokio::fs::rename(&temp_path, &dest_path)
-        .await
-        .map_err(|e| format!("Failed to finalize download: {}", e))?;
+    if let Err(e) = tokio::fs::rename(&temp_path, &dest_path).await {
+        let _ = tokio::fs::remove_file(&temp_path).await;
+        return Err(format!("Failed to finalize download: {}", e));
+    }
 
     verify_file_integrity(&dest_path, &model_name).await?;
 

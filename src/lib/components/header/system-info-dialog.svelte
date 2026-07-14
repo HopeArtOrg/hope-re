@@ -25,6 +25,7 @@
     error,
     isFetching,
     refetch,
+    dataUpdatedAt,
   } = $derived(useSystemInfo());
 
   let dialogOpen = $state<boolean>(false);
@@ -36,12 +37,15 @@
 
 <Dialog.Root open={dialogOpen} onOpenChange={handleDialogOpen}>
   <Dialog.Trigger>
-    <Button variant="outline"
-            size="sm"
-            class="flex items-center gap-2 px-3 py-2 doodle-blob border-2 border-foreground/10 bg-white/40 dark:bg-black/40 hover:bg-white/60 dark:hover:bg-black/60 hover:cursor-pointer transition-all shadow-sm"
-            aria-label="System Info">
-      <InfoIcon class="size-4" />
-    </Button>
+    {#snippet child({ props })}
+      <Button {...props}
+              variant="outline"
+              size="sm"
+              class="flex items-center gap-2 px-3 py-2 doodle-blob border-2 border-foreground/10 bg-white/40 dark:bg-black/40 hover:bg-white/60 dark:hover:bg-black/60 hover:cursor-pointer transition-all shadow-sm"
+              aria-label="System Info">
+        <InfoIcon class="size-4" />
+      </Button>
+    {/snippet}
   </Dialog.Trigger>
 
   <Dialog.Content class="max-w-md blue-note border-2 border-foreground/10 p-10">
@@ -147,7 +151,7 @@
     {#if info && !isLoading}
       <div class="flex items-center justify-between mt-8 pt-6 border-t-2 border-foreground/10">
         <p class="text-xs font-bold text-muted-foreground/60 italic">
-          Last check: {new Date().toLocaleTimeString()}
+          Last check: {new Date(dataUpdatedAt).toLocaleTimeString()}
         </p>
         <Button
           variant="outline"

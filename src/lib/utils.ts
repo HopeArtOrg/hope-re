@@ -1,6 +1,7 @@
 import type { ClassValue } from "clsx";
 
 import { clsx } from "clsx";
+import DOMPurify from "dompurify";
 import { marked } from "marked";
 import { twMerge } from "tailwind-merge";
 
@@ -9,7 +10,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function parseMarkdown(input: string): string {
-  return marked.parse(input, { async: false }) as string;
+  const html = marked.parse(input, { async: false }) as string;
+  return DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
 }
 
 export type WithoutChild<T> = T extends { child?: any } ? Omit<T, "child"> : T;

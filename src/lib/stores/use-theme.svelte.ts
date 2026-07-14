@@ -2,9 +2,46 @@ import { LazyStore } from "@tauri-apps/plugin-store";
 
 export type Theme = "light" | "dark" | "system";
 
+const store = new LazyStore("settings.json");
+
+let theme = $state<Theme>("system");
+let systemListenerBound = false;
+
+function applyTheme(themeValue: Theme) {
+  if (typeof document === "undefined")
+    return;
+
+  const root = document.documentElement;
+
+  if (themeValue === "system") {
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches
+        ? "dark"
+        : "light";
+
+    root.classList.toggle("dark", systemTheme === "dark");
+  }
+  else {
+    root.classList.toggle("dark", themeValue === "dark");
+  }
+}
+
+function bindSystemListener() {
+  if (systemListenerBound || typeof window === "undefined")
+    return;
+
+  systemListenerBound = true;
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", () => {
+      if (theme === "system") {
+        applyTheme("system");
+      }
+    });
+}
+
 export function useTheme() {
-  const store = new LazyStore("settings.json");
-  let theme = $state<Theme>("system");
+  bindSystemListener();
 
   async function initTheme() {
     try {
@@ -37,39 +74,9 @@ export function useTheme() {
     }
   }
 
-  function applyTheme(themeValue: Theme) {
-    if (typeof document === "undefined")
-      return;
-
-    const root = document.documentElement;
-
-    if (themeValue === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-          ? "dark"
-          : "light";
-
-      root.classList.toggle("dark", systemTheme === "dark");
-    }
-    else {
-      root.classList.toggle("dark", themeValue === "dark");
-    }
-  }
-
-  if (typeof window !== "undefined") {
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", () => {
-        if (theme === "system") {
-          applyTheme("system");
-        }
-      });
-  }
-
   return {
     initTheme,
     getTheme,
     setTheme,
-    applyTheme,
   };
 }

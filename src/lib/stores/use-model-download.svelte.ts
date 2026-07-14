@@ -1,5 +1,3 @@
-import type { ModelsCheckResult } from "$lib/queries";
-
 import { useQueryClient } from "@tanstack/svelte-query";
 import { listen } from "@tauri-apps/api/event";
 
@@ -90,27 +88,37 @@ export function useModelDownload() {
       totalBytes: 0,
     }));
 
-    const unlisten = await listen<DownloadProgress>(
-      "model-download-progress",
-      (event) => {
-        const idx = MODEL_NAMES.indexOf(event.payload.model_name);
-        if (idx >= 0) {
-          modelProgress[idx] = {
-            name: event.payload.model_name,
-            percent: event.payload.progress_percent,
-            downloadedBytes: event.payload.downloaded_bytes,
-            totalBytes: event.payload.total_bytes,
-          };
-        }
-      },
-    );
+    let unlisten: (() => void) | undefined;
 
     try {
+      unlisten = await listen<DownloadProgress>(
+        "model-download-progress",
+        (event) => {
+          const idx = MODEL_NAMES.indexOf(event.payload.model_name);
+          if (idx >= 0) {
+            modelProgress[idx] = {
+              name: event.payload.model_name,
+              percent: event.payload.progress_percent,
+              downloadedBytes: event.payload.downloaded_bytes,
+              totalBytes: event.payload.total_bytes,
+            };
+          }
+        },
+      );
+
       for (let i = 0; i < modelsToDownload.length; i++) {
         const modelName = modelsToDownload[i];
         currentModelIndex = MODEL_NAMES.indexOf(modelName);
 
         await downloadMutation.mutateAsync(modelName);
+
+        const idx = MODEL_NAMES.indexOf(modelName);
+        if (idx >= 0) {
+          modelProgress[idx] = {
+            ...modelProgress[idx],
+            percent: 100,
+          };
+        }
       }
 
       await queryClient.invalidateQueries({ queryKey: ["models-status"] });
@@ -119,7 +127,7 @@ export function useModelDownload() {
       error = e instanceof Error ? e.message : String(e);
     }
     finally {
-      unlisten();
+      unlisten?.();
       isDownloading = false;
     }
   }
@@ -143,14 +151,8 @@ export function useModelDownload() {
     get currentModelName() {
       return currentModelName;
     },
-    get totalModels() {
-      return totalModels;
-    },
     get error() {
       return error;
-    },
-    get statusData(): ModelsCheckResult | undefined {
-      return statusQuery.data;
     },
     get minimized() {
       return minimized;

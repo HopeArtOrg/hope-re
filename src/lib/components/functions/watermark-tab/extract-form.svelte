@@ -24,11 +24,26 @@
   const extractMutation = useExtractWatermark();
   const wmState = useWatermarkState();
 
+  const SUCCESS_RESET_MS = 3000;
+  const DEFAULT_LENGTH = "17";
+
   let useCustomExtractSeed = $state<boolean>(false);
   let extractSeedValue = $state<string>("");
-  let expectedLength = $state<string>("17");
+  let expectedLength = $state<string>(DEFAULT_LENGTH);
   let extractedText = $state<string>("");
   let verificationState = $state<"idle" | "verified" | "failed">("idle");
+
+  let isProcessing = $state<boolean>(false);
+  let progress = $state<number>(0);
+  let progressStatus = $state<"idle" | "processing" | "success" | "error">("idle");
+  let progressMessage = $state<string>("");
+
+  let runId = 0;
+  let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
+  function isValidSeed(value: string): boolean {
+    return /^\d+$/.test(value.trim());
+  }
 
   function isValidWatermark(text: string): boolean {
     if (!text || text.length === 0) {
@@ -50,6 +65,7 @@
   $effect(() => {
     if (wmState.scannableImage) {
       extractImage.originalImage = wmState.scannableImage;
+      wmState.scannableImage = null;
     }
   });
 
@@ -59,15 +75,27 @@
     }
   });
 
-  let isProcessing = $state<boolean>(false);
-  let progress = $state<number>(0);
-  let progressStatus = $state<"idle" | "processing" | "success" | "error">("idle");
-  let progressMessage = $state<string>("");
+  $effect(() => {
+    if (wmState.useSeed) {
+      useCustomExtractSeed = true;
+      extractSeedValue = wmState.lastSeed;
+    }
+  });
 
   async function handleExtract() {
     if (!extractImage.originalImage) {
       toast.error("Please upload an image to scan");
       return;
+    }
+
+    if (useCustomExtractSeed && !isValidSeed(extractSeedValue)) {
+      toast.error("Decryption key must be a positive whole number");
+      return;
+    }
+
+    const currentRun = ++runId;
+    if (resetTimer) {
+      clearTimeout(resetTimer);
     }
 
     isProcessing = true;
@@ -88,7 +116,7 @@
       progress = 85;
       progressMessage = "Decoding hidden signature bits...";
 
-      const seed = useCustomExtractSeed ? Number(extractSeedValue) : undefined;
+      const seed = useCustomExtractSeed ? Number(extractSeedValue.trim()) : undefined;
       const watermarkLen = Number(expectedLength) || 17;
 
       const result = await extractMutation.mutateAsync({
@@ -96,6 +124,10 @@
         watermarkLen,
         seed,
       });
+
+      if (currentRun !== runId) {
+        return;
+      }
 
       if (isValidWatermark(result)) {
         extractedText = result;
@@ -109,23 +141,35 @@
       }
       progress = 100;
       progressStatus = "success";
-      setTimeout(() => {
-        progressStatus = "idle";
-        progress = 0;
-        progressMessage = "";
-      }, 3000);
+      resetTimer = setTimeout(() => {
+        if (progressStatus === "success") {
+          progressStatus = "idle";
+          progress = 0;
+          progressMessage = "";
+        }
+      }, SUCCESS_RESET_MS);
     }
     catch (error: any) {
+      if (currentRun !== runId) {
+        return;
+      }
       progressStatus = "error";
       verificationState = "failed";
       toast.error(error instanceof Error ? error.message : String(error));
     }
     finally {
-      isProcessing = false;
+      if (currentRun === runId) {
+        isProcessing = false;
+      }
     }
   }
 
   function handleCancel() {
+    runId++;
+    if (resetTimer) {
+      clearTimeout(resetTimer);
+    }
+
     isProcessing = false;
     progress = 0;
     progressStatus = "idle";
@@ -136,7 +180,8 @@
     verificationState = "idle";
     useCustomExtractSeed = false;
     extractSeedValue = "";
-    expectedLength = "17";
+    expectedLength = DEFAULT_LENGTH;
+    wmState.scannableImage = null;
 
     toast.success("Canvas reset complete");
   }
@@ -198,7 +243,7 @@
       <div class="flex flex-col gap-2">
         <label for="length-input" class="text-sm font-bold flex items-center gap-1.5 text-teal-800/80 dark:text-teal-400/80">
           <BinaryIcon class="size-4" />
-          Expected Signature Length (characters)
+          Expected Signature Length (bytes)
         </label>
         <Input
           id="length-input"
