@@ -5,255 +5,27 @@ Frontend: SvelteKit 2 + Svelte 5 + TypeScript + Tailwind CSS 4 + shadcn-svelte.
 Backend: Rust (Tauri v2) with ONNX Runtime ML inference.
 Design philosophy: minimalistic artistic Japanese Zen-like system design.
 
-## Build / Dev / Lint Commands
-
-```bash
-pnpm install              # install frontend dependencies
-pnpm dev                  # start Vite dev server (port 3000)
-pnpm build                # production build (Vite SSG)
-pnpm lint                 # ESLint check (strict, replaces Prettier)
-pnpm format               # ESLint auto-fix
-pnpm check                # svelte-kit sync + svelte-check (type checking)
-pnpm check:watch          # same with --watch
-pnpm tauri dev             # full desktop app dev (Rust + frontend)
-pnpm tauri build           # production desktop build
-```
-
-Rust backend (run from `src-tauri/`):
-
-```bash
-cargo build               # build Rust backend
-cargo check               # type check only
-cargo clippy               # lint Rust code
-cargo fmt                  # format Rust code (rustfmt)
-```
-
-## Testing
-
-No test framework is currently configured. There are no test files in the repo.
-If adding tests, use `vitest` for frontend and `cargo test` for Rust.
-
-## Pre-commit Hooks
-
-Husky runs `lint-staged` on pre-commit which executes `pnpm lint` on all staged files.
-Always run `pnpm lint` before committing.
-
-## Commit Convention
-
-Angular-style conventional commits. Format: `<type>(<scope>): <subject>`
-
-Types: `feat`, `fix`, `perf` (appear in changelog), `build`, `ci`, `docs`, `style`, `refactor`, `test`.
-Subject: imperative present tense, no capital first letter, no trailing period.
-Example: `feat(protection): add nightshade intensity control`
-
-## Code Style - TypeScript / Svelte
-
-### Formatting (enforced by ESLint, Prettier is disabled)
-
-- 2 spaces indent
-- Semicolons always
-- Double quotes
-- Max 2 attributes per line (single-line Svelte), 1 per line (multi-line)
-
-### File Naming
-
-- **kebab-case** for all `.ts`, `.svelte`, `.css` files (enforced by ESLint)
-- Rust files use **snake_case** (excluded from kebab-case rule)
-- Stores: `use-*.svelte.ts` pattern
-- Component directories: `index.svelte` as entry, `index.ts` for barrel exports
-
-### Type Definitions
-
-- Always use `type` keyword, never `interface` (enforced: `ts/consistent-type-definitions`)
-- Always use `import type` for type-only imports
-- Export types from co-located `types.ts` files, re-export through barrel `index.ts`
-- PascalCase for type names: `ProtectionSettings`, `AlgorithmParams`
-
-### Import Order (enforced by `perfectionist/sort-imports`)
-
-1. `import type { ... }` (type-only, separated by blank line)
-2. External packages (`@lucide`, `@tanstack`, `@tauri-apps`, `svelte-sonner`, etc.)
-3. Internal `$lib/...` imports
-4. Relative imports (`./types`, `../utils`)
-
-### Naming Conventions
-
-- Variables/functions: `camelCase`
-- Event handlers: `handle*` prefix (`handleProtect`, `handleDownload`)
-- Hooks/stores: `use*` prefix (`useImage`, `useProtection`)
-- Types: `PascalCase`
-- Constants (scalars): `UPPER_SNAKE_CASE` (`TILE_SIZE`, `SUCCESS_RESET_MS`)
-- Constants (arrays/objects): `camelCase` (`algorithms`, `qualityPresets`)
-- Components: PascalCase in exports, kebab-case filenames
-
-### Svelte 5 Runes (mandatory, no legacy syntax)
-
-- Props: `$props()` with destructuring and defaults; `$bindable()` for two-way
-- State: `$state<T>()` with explicit generic type
-- Derived: `$derived(expression)`
-- Effects: `$effect(() => { ... return cleanup; })`
-- No `<style>` blocks; all styling via Tailwind CSS utility classes
-
-### Styling (Tailwind CSS 4)
-
-- Use logical inset utilities for RTL-aware positioning: prefer `inset-e-*` (inline-end) and `inset-s-*` (inline-start) over `end-*` / `start-*`. Example: `inset-e-4`, not `end-4`.
-
-### State Management
-
-- TanStack Svelte Query for server state (`createQuery`, `createMutation`)
-- Svelte 5 rune-based composables for local state (`use-*.svelte.ts`)
-- Expose reactive state via getters/setters in returned objects (preserves reactivity)
-- Module-level `$state` for singleton stores, function-level for instance stores
-
-### Internationalization (i18n)
-
-- Supported locales: English (`en`), Vietnamese (`vi`), Japanese (`ja`), Chinese (`zh`).
-- No i18n library. `lib/i18n/locales/en.ts` is the source of truth and exports
-  `type Messages = typeof en`; `vi`/`ja`/`zh` are typed `Messages`, so `pnpm check`
-  fails if any locale drifts out of key-sync. Add every new key to all four files.
-- Never hardcode user-facing text (template nodes, `placeholder`/`title`/`aria-label`,
-  `toast.*`, `sr-only`, progress messages). Use `t("dot.path")` from
-  `$lib/stores/use-i18n.svelte`; it is reactive in `.svelte` and callable in `.svelte.ts`.
-- Interpolate with `{name}` tokens: `t("image.loaded", { name })`. Unknown keys return
-  the key; a locale missing a key falls back to English.
-- Structural constants (`algorithms`, `glazeStyles`, `nightshadeTargets`, `qualityPresets`)
-  hold only `value`/`key`/icons/colours; their labels/descriptions live in the dictionaries,
-  keyed by `value`/`key` (e.g. algorithm labels resolve via `algorithms.<value>.label`).
-- Locale is persisted to `settings.json` (via `useI18n().setLocale`), detected from
-  `navigator.language` on first run, and switched from the header `LanguageSelect`.
-- Decorative, non-informational marks stay untranslated (brand `Hope:RE`, calligraphy
-  stamps `落款`/`印章`/`証`/`未`, the `ERASE` doodle).
-- CJK glyphs are covered by system-font fallbacks appended to `--font-patrick-hand` in
-  `app.css` (Patrick Hand has no CJK coverage).
-
-### Error Handling (TypeScript)
-
-- Wrap in `try/catch`, call `toast.error("message")` + `console.error("context:", error)`
-- Extract messages: `e instanceof Error ? e.message : String(e)`
-- `else` and `catch` on new line after closing brace (Allman-ish style)
-
-### Comments and Emojis
-
-- **No comments in code.** Do not add inline comments, block comments, or JSDoc to TypeScript,
-  Svelte, or Rust files. The code should be self-documenting through clear naming.
-- **No emojis in markdown or code.** Never use emoji characters in `.md` files, commit messages,
-  toast messages, log messages, or anywhere else in the codebase.
-
-### Restricted Patterns
-
-- `no-console`: warn (prefer toast for user-facing messages)
-- `node/no-process-env`: error (use Tauri APIs instead)
-- `antfu/no-top-level-await`: off (allowed)
-
-## Code Style - Rust
-
-### Formatting (`rustfmt.toml`)
-
-- Edition 2021, max width 100, 4 spaces, Unix newlines
-
-### Module Organization
-
-- `mod.rs` declares submodules and re-exports public API via `pub use`
-- Private submodules: `mod name;` (no `pub`)
-- Files: **snake_case**; Types: **PascalCase**; Constants: **UPPER_SNAKE_CASE**
-
-### Tauri Commands
-
-- Annotated with `#[tauri::command]`, always return `Result<T, String>`
-- Errors via `.map_err(|e| format!("Descriptive message: {}", e))?`
-- No custom error enums; all errors are `String`-typed
-- Non-critical event emissions: `let _ = app.emit(...);`
-
-### Structs
-
-- Derive `Debug, Clone, serde::Serialize, serde::Deserialize` for data transfer types
-- Use `Option<T>` for optional fields
-
-### Platform-Specific Code
-
-- Use `#[cfg(...)]` for conditional compilation (CUDA/DirectML/CoreML/XNNPACK)
-- Stubs in `onnx_stubs.rs` for unsupported platforms
-
-### Logging
-
-- Use `log::info!`, `log::error!`, etc. (via Tauri log plugin)
-
-## Project Structure
-
-```
-src/                      # Frontend (SvelteKit + Svelte 5)
-  lib/components/         # UI components (shadcn-svelte based)
-  lib/queries/            # TanStack Query hooks (by domain)
-  lib/stores/             # Svelte 5 rune composables (use-*.svelte.ts)
-  lib/i18n/               # Message dictionaries (en/vi/ja/zh) + Messages type
-  lib/constants.ts        # Algorithm/style/preset definitions
-  lib/utils.ts            # cn(), parseMarkdown, type helpers
-  routes/                 # SvelteKit routes (SPA, SSR disabled)
-src-tauri/                # Backend (Rust / Tauri v2)
-  src/commands/           # Tauri command handlers
-  src/onnx_integration/   # ONNX Runtime: models, protection pipeline
-  src/system_info/        # System info gathering (CPU, GPU, memory)
-src-models/               # ML training (Python/JAX notebooks, ONNX export)
-```
-
-## Key Dependencies
-
-Frontend: `@tauri-apps/api`, `@tanstack/svelte-query`, `bits-ui`, `tailwind-merge`,
-`clsx`, `svelte-sonner`, `marked`, `mode-watcher`, `lucide-svelte`.
-Backend: `tauri` 2.x, `ort` (ONNX Runtime), `image`, `ndarray`, `reqwest`, `sysinfo`.
-
-## CI/CD
-
-- PR lint: `pnpm lint` on Ubuntu (Node 24, pnpm 10)
-- Release: multi-platform Tauri build (macOS ARM, Windows x64, Linux amd64/arm64)
-- ONNX models tracked via Git LFS, uploaded to GitHub Releases
-
-## ONNX Model Pipeline
-
-### Model Architecture
-
-Three ONNX models (~350MB each) built on ViT-B/32 CLIP:
-
-- `noise_algorithm.onnx` -- Adversarial noise (input: image only)
-- `glaze_algorithm.onnx` -- Style cloaking (input: image + style_index 0-4)
-- `nightshade_algorithm.onnx` -- Data poisoning (input: image + target_index 0-7)
-
-All models: NHWC `(1, 224, 224, 3)` float32 in `[0.0, 1.0]`, scalar float32 loss output.
-CLIP normalization is baked into the model graph.
-
-### Training Pipeline (Google Colab)
-
-```
-0_setup_colab.ipynb    -> GPU check, JAX+CUDA install
-1_clip_to_jax.ipynb    -> PyTorch CLIP -> numpy weights, pre-compute text embeddings
-2_noise_algorithm.ipynb -> JAX noise model -> .pkl
-3_glaze_algorithm.ipynb -> JAX glaze model -> .pkl
-4_nightshade_algorithm.ipynb -> JAX nightshade model -> .pkl
-5_export_onnx.ipynb    -> .pkl -> ONNX (jax2onnx, onnxsim, validate)
-```
-
-### Model Distribution Flow
-
-1. Train in Colab, export `.onnx` to `src-models/models/`
-2. Track with Git LFS (`.gitattributes`)
-3. `publish.yml` uploads to GitHub Release after Tauri build
-4. App downloads at runtime via `model_downloader.rs`
-5. Stored in `app_data_dir/models/`
-
-### Inference Pipeline (Rust)
-
-```
-Image -> base64 decode -> tile (224x224, overlap 32px)
-  -> preprocess (normalize to [0,1]) -> edge weight map
-  -> SPSA-PGD optimization (8 directions/iter, momentum 0.85)
-  -> blend tiles -> encode output
-```
-
-### Config Reference
-
-`src-models/models/hope_config.json` -- input specs, algorithm parameters, presets,
-Glaze styles (Abstract/Impressionist/Cubist/Sketch/Watercolor),
-Nightshade targets (Dog/Cat/Car/Landscape/Person/Building/Food/Abstract).
+## Documentation Map
+
+The project documentation is split into five feature documents. Read the relevant one before starting work; this file only keeps the agent-specific tooling and a digest of the non-negotiable rules.
+
+| Document                                     | Read it for                                                                                                        |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| [CODEBASE.md](CODEBASE.md)                   | Architecture: project structure, key dependencies, and the ONNX model pipeline (training, distribution, inference) |
+| [CORE_FUNCTION.md](CORE_FUNCTION.md)         | Features: the Tauri command surface and how protection, watermarking, models, updates, and system info flow        |
+| [CODING_CONVENTION.md](CODING_CONVENTION.md) | Code style: TypeScript/Svelte and Rust conventions, naming, imports, runes, state management, i18n rules           |
+| [CONTRIBUTE.md](CONTRIBUTE.md)               | Workflow: build/dev/lint commands, testing, pre-commit hooks, commit convention, CI/CD, and the release flow       |
+| [CI_CD_PIPELINE.md](CI_CD_PIPELINE.md)       | Pipelines: the lint gate, the tag-driven release build matrix, model upload, and required secrets                  |
+
+## Non-negotiable Rules
+
+The complete standards live in [CODING_CONVENTION.md](CODING_CONVENTION.md); these are the ones agents most often get wrong:
+
+- No comments in code (TypeScript, Svelte, or Rust) and no emojis anywhere (markdown, commits, toasts, logs).
+- kebab-case filenames for `.ts`/`.svelte`/`.css`; snake_case for Rust.
+- Svelte 5 runes only (`$props`, `$state`, `$derived`, `$effect`); no legacy syntax, no `<style>` blocks.
+- All user-facing text goes through `t("dot.path")` from `$lib/stores/use-i18n.svelte`; every new key is added to all four locale dictionaries (`en`/`vi`/`ja`/`zh`).
+- Always run `pnpm lint` before committing; conventional commits (`<type>(<scope>): <subject>`).
 
 ## OpenCode Skills and Agents
 
