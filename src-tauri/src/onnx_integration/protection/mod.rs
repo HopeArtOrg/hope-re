@@ -65,7 +65,8 @@ fn decode_image(base64_str: &str) -> Result<image::DynamicImage, String> {
     let cleaned = base64_str
         .trim_start_matches("data:image/png;base64,")
         .trim_start_matches("data:image/jpeg;base64,")
-        .trim_start_matches("data:image/jpg;base64,");
+        .trim_start_matches("data:image/jpg;base64,")
+        .trim_start_matches("data:image/webp;base64,");
 
     base64::Engine::decode(&base64::engine::general_purpose::STANDARD, cleaned)
         .map_err(|e| format!("Failed to decode base64: {}", e))
@@ -94,6 +95,13 @@ fn execute_protection(
     img: &image::DynamicImage,
     settings: &ProtectionSettings,
 ) -> Result<(image::DynamicImage, String, bool), String> {
+    if !settings.intensity.is_finite() || settings.intensity < 0.0 {
+        return Err(format!(
+            "intensity must be a non-negative finite number, got {}",
+            settings.intensity
+        ));
+    }
+
     let render_factor = settings.render_quality.clamp(0, 100) as f32 / 100.0;
 
     match settings.algorithm.as_str() {

@@ -34,11 +34,12 @@
     </div>
 
     <div class="flex-1 min-w-0">
-      {#if activeTab === "glaze"}
+      <div class:hidden={activeTab !== "glaze"}>
         <GlazeTab />
-      {:else if activeTab === "watermark"}
+      </div>
+      <div class:hidden={activeTab !== "watermark"}>
         <WatermarkTab />
-      {/if}
+      </div>
     </div>
   </div>
 </div>

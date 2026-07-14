@@ -39,6 +39,13 @@
     panY = 0;
   }
 
+  $effect(() => {
+    const src = imageSrc;
+    if (open && src) {
+      handleReset();
+    }
+  });
+
   function handleMouseDown(e: MouseEvent) {
     if (zoom > 100) {
       isDragging = true;

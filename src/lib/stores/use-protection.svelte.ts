@@ -51,6 +51,8 @@ export function useProtection() {
   let progressMessage = $state<string>("");
 
   let progressInterval: (() => void) | null = null;
+  let resetTimer: ReturnType<typeof setTimeout> | null = null;
+  let cancelling = false;
 
   const mutation = useProtectImage();
 
@@ -58,7 +60,6 @@ export function useProtection() {
   const resultImage = $derived(mutation.data?.image_base64 ?? null);
   const hasResult = $derived(mutation.isSuccess && !!mutation.data?.image_base64);
   const modelUsed = $derived(mutation.data?.model_used ?? true);
-  const resultMessage = $derived(mutation.data?.message ?? "");
 
   function stageMessage(stage: string): string {
     switch (stage) {
@@ -76,6 +77,7 @@ export function useProtection() {
   }
 
   async function startProgressListener() {
+    stopProgressListener();
     const unlisten = await listen<ProtectionProgress>(
       "protection-progress",
       (event) => {
@@ -95,6 +97,16 @@ export function useProtection() {
   }
 
   async function handleProtect(imageBase64: string) {
+    if (progressStatus === "processing" || mutation.isPending) {
+      return;
+    }
+
+    if (resetTimer) {
+      clearTimeout(resetTimer);
+      resetTimer = null;
+    }
+
+    cancelling = false;
     mutation.reset();
     progress = 0;
     progressStatus = "processing";
@@ -135,7 +147,7 @@ export function useProtection() {
         toast.warning("Image protected with basic fallback. Download AI models for stronger protection.");
       }
 
-      setTimeout(() => {
+      resetTimer = setTimeout(() => {
         if (progressStatus === "success") {
           progressStatus = "idle";
           progress = 0;
@@ -145,6 +157,14 @@ export function useProtection() {
     }
     catch (error) {
       stopProgressListener();
+
+      if (cancelling) {
+        progress = 0;
+        progressStatus = "idle";
+        progressMessage = "";
+        return;
+      }
+
       progress = 0;
       progressStatus = "error";
       const errorMessage = error instanceof Error ? error.message : String(error);
@@ -152,7 +172,7 @@ export function useProtection() {
       toast.error("Protection failed");
       console.error("Protection error:", error);
 
-      setTimeout(() => {
+      resetTimer = setTimeout(() => {
         if (progressStatus === "error") {
           progressStatus = "idle";
           progressMessage = "";
@@ -171,8 +191,21 @@ export function useProtection() {
   }
 
   async function resetProgress() {
+    cancelling = true;
     stopProgressListener();
-    await cancelProtection();
+
+    if (resetTimer) {
+      clearTimeout(resetTimer);
+      resetTimer = null;
+    }
+
+    try {
+      await cancelProtection();
+    }
+    catch (error) {
+      console.error("Cancel protection error:", error);
+    }
+
     progress = 0;
     progressStatus = "idle";
     progressMessage = "";
@@ -236,9 +269,6 @@ export function useProtection() {
     },
     get modelUsed() {
       return modelUsed;
-    },
-    get resultMessage() {
-      return resultMessage;
     },
     handleProtect,
     resetSettings,

@@ -49,6 +49,13 @@ impl AlgorithmParams {
             ));
         }
 
+        if self.epsilon < 0.0 {
+            return Err(format!(
+                "epsilon must be non-negative, got {}",
+                self.epsilon
+            ));
+        }
+
         if self.epsilon <= 0.0 {
             log::warn!(
                 "epsilon is very small ({}) which may cause poor protection. Consider increasing intensity.",

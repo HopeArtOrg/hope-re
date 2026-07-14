@@ -1,11 +1,11 @@
 #[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
 pub use crate::onnx_integration::{
-    cancel_protection, check_models_status, create_ort_session, download_model,
-    get_inference_capabilities, protect_image,
+    cancel_protection, check_models_status, download_model, get_inference_capabilities,
+    protect_image,
 };
 
 #[cfg(all(target_os = "android", not(target_arch = "aarch64")))]
 pub use crate::onnx_stubs::{
-    cancel_protection, check_models_status, create_ort_session, download_model,
-    get_inference_capabilities, protect_image,
+    cancel_protection, check_models_status, download_model, get_inference_capabilities,
+    protect_image,
 };

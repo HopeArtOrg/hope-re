@@ -22,7 +22,6 @@ pub struct ModelStatus {
 pub struct ModelsCheckResult {
     pub models: Vec<ModelStatus>,
     pub all_ready: bool,
-    pub models_dir: String,
 }
 
 #[derive(Debug, Clone, Serialize, serde::Deserialize)]
@@ -54,16 +53,10 @@ pub fn get_inference_capabilities() -> Result<InferenceCapabilities, String> {
 }
 
 #[tauri::command]
-pub fn create_ort_session(_model_path: String) -> Result<String, String> {
-    Err("ONNX Runtime is not available on this Android architecture".to_string())
-}
-
-#[tauri::command]
 pub async fn check_models_status(_app: tauri::AppHandle) -> Result<ModelsCheckResult, String> {
     Ok(ModelsCheckResult {
         models: Vec::new(),
         all_ready: false,
-        models_dir: String::new(),
     })
 }
 
@@ -80,3 +73,6 @@ pub async fn protect_image(
 ) -> Result<ProtectionResult, String> {
     Err("ONNX Runtime is not available on this Android architecture".to_string())
 }
+
+#[tauri::command]
+pub fn cancel_protection() {}

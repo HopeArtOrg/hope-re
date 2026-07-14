@@ -46,6 +46,14 @@ pub async fn extract_watermark(
     watermark_len: usize,
     seed: Option<u64>,
 ) -> Result<String, String> {
+    const MAX_WATERMARK_LEN: usize = 4096;
+    if watermark_len == 0 || watermark_len > MAX_WATERMARK_LEN {
+        return Err(format!(
+            "watermark_len must be between 1 and {}",
+            MAX_WATERMARK_LEN
+        ));
+    }
+
     let temp_input = decode_base64_to_temp_png(&image_base64)?;
 
     let dummy_string = "A".repeat(watermark_len);

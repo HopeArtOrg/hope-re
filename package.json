@@ -15,7 +15,6 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "dependencies": {
-    "@fontsource/be-vietnam-pro": "^5.2.8",
     "@fontsource/patrick-hand": "^5.2.8",
     "@tailwindcss/vite": "^4.3.2",
     "@tanstack/svelte-query": "^6.1.36",
@@ -27,6 +26,7 @@
     "@tauri-apps/plugin-process": "^2.3.1",
     "@tauri-apps/plugin-store": "~2.4.3",
     "@tauri-apps/plugin-updater": "^2.10.1",
+    "dompurify": "^3.4.12",
     "marked": "^18.0.5",
     "tailwindcss": "^4.3.2"
   },
