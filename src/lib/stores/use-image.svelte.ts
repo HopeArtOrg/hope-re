@@ -2,6 +2,8 @@ import { save } from "@tauri-apps/plugin-dialog";
 import { writeFile } from "@tauri-apps/plugin-fs";
 import { toast } from "svelte-sonner";
 
+import { t } from "$lib/stores/use-i18n.svelte";
+
 const ISO_REPLACE_REGEX = /[:.]/g;
 const DATA_URL_MIME_REGEX = /^data:(image\/[a-z+]+);base64,/i;
 
@@ -31,13 +33,13 @@ export function useImage() {
       if (token !== uploadToken)
         return;
       originalImage = e.target?.result as string;
-      toast.success(`Loaded ${file.name}`);
+      toast.success(t("image.loaded", { name: file.name }));
     };
 
     reader.onerror = () => {
       if (token !== uploadToken)
         return;
-      toast.error("Failed to load image");
+      toast.error(t("image.failedLoad"));
     };
 
     reader.readAsDataURL(file);
@@ -54,7 +56,7 @@ export function useImage() {
 
       const filePath = await save({
         filters: [{
-          name: "Image",
+          name: t("image.filterName"),
           extensions: [extension],
         }],
         defaultPath,
@@ -68,10 +70,10 @@ export function useImage() {
       const bytes = new Uint8Array(arrayBuffer);
 
       await writeFile(filePath, bytes);
-      toast.success("Image saved successfully");
+      toast.success(t("image.saved"));
     }
     catch (error) {
-      toast.error("Failed to save image");
+      toast.error(t("image.failedSave"));
       console.error("Save error:", error);
     }
   }

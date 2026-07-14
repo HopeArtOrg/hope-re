@@ -10,6 +10,7 @@
   import { DownloadIcon } from "$lib/components";
   import { Button } from "$lib/components/ui/button";
   import * as Dialog from "$lib/components/ui/dialog";
+  import { t } from "$lib/stores/use-i18n.svelte";
 
   let {
     open = $bindable(false),
@@ -129,7 +130,7 @@
                   class="size-8 hover:bg-primary/10 hover:text-primary"
                   onclick={onDownload}
                   disabled={!onDownload}
-                  title="Save Artwork">
+                  title={t("placeholders.saveArtwork")}>
             <DownloadIcon class="size-4" />
           </Button>
         </div>
@@ -146,7 +147,7 @@
            role="presentation">
         {#if imageSrc}
           <img src={imageSrc}
-               alt="Fullscreen Preview"
+               alt={t("placeholders.fullscreenPreview")}
                class="max-w-full max-h-full object-contain transition-transform duration-200 select-none {isDragging ? "cursor-grabbing" : "cursor-grab"}"
                style="transform: translate({panX}px, {panY}px) scale({zoom / 100})"
                draggable="false" />

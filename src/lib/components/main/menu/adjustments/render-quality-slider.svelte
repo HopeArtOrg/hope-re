@@ -5,6 +5,7 @@
 
   import { Slider } from "$lib/components/ui/slider";
   import { qualityPresets } from "$lib/constants";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { cn } from "$lib/utils";
 
   let { value = $bindable([50]) }: RenderQualitySliderProps = $props();
@@ -14,6 +15,9 @@
   const currentPreset = $derived(
     qualityPresets.find(p => p.value === value[0]) || qualityPresets[2],
   );
+
+  const currentPresetLabel = $derived(t(`qualityPresets.${currentPreset.key}.label`));
+  const currentPresetTime = $derived(t(`qualityPresets.${currentPreset.key}.time`));
 </script>
 
 <div class="space-y-4">
@@ -22,18 +26,18 @@
       <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-sky-500/10">
         <ClockIcon class="size-6 text-sky-600 dark:text-sky-400" />
       </div>
-      <label for={sliderId} class="text-2xl font-bold text-foreground/90">Patience Level</label>
+      <label for={sliderId} class="text-2xl font-bold text-foreground/90">{t("renderQuality.title")}</label>
     </div>
     <div class="flex items-center gap-2">
       <currentPreset.icon class={cn("size-5", currentPreset.colour)} />
       <span class={cn("text-base font-bold uppercase tracking-wider", currentPreset.colour)}>
-        {currentPreset.label}
+        {currentPresetLabel}
       </span>
     </div>
   </div>
 
   <p class="text-base text-foreground/60 font-bold px-1 leading-tight">
-    How much time we spend inking. Higher patience means better quality but takes longer.
+    {t("renderQuality.hint")}
   </p>
 
   <div class="space-y-6 py-2">
@@ -42,7 +46,7 @@
             min={0}
             max={100}
             step={25}
-            aria-label="Render quality control" />
+            aria-label={t("renderQuality.aria")} />
 
     <div class="flex justify-between items-start px-2">
       {#each qualityPresets as preset (preset.value)}
@@ -58,7 +62,7 @@
             <Icon class={cn("size-5", preset.colour)} />
           </div>
           <span class={cn("text-[11px] font-bold uppercase tracking-tighter whitespace-nowrap", preset.colour)}>
-            {preset.label}
+            {t(`qualityPresets.${preset.key}.label`)}
           </span>
         </button>
       {/each}
@@ -66,16 +70,16 @@
   </div>
 
   <div class="p-4 doodle-line bg-white/20 dark:bg-black/20 border-2 border-foreground/10 relative">
-    <div class="absolute -top-3 -left-2 -rotate-12 text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line decorative-doodle">NOTE!</div>
+    <div class="absolute -top-3 -left-2 -rotate-12 text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line decorative-doodle">{t("renderQuality.note")}</div>
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
         <currentPreset.icon class={cn("size-6", currentPreset.colour)} />
         <span class={cn("text-lg font-bold", currentPreset.colour)}>
-          {currentPreset.label}
+          {currentPresetLabel}
         </span>
       </div>
       <span class="text-base text-foreground/60 font-bold italic">
-        ~{currentPreset.time}
+        {currentPresetTime}
       </span>
     </div>
   </div>

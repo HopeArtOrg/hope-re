@@ -4,6 +4,7 @@
   import { GaugeIcon } from "@lucide/svelte";
 
   import { Slider } from "$lib/components/ui/slider";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { cn } from "$lib/utils";
 
   let { value = $bindable([30]) }: IntensitySliderProps = $props();
@@ -19,6 +20,14 @@
       ? "Medium"
       : "High",
   );
+
+  const intensityLabel = $derived(
+    intensityLevel === "Low"
+      ? t("intensity.lowInk")
+      : intensityLevel === "Medium"
+      ? t("intensity.nice")
+      : t("intensity.fullInk"),
+  );
 </script>
 
 <div class="space-y-4">
@@ -27,7 +36,7 @@
       <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-amber-500/10">
         <GaugeIcon class="size-6 text-amber-600 dark:text-amber-400" />
       </div>
-      <label for={sliderId} class="text-2xl font-bold text-foreground/90">Protect Power</label>
+      <label for={sliderId} class="text-2xl font-bold text-foreground/90">{t("intensity.title")}</label>
     </div>
     <div class="flex items-center gap-2">
       <span class={cn(
@@ -36,7 +45,7 @@
         intensityLevel === "Medium" && "text-amber-700 border-amber-500/40",
         intensityLevel === "High" && "text-rose-700 border-rose-500/40",
       )}>
-        {intensityLevel === "Low" ? "Low Ink" : intensityLevel === "Medium" ? "Nice" : "FULL INK"}
+        {intensityLabel}
       </span>
       <span class="text-xl text-foreground/70 font-bold">
         {intensityDisplay}
@@ -51,10 +60,10 @@
             min={1}
             max={50}
             step={1}
-            aria-label="Intensity control" />
+            aria-label={t("intensity.aria")} />
   </div>
 
   <p class="text-base text-foreground/60 font-bold px-1 leading-tight">
-    Controls how thick the "ink" is. Higher power means stronger protection, but more visible changes to your sketch.
+    {t("intensity.hint")}
   </p>
 </div>

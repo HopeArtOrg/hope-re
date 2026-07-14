@@ -1,6 +1,7 @@
 <script lang="ts">
   import { ScanLineIcon, StampIcon } from "@lucide/svelte";
 
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { useWatermarkState } from "$lib/stores/use-watermark-state.svelte";
 
   import EmbedForm from "./embed-form.svelte";
@@ -17,14 +18,14 @@
         class="flex-1 py-3 px-6 text-center font-bold text-lg border-2 border-b-0 border-foreground/10 rounded-t-2xl transition-all relative {wmState.activeSubTab === "embed" ? "bg-card text-foreground mb-[-2px] z-10 shadow-[0px_-4px_10px_rgba(0,0,0,0.05)]" : "bg-muted/20 text-muted-foreground border-transparent hover:bg-muted/30"}"
       >
         <StampIcon class="size-4 inline-block mr-2 align-text-bottom" />
-        Sign Canvas
+        {t("watermark.signCanvas")}
       </button>
       <button
         onclick={() => wmState.activeSubTab = "extract"}
         class="flex-1 py-3 px-6 text-center font-bold text-lg border-2 border-b-0 border-foreground/10 rounded-t-2xl transition-all relative {wmState.activeSubTab === "extract" ? "bg-card text-foreground mb-[-2px] z-10 shadow-[0px_-4px_10px_rgba(0,0,0,0.05)]" : "bg-muted/20 text-muted-foreground border-transparent hover:bg-muted/30"}"
       >
         <ScanLineIcon class="size-4 inline-block mr-2 align-text-bottom" />
-        Verify Canvas
+        {t("watermark.verifyCanvas")}
       </button>
     </div>
   </div>

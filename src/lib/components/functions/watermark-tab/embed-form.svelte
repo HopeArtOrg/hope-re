@@ -19,6 +19,7 @@
   import { Button } from "$lib/components/ui/button";
   import { Input } from "$lib/components/ui/input";
   import { useEmbedWatermark } from "$lib/queries";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { useImage } from "$lib/stores/use-image.svelte";
   import { useWatermarkState } from "$lib/stores/use-watermark-state.svelte";
 
@@ -28,7 +29,7 @@
 
   const SUCCESS_RESET_MS = 3000;
 
-  let watermarkText = $state<string>("Hope:RE Protected");
+  let watermarkText = $state<string>(t("watermark.embed.defaultText"));
   let useCustomSeed = $state<boolean>(false);
   let seedValue = $state<string>("");
   let embedResultImage = $state<string | null>(null);
@@ -58,17 +59,17 @@
 
   async function handleEmbed() {
     if (!embedImage.originalImage) {
-      toast.error("Please upload an image to sign");
+      toast.error(t("watermark.embed.uploadToSign"));
       return;
     }
 
     if (!watermarkText) {
-      toast.error("Please enter a signature text");
+      toast.error(t("watermark.embed.enterText"));
       return;
     }
 
     if (useCustomSeed && !isValidSeed(seedValue)) {
-      toast.error("Encryption key must be a positive whole number");
+      toast.error(t("watermark.embed.invalidSeed"));
       return;
     }
 
@@ -81,9 +82,9 @@
     progressStatus = "processing";
 
     const steps = [
-      { progress: 20, message: "Decomposing image frequencies...", duration: 400 },
-      { progress: 55, message: "Embedding secure signature coefficients...", duration: 600 },
-      { progress: 85, message: "Synthesizing output frequencies...", duration: 400 },
+      { progress: 20, message: t("watermark.embed.stepDecomposing"), duration: 400 },
+      { progress: 55, message: t("watermark.embed.stepEmbedding"), duration: 600 },
+      { progress: 85, message: t("watermark.embed.stepSynthesizing"), duration: 400 },
     ];
 
     for (const step of steps) {
@@ -94,7 +95,7 @@
 
     try {
       progress = 90;
-      progressMessage = "Reconstructing final signed canvas...";
+      progressMessage = t("watermark.embed.stepReconstructing");
 
       const seed = useCustomSeed ? Number(seedValue.trim()) : undefined;
       const result = await embedMutation.mutateAsync({
@@ -112,7 +113,7 @@
 
       progress = 100;
       progressStatus = "success";
-      toast.success("Ink signature embedded successfully");
+      toast.success(t("watermark.embed.embedded"));
       resetTimer = setTimeout(() => {
         if (progressStatus === "success") {
           progressStatus = "idle";
@@ -152,13 +153,13 @@
     useCustomSeed = false;
     seedValue = "";
 
-    toast.success("Canvas reset complete");
+    toast.success(t("watermark.resetComplete"));
   }
 
   function handleSendToScanner() {
     syncScannerState();
     wmState.activeSubTab = "extract";
-    toast.success("Signed canvas loaded into Verification scanner");
+    toast.success(t("watermark.embed.loadedIntoScanner"));
   }
 
   function handleDownload() {
@@ -171,7 +172,7 @@
     <div class="relative group">
       <BaseImagePlaceholder
         imageSrc={embedImage.originalImage}
-        label="Original Canvas"
+        label={t("placeholders.originalCanvas")}
         containerClass="sticky-note p-8 min-h-[350px]"
         onUpload={embedImage.handleUpload}
       />
@@ -180,7 +181,7 @@
     <div class="relative group">
       <BaseImagePlaceholder
         imageSrc={embedResultImage}
-        label="Signed Canvas (Output)"
+        label={t("placeholders.signedCanvasOutput")}
         containerClass="canvas-sheet p-8 min-h-[350px]"
         readonly
       >
@@ -200,7 +201,7 @@
         onclick={handleSendToScanner}
       >
         <ScanLineIcon class="size-5 mr-2" />
-        Test Signature Verification
+        {t("watermark.embed.testVerification")}
       </Button>
     {/if}
   </div>
@@ -214,20 +215,20 @@
       <div class="flex items-center gap-3 bg-linear-to-r from-amber-500/10 to-orange-500/10 text-amber-800 dark:text-amber-300 p-4 rounded-2xl border border-amber-200/30 dark:border-amber-900/20">
         <StampIcon class="size-6 shrink-0" />
         <div>
-          <h2 class="text-xl font-bold leading-none">Signature Settings</h2>
-          <p class="text-xs opacity-80 mt-1">Embed a hidden digital signature into the image</p>
+          <h2 class="text-xl font-bold leading-none">{t("watermark.embed.settingsTitle")}</h2>
+          <p class="text-xs opacity-80 mt-1">{t("watermark.embed.settingsSubtitle")}</p>
         </div>
       </div>
 
       <div class="flex flex-col gap-2">
         <label for="watermark-input" class="text-sm font-bold flex items-center gap-1.5 text-amber-800/80 dark:text-amber-400/80">
           <TypeIcon class="size-4" />
-          Signature Text
+          {t("watermark.embed.signatureText")}
         </label>
         <Input
           id="watermark-input"
           type="text"
-          placeholder="e.g. Copyright 2026 ArtOrg"
+          placeholder={t("watermark.embed.signaturePlaceholder")}
           bind:value={watermarkText}
           disabled={isProcessing}
           class="doodle-line border-2 border-amber-200/60 focus-visible:border-amber-500 focus-visible:ring-amber-500/20 dark:border-amber-800/40 h-12 text-base px-4 font-bold bg-background/50 focus:bg-background"
@@ -243,7 +244,7 @@
         >
           <span class="flex items-center gap-1.5">
             <KeyIcon class="size-4" />
-            Secure Encryption Key
+            {t("watermark.embed.encryptionKey")}
           </span>
           <ChevronDownIcon class="size-5 transition-transform duration-300 {useCustomSeed ? "rotate-180 text-amber-500" : "text-muted-foreground/60"}" />
         </button>
@@ -252,7 +253,7 @@
             <Input
               id="seed-input"
               type="text"
-              placeholder="Enter numeric seed (e.g. 12345)"
+              placeholder={t("watermark.embed.seedPlaceholder")}
               bind:value={seedValue}
               disabled={isProcessing}
               class="doodle-line border-2 border-amber-200/60 focus-visible:border-amber-500 focus-visible:ring-amber-500/20 dark:border-amber-800/40 h-10 text-base px-4 bg-background/50 font-bold"
@@ -264,7 +265,7 @@
       <div class="mt-2 p-4 bg-amber-500/5 rounded-2xl border border-amber-200/20 dark:border-amber-950/20 text-sm flex gap-3 text-amber-900/70 dark:text-amber-200/70 leading-relaxed">
         <InfoIcon class="size-5 shrink-0 text-amber-600/70 dark:text-amber-400/70" />
         <p>
-          This hides a digital signature inside image frequencies. It is robust to cropping, compression, and screenshotting, allowing you to prove ownership even if your work is scraped or reused.
+          {t("watermark.embed.info")}
         </p>
       </div>
 
@@ -290,10 +291,10 @@
       >
         {#if isProcessing}
           <LoaderCircleIcon class="size-6 animate-spin" />
-          <span class="font-bold">Signing...</span>
+          <span class="font-bold">{t("watermark.embed.signing")}</span>
         {:else}
           <StampIcon class="size-6" />
-          <span class="font-bold">Sign Sheet</span>
+          <span class="font-bold">{t("watermark.embed.signSheet")}</span>
         {/if}
       </Button>
 
@@ -305,7 +306,7 @@
         disabled={!embedImage.hasImage}
       >
         <RotateCcwIcon class="size-6" />
-        <span class="font-bold">Reset Sheet</span>
+        <span class="font-bold">{t("watermark.resetSheet")}</span>
       </Button>
     </div>
   </div>

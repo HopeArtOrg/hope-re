@@ -9,6 +9,7 @@
     Root as FileDropZone,
     Trigger as FileDropZoneTrigger,
   } from "$lib/components/ui/file-drop-zone";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { cn } from "$lib/utils";
 
   const {
@@ -20,8 +21,15 @@
     containerClass,
   }: BaseImagePlaceholderProps = $props();
 
+  const REJECTION_KEYS: Record<string, string> = {
+    "Maximum file size exceeded": "fileDropZone.maxSizeExceeded",
+    "Maximum files uploaded": "fileDropZone.maxFilesUploaded",
+    "File type not allowed": "fileDropZone.typeNotAllowed",
+  };
+
   function handleFileRejected({ reason, file }: { reason: string; file: File }) {
-    toast.error(`${file.name}: ${reason}`);
+    const key = REJECTION_KEYS[reason];
+    toast.error(`${file.name}: ${key ? t(key) : reason}`);
   }
 
   const labelColour = $derived<string>(
@@ -92,11 +100,11 @@
                 <UploadIcon class="size-10 text-amber-600/40 dark:text-amber-400/40" />
               </div>
               <p class="text-sm font-medium mb-1 text-muted-foreground/80">
-                Sketch your image here
+                {t("placeholders.sketchHere")}
               </p>
               <p class="text-xs text-muted-foreground/60 mb-4">
-                <span class="hidden md:inline">Drop a sheet or click to browse</span>
-                <span class="md:hidden">Tap to browse image</span>
+                <span class="hidden md:inline">{t("placeholders.dropOrClick")}</span>
+                <span class="md:hidden">{t("placeholders.tapToBrowse")}</span>
               </p>
             </div>
           {/if}
@@ -133,10 +141,10 @@
             <ImageIcon class="size-10 text-emerald-600/40 dark:text-emerald-400/40" />
           </div>
           <p class="text-sm font-medium text-muted-foreground/60 mb-1">
-            Canvas is blank
+            {t("placeholders.canvasBlank")}
           </p>
           <p class="text-xs text-muted-foreground/40">
-            Start drawing to see the result
+            {t("placeholders.startDrawing")}
           </p>
         </div>
       {/if}

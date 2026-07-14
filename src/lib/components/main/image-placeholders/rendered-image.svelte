@@ -3,6 +3,7 @@
 
   import { DownloadIcon } from "$lib/components";
   import { Button } from "$lib/components/ui/button";
+  import { t } from "$lib/stores/use-i18n.svelte";
 
   const { onDownload, onFullscreen }: RenderedImageActionsProps = $props();
 </script>
@@ -12,7 +13,7 @@
           size="icon"
           class="size-14 pointer-events-auto doodle-blob bg-background/60 hover:bg-background/80 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80 border-2 border-foreground/10 backdrop-blur-md shadow-lg hover:scale-110"
           onclick={onDownload}
-          title="Save Artwork">
+          title={t("placeholders.saveArtwork")}>
     <DownloadIcon class="size-5 text-foreground/80" />
   </Button>
 
@@ -20,7 +21,7 @@
           size="icon"
           class="size-14 pointer-events-auto doodle-blob bg-background/60 hover:bg-background/80 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80 border-2 border-foreground/10 backdrop-blur-md shadow-lg hover:scale-110"
           onclick={onFullscreen}
-          title="Inspect Canvas">
+          title={t("placeholders.inspectCanvas")}>
     <!-- Magnifying Glass SVG -->
     <svg width="24"
          height="24"
