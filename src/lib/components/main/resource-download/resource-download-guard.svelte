@@ -11,11 +11,11 @@
   import { useModelDownload } from "$lib/stores/use-model-download.svelte";
   import { cn } from "$lib/utils";
 
-  type Props = {
+  type ResourceDownloadGuardProps = {
     children: Snippet;
   };
 
-  const { children }: Props = $props();
+  const { children }: ResourceDownloadGuardProps = $props();
 
   const models = useModelDownload();
   let mounted = $state<boolean>(false);
@@ -68,7 +68,7 @@
     {#if models.isDownloading}
       <button
         onclick={() => models.minimize()}
-        class="absolute end-4 top-4 rounded-lg opacity-50 transition-opacity hover:opacity-100 focus-visible:outline-hidden cursor-pointer"
+        class="absolute inset-e-4 top-4 rounded-lg opacity-50 transition-opacity hover:opacity-100 focus-visible:outline-hidden cursor-pointer"
         aria-label="Minimize to dock"
       >
         <MinusIcon class="size-4" />
