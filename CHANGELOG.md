@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.5.0] - 2026-07-15
+
+### Added
+- Add CODEBASE.md documenting the architecture, project structure, key dependencies, and the ONNX model pipeline.
+- Add CODING_CONVENTION.md documenting the TypeScript, Svelte, i18n, and Rust coding standards.
+- Add CONTRIBUTE.md documenting setup commands, testing, pre-commit hooks, the commit convention, CI/CD, and the tag-driven release flow.
+- Add CI_CD_PIPELINE.md documenting the lint gate, the tag-driven release build matrix, the model upload job, and required secrets.
+- Add CORE_FUNCTION.md documenting the Tauri command surface and the protection, watermarking, model management, update, and system info flows.
+
+### Changed
+- Restructure AGENTS.md into a documentation hub that features CODEBASE.md, CODING_CONVENTION.md, and CONTRIBUTE.md alongside the agent skill guides.
+- Bump version to 2.5.0 across package.json, Cargo.toml, and tauri.conf.json.
+
 ## [2.4.0] - 2026-07-15
 
 ### Added
