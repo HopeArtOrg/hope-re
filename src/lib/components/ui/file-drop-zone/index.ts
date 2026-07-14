@@ -25,7 +25,7 @@ export const MEGABYTE = 1000 * KILOBYTE;
 export const GIGABYTE = 1000 * MEGABYTE;
 
 // utilities for limiting accepted files
-export const ACCEPT_IMAGE = "image/*";
+export const ACCEPT_IMAGE = "image/png,image/jpeg,image/webp";
 export const ACCEPT_VIDEO = "video/*";
 export const ACCEPT_AUDIO = "audio/*";
 

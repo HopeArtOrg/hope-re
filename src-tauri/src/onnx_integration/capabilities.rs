@@ -141,7 +141,7 @@ fn get_inference_capabilities_internal() -> InferenceCapabilities {
         }
     }
 
-    #[cfg(any(target_os = "linux", target_os = "android"))]
+    #[cfg(target_os = "linux")]
     {
         use ort::ep::{ExecutionProvider, CUDA, XNNPACK};
 
@@ -150,6 +150,17 @@ fn get_inference_capabilities_internal() -> InferenceCapabilities {
                 name: "CUDA".to_string(),
             });
         }
+
+        if XNNPACK::default().is_available().unwrap_or(false) {
+            providers.push(ExecutionProviderInfo {
+                name: "XNNPACK".to_string(),
+            });
+        }
+    }
+
+    #[cfg(target_os = "android")]
+    {
+        use ort::ep::{ExecutionProvider, XNNPACK};
 
         if XNNPACK::default().is_available().unwrap_or(false) {
             providers.push(ExecutionProviderInfo {

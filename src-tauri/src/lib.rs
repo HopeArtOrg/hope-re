@@ -7,8 +7,8 @@ mod onnx_stubs;
 mod system_info;
 
 use commands::{
-    cancel_protection, check_models_status, create_ort_session, download_model, embed_watermark,
-    extract_watermark, get_inference_capabilities, get_system_info, protect_image,
+    cancel_protection, check_models_status, download_model, embed_watermark, extract_watermark,
+    get_inference_capabilities, get_system_info, protect_image,
 };
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -23,7 +23,6 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             get_system_info,
             get_inference_capabilities,
-            create_ort_session,
             protect_image,
             embed_watermark,
             extract_watermark,

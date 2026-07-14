@@ -1,6 +1,5 @@
 <script lang="ts">
   import {
-    BinaryIcon,
     ChevronDownIcon,
     InfoIcon,
     KeyIcon,
@@ -19,7 +18,6 @@
   } from "$lib/components";
   import { Button } from "$lib/components/ui/button";
   import { Input } from "$lib/components/ui/input";
-  import { Slider } from "$lib/components/ui/slider";
   import { useEmbedWatermark } from "$lib/queries";
   import { useImage } from "$lib/stores/use-image.svelte";
   import { useWatermarkState } from "$lib/stores/use-watermark-state.svelte";
@@ -28,16 +26,35 @@
   const embedMutation = useEmbedWatermark();
   const wmState = useWatermarkState();
 
+  const SUCCESS_RESET_MS = 3000;
+
   let watermarkText = $state<string>("Hope:RE Protected");
   let useCustomSeed = $state<boolean>(false);
   let seedValue = $state<string>("");
-  let watermarkStrength = $state<number[]>([36]);
   let embedResultImage = $state<string | null>(null);
 
   let isProcessing = $state<boolean>(false);
   let progress = $state<number>(0);
   let progressStatus = $state<"idle" | "processing" | "success" | "error">("idle");
   let progressMessage = $state<string>("");
+
+  let runId = 0;
+  let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
+  function isValidSeed(value: string): boolean {
+    return /^\d+$/.test(value.trim());
+  }
+
+  function byteLength(text: string): number {
+    return new TextEncoder().encode(text).length;
+  }
+
+  function syncScannerState() {
+    wmState.scannableImage = embedResultImage;
+    wmState.lastWatermarkLength = byteLength(watermarkText);
+    wmState.useSeed = useCustomSeed;
+    wmState.lastSeed = seedValue;
+  }
 
   async function handleEmbed() {
     if (!embedImage.originalImage) {
@@ -48,6 +65,16 @@
     if (!watermarkText) {
       toast.error("Please enter a signature text");
       return;
+    }
+
+    if (useCustomSeed && !isValidSeed(seedValue)) {
+      toast.error("Encryption key must be a positive whole number");
+      return;
+    }
+
+    const currentRun = ++runId;
+    if (resetTimer) {
+      clearTimeout(resetTimer);
     }
 
     isProcessing = true;
@@ -69,38 +96,51 @@
       progress = 90;
       progressMessage = "Reconstructing final signed canvas...";
 
-      const seed = useCustomSeed ? Number(seedValue) : undefined;
+      const seed = useCustomSeed ? Number(seedValue.trim()) : undefined;
       const result = await embedMutation.mutateAsync({
         imageBase64: embedImage.originalImage,
         watermark: watermarkText,
         seed,
       });
 
+      if (currentRun !== runId) {
+        return;
+      }
+
       embedResultImage = result;
-      wmState.scannableImage = result;
-      wmState.lastWatermarkLength = watermarkText.length;
-      wmState.useSeed = useCustomSeed;
-      wmState.lastSeed = seedValue;
+      syncScannerState();
 
       progress = 100;
       progressStatus = "success";
       toast.success("Ink signature embedded successfully");
-      setTimeout(() => {
-        progressStatus = "idle";
-        progress = 0;
-        progressMessage = "";
-      }, 3000);
+      resetTimer = setTimeout(() => {
+        if (progressStatus === "success") {
+          progressStatus = "idle";
+          progress = 0;
+          progressMessage = "";
+        }
+      }, SUCCESS_RESET_MS);
     }
     catch (error: any) {
+      if (currentRun !== runId) {
+        return;
+      }
       progressStatus = "error";
       toast.error(error instanceof Error ? error.message : String(error));
     }
     finally {
-      isProcessing = false;
+      if (currentRun === runId) {
+        isProcessing = false;
+      }
     }
   }
 
   function handleCancel() {
+    runId++;
+    if (resetTimer) {
+      clearTimeout(resetTimer);
+    }
+
     isProcessing = false;
     progress = 0;
     progressStatus = "idle";
@@ -111,16 +151,12 @@
     watermarkText = "";
     useCustomSeed = false;
     seedValue = "";
-    watermarkStrength = [36];
 
     toast.success("Canvas reset complete");
   }
 
   function handleSendToScanner() {
-    wmState.scannableImage = embedResultImage;
-    wmState.lastWatermarkLength = watermarkText.length;
-    wmState.useSeed = useCustomSeed;
-    wmState.lastSeed = seedValue;
+    syncScannerState();
     wmState.activeSubTab = "extract";
     toast.success("Signed canvas loaded into Verification scanner");
   }
@@ -223,27 +259,6 @@
             />
           </div>
         {/if}
-      </div>
-
-      <div class="flex flex-col gap-3 mt-2">
-        <div class="flex justify-between items-center">
-          <span class="text-sm font-bold flex items-center gap-1.5 text-amber-800/80 dark:text-amber-400/80">
-            <BinaryIcon class="size-4" />
-            Perturbation Strength
-          </span>
-          <span class="text-sm font-bold px-3 py-1 bg-amber-500/20 rounded-full text-amber-800 dark:text-amber-300 doodle-blob">
-            {watermarkStrength[0]}
-          </span>
-        </div>
-        <Slider
-          type="multiple"
-          bind:value={watermarkStrength}
-          min={10}
-          max={100}
-          step={1}
-          disabled={isProcessing}
-          class="accent-amber-500"
-        />
       </div>
 
       <div class="mt-2 p-4 bg-amber-500/5 rounded-2xl border border-amber-200/20 dark:border-amber-950/20 text-sm flex gap-3 text-amber-900/70 dark:text-amber-200/70 leading-relaxed">

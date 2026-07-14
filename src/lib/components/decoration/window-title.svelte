@@ -12,9 +12,35 @@
   let isMaximized = $state<boolean>(false);
 
   function handleMaximize() {
-    isMaximized = !isMaximized;
     appWindow.toggleMaximize();
   }
+
+  $effect(() => {
+    let unlisten: (() => void) | undefined;
+    let cancelled = false;
+
+    appWindow.isMaximized().then((value) => {
+      isMaximized = value;
+    });
+
+    appWindow
+      .onResized(async () => {
+        isMaximized = await appWindow.isMaximized();
+      })
+      .then((fn) => {
+        if (cancelled) {
+          fn();
+        }
+        else {
+          unlisten = fn;
+        }
+      });
+
+    return () => {
+      cancelled = true;
+      unlisten?.();
+    };
+  });
 </script>
 
 <div
@@ -23,15 +49,17 @@
 >
   <button
     onclick={() => appWindow.minimize()}
+    aria-label="Minimize"
     class="inline-flex h-[30px] w-[30px] items-center justify-center px-2 py-1 transition-colors duration-100 hover:bg-zinc-600/50"
   >
     <MinusIcon class="size-4 text-foreground" />
   </button>
   <button
     onclick={handleMaximize}
+    aria-label={isMaximized ? "Restore" : "Maximize"}
     class="inline-flex h-[30px] w-[30px] items-center justify-center px-2 py-1 transition-colors duration-100 hover:bg-zinc-600/50"
   >
-    {#if isMaximized === true}
+    {#if isMaximized}
       <MinimizeIcon class="size-4 text-foreground" />
     {:else}
       <MaximizeIcon class="size-4 text-foreground" />
@@ -39,6 +67,7 @@
   </button>
   <button
     onclick={() => appWindow.close()}
+    aria-label="Close"
     class="inline-flex h-[30px] w-[30px] items-center justify-center px-2 py-1 transition-colors duration-100 hover:bg-red-500"
   >
     <XIcon class="size-4 text-foreground" />

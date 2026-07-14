@@ -171,14 +171,12 @@ fn detect_gpu_macos() -> GpuDetails {
             let line_trimmed = line.trim();
 
             if line_trimmed.starts_with("Chipset Model: ") {
-                if let Some((_, after)) = line_trimmed.split_once(":  ") {
+                if let Some((_, after)) = line_trimmed.split_once(": ") {
                     gpu_name = after.trim().to_string();
                 }
             }
 
-            if (line_trimmed.contains("VRAM") || line_trimmed.contains("Metal"))
-                && line_trimmed.contains(":")
-            {
+            if line_trimmed.contains("VRAM") && line_trimmed.contains(":") {
                 if let Some((_, after)) = line_trimmed.split_once(": ") {
                     let vram_str = after.trim();
                     vram_mb = parse_vram(vram_str);

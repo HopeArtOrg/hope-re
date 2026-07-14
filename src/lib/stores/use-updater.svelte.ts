@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/svelte-query";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { toast } from "svelte-sonner";
 
-import { useCheckForUpdate } from "$lib/queries";
+import { fetchUpdate, useCheckForUpdate } from "$lib/queries";
 
 let dialogOpen = $state<boolean>(false);
 let downloadProgress = $state<number>(0);
@@ -32,6 +32,7 @@ export function useUpdater() {
     try {
       const result = await queryClient.fetchQuery({
         queryKey: ["updater-check"],
+        queryFn: fetchUpdate,
         staleTime: 0,
       });
 

@@ -54,11 +54,6 @@ pub fn get_inference_capabilities() -> Result<InferenceCapabilities, String> {
 }
 
 #[tauri::command]
-pub fn create_ort_session(_model_path: String) -> Result<String, String> {
-    Err("ONNX Runtime is not available on this Android architecture".to_string())
-}
-
-#[tauri::command]
 pub async fn check_models_status(_app: tauri::AppHandle) -> Result<ModelsCheckResult, String> {
     Ok(ModelsCheckResult {
         models: Vec::new(),
