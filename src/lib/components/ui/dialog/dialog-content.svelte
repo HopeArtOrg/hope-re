@@ -5,6 +5,7 @@
   import XIcon from "@lucide/svelte/icons/x";
   import { Dialog as DialogPrimitive } from "bits-ui";
 
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { cn } from "$lib/utils.js";
 
   import DialogPortal from "./dialog-portal.svelte";
@@ -41,7 +42,7 @@
         class="absolute end-4 top-4 rounded-lg opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
       >
         <XIcon />
-        <span class="sr-only">Close</span>
+        <span class="sr-only">{t("window.close")}</span>
       </DialogPrimitive.Close>
     {/if}
   </DialogPrimitive.Content>

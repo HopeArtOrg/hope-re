@@ -15,6 +15,7 @@
   import { Button } from "$lib/components/ui/button";
   import { Input } from "$lib/components/ui/input";
   import { useExtractWatermark } from "$lib/queries";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { useImage } from "$lib/stores/use-image.svelte";
   import { useWatermarkState } from "$lib/stores/use-watermark-state.svelte";
 
@@ -84,12 +85,12 @@
 
   async function handleExtract() {
     if (!extractImage.originalImage) {
-      toast.error("Please upload an image to scan");
+      toast.error(t("watermark.extract.uploadToScan"));
       return;
     }
 
     if (useCustomExtractSeed && !isValidSeed(extractSeedValue)) {
-      toast.error("Decryption key must be a positive whole number");
+      toast.error(t("watermark.extract.invalidSeed"));
       return;
     }
 
@@ -102,8 +103,8 @@
     progressStatus = "processing";
 
     const steps = [
-      { progress: 30, message: "Analyzing digital canvas structure...", duration: 400 },
-      { progress: 65, message: "Scanning watermark coefficients...", duration: 500 },
+      { progress: 30, message: t("watermark.extract.stepAnalyzing"), duration: 400 },
+      { progress: 65, message: t("watermark.extract.stepScanning"), duration: 500 },
     ];
 
     for (const step of steps) {
@@ -114,7 +115,7 @@
 
     try {
       progress = 85;
-      progressMessage = "Decoding hidden signature bits...";
+      progressMessage = t("watermark.extract.stepDecoding");
 
       const seed = useCustomExtractSeed ? Number(extractSeedValue.trim()) : undefined;
       const watermarkLen = Number(expectedLength) || 17;
@@ -132,12 +133,12 @@
       if (isValidWatermark(result)) {
         extractedText = result;
         verificationState = "verified";
-        toast.success("Signature revealed successfully");
+        toast.success(t("watermark.extract.revealed"));
       }
       else {
         extractedText = "";
         verificationState = "failed";
-        toast.error("No valid signature detected");
+        toast.error(t("watermark.extract.noSignature"));
       }
       progress = 100;
       progressStatus = "success";
@@ -183,7 +184,7 @@
     expectedLength = DEFAULT_LENGTH;
     wmState.scannableImage = null;
 
-    toast.success("Canvas reset complete");
+    toast.success(t("watermark.resetComplete"));
   }
 </script>
 
@@ -192,7 +193,7 @@
     <div class="relative group">
       <BaseImagePlaceholder
         imageSrc={extractImage.originalImage}
-        label="Watermarked Canvas to Scan"
+        label={t("placeholders.watermarkedToScan")}
         containerClass="sticky-note p-8 min-h-[350px]"
         onUpload={extractImage.handleUpload}
       />
@@ -208,8 +209,8 @@
       <div class="flex items-center gap-3 bg-linear-to-r from-teal-500/10 to-emerald-500/10 text-teal-800 dark:text-teal-300 p-4 rounded-2xl border border-teal-200/30 dark:border-teal-900/20">
         <ScanLineIcon class="size-6 shrink-0" />
         <div>
-          <h2 class="text-xl font-bold leading-none">Verification Settings</h2>
-          <p class="text-xs opacity-80 mt-1">Scan a canvas to verify embedded ownership signature</p>
+          <h2 class="text-xl font-bold leading-none">{t("watermark.extract.settingsTitle")}</h2>
+          <p class="text-xs opacity-80 mt-1">{t("watermark.extract.settingsSubtitle")}</p>
         </div>
       </div>
 
@@ -222,7 +223,7 @@
         >
           <span class="flex items-center gap-1.5">
             <KeyIcon class="size-4" />
-            Use Decryption Key
+            {t("watermark.extract.useDecryptionKey")}
           </span>
           <ChevronDownIcon class="size-5 transition-transform duration-300 {useCustomExtractSeed ? "rotate-180 text-teal-500" : "text-muted-foreground/60"}" />
         </button>
@@ -231,7 +232,7 @@
             <Input
               id="extract-seed-input"
               type="text"
-              placeholder="Enter the encryption seed"
+              placeholder={t("watermark.extract.seedPlaceholder")}
               bind:value={extractSeedValue}
               disabled={isProcessing}
               class="doodle-line border-2 border-teal-200/60 focus-visible:border-teal-500 focus-visible:ring-teal-500/20 dark:border-teal-800/40 h-10 text-base px-4 bg-background/50 font-bold"
@@ -243,7 +244,7 @@
       <div class="flex flex-col gap-2">
         <label for="length-input" class="text-sm font-bold flex items-center gap-1.5 text-teal-800/80 dark:text-teal-400/80">
           <BinaryIcon class="size-4" />
-          Expected Signature Length (bytes)
+          {t("watermark.extract.expectedLength")}
         </label>
         <Input
           id="length-input"
@@ -278,10 +279,10 @@
       >
         {#if isProcessing}
           <LoaderCircleIcon class="size-6 animate-spin" />
-          <span class="font-bold">Verifying...</span>
+          <span class="font-bold">{t("watermark.extract.verifying")}</span>
         {:else}
           <ScanLineIcon class="size-6" />
-          <span class="font-bold">Verify Sheet</span>
+          <span class="font-bold">{t("watermark.extract.verifySheet")}</span>
         {/if}
       </Button>
 
@@ -293,7 +294,7 @@
         disabled={!extractImage.hasImage}
       >
         <RotateCcwIcon class="size-6" />
-        <span class="font-bold">Reset Sheet</span>
+        <span class="font-bold">{t("watermark.resetSheet")}</span>
       </Button>
     </div>
   </div>

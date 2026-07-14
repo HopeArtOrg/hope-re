@@ -11,6 +11,7 @@
   import { CatIcon, ProtectionMenu } from "$lib/components";
   import { Button } from "$lib/components/ui/button";
   import { useInferenceCapabilities } from "$lib/queries";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { useImage } from "$lib/stores/use-image.svelte";
   import { useProtection } from "$lib/stores/use-protection.svelte";
 
@@ -35,14 +36,14 @@
 
   async function handleCancel() {
     if (protection.isProcessing) {
-      toast.info("Protection cancelled");
+      toast.info(t("glaze.protectionCancelled"));
     }
 
     await protection.resetProgress();
     protection.resetSettings();
     image.clear();
 
-    toast.success("All cleared");
+    toast.success(t("glaze.allCleared"));
   }
 
   const canProcess = $derived(image.hasImage && !protection.isProcessing);
@@ -63,7 +64,7 @@
 
     {#if isSuccess && inferenceData}
       <div class="absolute -top-14 -left-4 flex items-center gap-3 px-3 opacity-70 hover:opacity-100 transition-opacity cursor-help bg-card/60 backdrop-blur-md p-2 rounded-lg doodle-line border-2 border-foreground/10 shadow-sm"
-           title="Inference Providers: {inferenceData.providers.map(p => p.name).join(", ")}">
+           title={t("glaze.inferenceProviders", { providers: inferenceData.providers.map(p => p.name).join(", ") })}>
         <div class="relative group">
           <CpuIcon class="size-5 text-primary/70" />
           <div class="absolute -top-10 -left-6 scale-90 opacity-40 group-hover:opacity-100 transition-opacity decorative-doodle">
@@ -91,10 +92,10 @@
     >
       {#if protection.isProcessing}
         <LoaderCircleIcon class="size-6 animate-spin" />
-        <span class="font-bold">Drawing...</span>
+        <span class="font-bold">{t("glaze.drawing")}</span>
       {:else}
         <ShieldIcon class="size-6" />
-        <span class="font-bold">Apply Ink</span>
+        <span class="font-bold">{t("glaze.applyInk")}</span>
       {/if}
     </Button>
 
@@ -107,10 +108,10 @@
     >
       {#if protection.isProcessing}
         <XIcon class="size-6" />
-        <span class="font-bold">Stop!</span>
+        <span class="font-bold">{t("glaze.stop")}</span>
       {:else}
         <RotateCcwIcon class="size-6" />
-        <span class="font-bold">New Sheet</span>
+        <span class="font-bold">{t("glaze.newSheet")}</span>
       {/if}
     </Button>
   </div>

@@ -5,12 +5,15 @@
 
   import * as Select from "$lib/components/ui/select";
   import { nightshadeTargets } from "$lib/constants";
+  import { t } from "$lib/stores/use-i18n.svelte";
 
   let { value = $bindable("dog") }: NightshadeTargetSelectProps = $props();
 
-  const contentTrigger = $derived(
-    nightshadeTargets.find(t => t.value === value)?.label ?? "Select a target",
+  const currentTarget = $derived(
+    nightshadeTargets.find(target => target.value === value) ?? nightshadeTargets[0],
   );
+
+  const contentTrigger = $derived(t(`nightshadeTargets.${currentTarget.value}.label`));
 </script>
 
 <div class="space-y-4">
@@ -18,11 +21,11 @@
     <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-rose-500/10">
       <CrosshairIcon class="size-5 text-rose-600 dark:text-rose-400" />
     </div>
-    <span class="text-xl font-bold text-foreground/80 tracking-tight">Target Concept</span>
+    <span class="text-xl font-bold text-foreground/80 tracking-tight">{t("nightshadeSelect.title")}</span>
   </div>
 
   <Select.Root type="single" bind:value>
-    <Select.Trigger class="w-full text-lg" aria-label="Target Concept Selection">
+    <Select.Trigger class="w-full text-lg" aria-label={t("nightshadeSelect.aria")}>
       {contentTrigger}
     </Select.Trigger>
     <Select.Content>
@@ -33,8 +36,8 @@
               <target.icon class="size-6 text-muted-foreground" />
             </div>
             <div class="flex flex-col gap-0.5">
-              <span class="font-bold text-lg">{target.label}</span>
-              <span class="text-sm text-muted-foreground/80">{target.description}</span>
+              <span class="font-bold text-lg">{t(`nightshadeTargets.${target.value}.label`)}</span>
+              <span class="text-sm text-muted-foreground/80">{t(`nightshadeTargets.${target.value}.description`)}</span>
             </div>
           </div>
         </Select.Item>
@@ -43,6 +46,6 @@
   </Select.Root>
 
   <p class="text-sm text-muted-foreground/70 font-bold px-1 leading-tight">
-    AI models will think your sketch is this concept instead. Sneaky!
+    {t("nightshadeSelect.hint")}
   </p>
 </div>

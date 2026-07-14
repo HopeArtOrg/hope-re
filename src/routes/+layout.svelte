@@ -12,6 +12,7 @@
   import favicon from "$lib/assets/favicon.svg";
   import { Header, MinimizedDock, ResourceDownloadGuard, UpdateDialog, WindowTitle } from "$lib/components";
   import { Toaster } from "$lib/components/ui/sonner";
+  import { useI18n } from "$lib/stores/use-i18n.svelte";
   import { useTheme } from "$lib/stores/use-theme.svelte";
   import { cn } from "$lib/utils";
 
@@ -30,9 +31,11 @@
   }
 
   const theme = useTheme();
+  const i18n = useI18n();
 
   onMount(async () => {
     await theme.initTheme();
+    await i18n.initLocale();
     if (isWindows) {
       document.documentElement.dataset.platform = "windows";
     }

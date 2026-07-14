@@ -7,6 +7,8 @@
   } from "@lucide/svelte";
   import { getCurrentWindow } from "@tauri-apps/api/window";
 
+  import { t } from "$lib/stores/use-i18n.svelte";
+
   const appWindow = getCurrentWindow();
 
   let isMaximized = $state<boolean>(false);
@@ -49,14 +51,14 @@
 >
   <button
     onclick={() => appWindow.minimize()}
-    aria-label="Minimize"
+    aria-label={t("window.minimize")}
     class="inline-flex h-[30px] w-[30px] items-center justify-center px-2 py-1 transition-colors duration-100 hover:bg-zinc-600/50"
   >
     <MinusIcon class="size-4 text-foreground" />
   </button>
   <button
     onclick={handleMaximize}
-    aria-label={isMaximized ? "Restore" : "Maximize"}
+    aria-label={isMaximized ? t("window.restore") : t("window.maximize")}
     class="inline-flex h-[30px] w-[30px] items-center justify-center px-2 py-1 transition-colors duration-100 hover:bg-zinc-600/50"
   >
     {#if isMaximized}
@@ -67,7 +69,7 @@
   </button>
   <button
     onclick={() => appWindow.close()}
-    aria-label="Close"
+    aria-label={t("window.close")}
     class="inline-flex h-[30px] w-[30px] items-center justify-center px-2 py-1 transition-colors duration-100 hover:bg-red-500"
   >
     <XIcon class="size-4 text-foreground" />

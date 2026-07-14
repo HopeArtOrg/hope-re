@@ -3,6 +3,8 @@
 
   import { SlidersVerticalIcon } from "@lucide/svelte";
 
+  import { t } from "$lib/stores/use-i18n.svelte";
+
   import {
     AlgorithmSelect,
     GlazeStyleSelect,
@@ -56,7 +58,7 @@
       <div class="p-3 rounded-lg bg-primary/10 doodle-blob shadow-sm">
         <SlidersVerticalIcon class="size-5 text-primary/70" />
       </div>
-      <h3 class="text-lg font-bold text-foreground/80 tracking-tight">Artistic Guidance</h3>
+      <h3 class="text-lg font-bold text-foreground/80 tracking-tight">{t("menu.artisticGuidance")}</h3>
     </div>
 
     <div class="space-y-10">

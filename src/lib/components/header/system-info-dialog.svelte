@@ -16,6 +16,7 @@
   import { Button } from "$lib/components/ui/button";
   import * as Dialog from "$lib/components/ui/dialog";
   import { useSystemInfo } from "$lib/queries/system-info";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { cn } from "$lib/utils";
 
   const {
@@ -42,7 +43,7 @@
               variant="outline"
               size="sm"
               class="flex items-center gap-2 px-3 py-2 doodle-blob border-2 border-foreground/10 bg-white/40 dark:bg-black/40 hover:bg-white/60 dark:hover:bg-black/60 hover:cursor-pointer transition-all shadow-sm"
-              aria-label="System Info">
+              aria-label={t("header.systemInfo")}>
         <InfoIcon class="size-4" />
       </Button>
     {/snippet}
@@ -56,7 +57,7 @@
             <MonitorIcon class="size-5 text-primary" />
           </div>
           <Dialog.DialogTitle class="text-xl font-bold tracking-tight">
-            Studio Vitals
+            {t("systemInfo.title")}
           </Dialog.DialogTitle>
         </div>
       </div>
@@ -66,25 +67,25 @@
       {#if isLoading && !info}
         <div class="flex flex-col items-center justify-center py-12">
           <LoaderCircleIcon class="size-10 animate-spin text-primary mb-3" />
-          <p class="text-sm font-bold text-muted-foreground">Checking vitals...</p>
+          <p class="text-sm font-bold text-muted-foreground">{t("systemInfo.checking")}</p>
         </div>
       {:else if isError}
         <div class="flex items-start gap-4 p-5 doodle-line bg-rose-500/10 border-2 border-rose-500/20">
           <CircleAlertIcon class="size-6 text-rose-600 shrink-0 mt-0.5" />
           <div>
-            <p class="text-base font-bold text-rose-700">Studio is offline!</p>
-            <p class="text-xs font-bold text-muted-foreground mt-1">{error?.message || "Unknown Error"}</p>
+            <p class="text-base font-bold text-rose-700">{t("systemInfo.offline")}</p>
+            <p class="text-xs font-bold text-muted-foreground mt-1">{error?.message || t("systemInfo.unknownError")}</p>
           </div>
         </div>
       {:else if info}
         <div class={cn(isFetching && "opacity-50 transition-opacity")}>
           <div class="doodle-line border-2 border-foreground/10 bg-white/40 dark:bg-black/20 p-8 space-y-6 shadow-inner relative">
-            <div class="absolute -top-3 -right-2 rotate-12 text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line">SPECS</div>
+            <div class="absolute -top-3 -right-2 rotate-12 text-[10px] bg-sky-500 text-white px-2 py-0.5 shadow-sm doodle-line">{t("systemInfo.specs")}</div>
 
             <div class="pb-6 border-b-2 border-foreground/5">
               <div class="flex items-center gap-3 mb-2">
                 <GlobeIcon class="size-5 text-sky-600" />
-                <p class="text-xs font-bold text-muted-foreground uppercase">Environment</p>
+                <p class="text-xs font-bold text-muted-foreground uppercase">{t("systemInfo.environment")}</p>
               </div>
               <p class="text-base font-bold pl-8">{info.platform.os}</p>
               <p class="text-xs font-bold text-muted-foreground/60 mt-1 pl-8">{info.platform.hostname}</p>
@@ -95,7 +96,7 @@
                 <CpuIcon class="size-5 text-indigo-600 shrink-0 mt-0.5" />
                 <div class="flex-1 min-w-0">
                   <p class="text-sm font-bold">
-                    <span class="text-muted-foreground">Brain:</span>
+                    <span class="text-muted-foreground">{t("systemInfo.brain")}</span>
                     <span class="ml-2">{info.cpu}</span>
                   </p>
                 </div>
@@ -105,7 +106,7 @@
                 <MemoryStickIcon class="size-5 text-violet-600 shrink-0 mt-0.5" />
                 <div class="flex-1 min-w-0">
                   <p class="text-sm font-bold">
-                    <span class="text-muted-foreground">Short-Term:</span>
+                    <span class="text-muted-foreground">{t("systemInfo.shortTerm")}</span>
                     <span class="ml-2">{info.memory}</span>
                   </p>
                 </div>
@@ -115,7 +116,7 @@
                 <ZapIcon class="size-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div class="flex-1 min-w-0">
                   <p class="text-sm font-bold">
-                    <span class="text-muted-foreground">Brush Power:</span>
+                    <span class="text-muted-foreground">{t("systemInfo.brushPower")}</span>
                     <span class="ml-2">{info.gpu}</span>
                   </p>
                 </div>
@@ -125,7 +126,7 @@
                 <HardDriveIcon class="size-5 text-amber-600 shrink-0 mt-0.5" />
                 <div class="flex-1 min-w-0">
                   <p class="text-sm font-bold">
-                    <span class="text-muted-foreground">Storage:</span>
+                    <span class="text-muted-foreground">{t("systemInfo.storage")}</span>
                     <span class="ml-2">{info.storage}</span>
                   </p>
                 </div>
@@ -137,7 +138,7 @@
                 <BoxIcon class="size-5 text-rose-600 shrink-0 mt-0.5" />
                 <div class="flex-1 min-w-0">
                   <p class="text-sm font-bold">
-                    <span class="text-muted-foreground">Studio Version:</span>
+                    <span class="text-muted-foreground">{t("systemInfo.studioVersion")}</span>
                     <span class="ml-2">v{info.app_version}</span>
                   </p>
                 </div>
@@ -151,7 +152,7 @@
     {#if info && !isLoading}
       <div class="flex items-center justify-between mt-8 pt-6 border-t-2 border-foreground/10">
         <p class="text-xs font-bold text-muted-foreground/60 italic">
-          Last check: {new Date(dataUpdatedAt).toLocaleTimeString()}
+          {t("systemInfo.lastCheck", { time: new Date(dataUpdatedAt).toLocaleTimeString() })}
         </p>
         <Button
           variant="outline"
@@ -161,7 +162,7 @@
           class="gap-3 doodle-blob border-2 border-foreground/10 bg-white/40 dark:bg-black/40 hover:bg-white/60 dark:hover:bg-black/60 h-10 px-4"
         >
           <RefreshCwIcon class={cn("size-4", isFetching && "animate-spin")} />
-          <span class="font-bold">Check Again</span>
+          <span class="font-bold">{t("systemInfo.checkAgain")}</span>
         </Button>
       </div>
     {/if}

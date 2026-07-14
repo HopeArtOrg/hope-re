@@ -3,6 +3,7 @@ import { relaunch } from "@tauri-apps/plugin-process";
 import { toast } from "svelte-sonner";
 
 import { fetchUpdate, useCheckForUpdate } from "$lib/queries";
+import { t } from "$lib/stores/use-i18n.svelte";
 
 let dialogOpen = $state<boolean>(false);
 let downloadProgress = $state<number>(0);
@@ -40,12 +41,12 @@ export function useUpdater() {
         dialogOpen = true;
       }
       else if (manual) {
-        toast.info("You are on the latest version");
+        toast.info(t("updater.latestVersion"));
       }
     }
     catch (e) {
       if (manual) {
-        toast.error("Failed to check for updates");
+        toast.error(t("updater.checkFailed"));
       }
       console.error("Update check failed:", e);
     }
@@ -80,13 +81,13 @@ export function useUpdater() {
       });
 
       downloadStatus = "installing";
-      toast.success("Update installed, restarting...");
+      toast.success(t("updater.installedRestarting"));
       await relaunch();
     }
     catch (e) {
       downloadError = e instanceof Error ? e.message : String(e);
       downloadStatus = "error";
-      toast.error("Update failed");
+      toast.error(t("updater.updateFailed"));
       console.error("Update download/install failed:", e);
     }
   }

@@ -7,6 +7,7 @@ import { listen } from "@tauri-apps/api/event";
 import { toast } from "svelte-sonner";
 
 import { buildProtectionSettings, cancelProtection, useProtectImage } from "$lib/queries";
+import { t } from "$lib/stores/use-i18n.svelte";
 
 type ProtectionProgress = {
   stage: string;
@@ -64,15 +65,15 @@ export function useProtection() {
   function stageMessage(stage: string): string {
     switch (stage) {
       case "loading":
-        return "Loading model...";
+        return t("protection.loadingModel");
       case "processing":
-        return `Applying ${algorithm} protection...`;
+        return t("protection.applying", { algorithm: t(`algorithms.${algorithm}.label`) });
       case "encoding":
-        return "Encoding output...";
+        return t("protection.encoding");
       case "complete":
-        return "Protection complete!";
+        return t("protection.complete");
       default:
-        return "Processing...";
+        return t("protection.processing");
     }
   }
 
@@ -110,8 +111,8 @@ export function useProtection() {
     mutation.reset();
     progress = 0;
     progressStatus = "processing";
-    progressMessage = "Initializing protection...";
-    toast.info("Starting image protection...");
+    progressMessage = t("protection.initializing");
+    toast.info(t("protection.starting"));
 
     await startProgressListener();
 
@@ -137,14 +138,14 @@ export function useProtection() {
       }
 
       progress = 100;
-      progressMessage = "Protection complete!";
+      progressMessage = t("protection.complete");
       progressStatus = "success";
 
       if (result.model_used) {
-        toast.success("Image protected successfully!");
+        toast.success(t("protection.success"));
       }
       else {
-        toast.warning("Image protected with basic fallback. Download AI models for stronger protection.");
+        toast.warning(t("protection.fallbackWarning"));
       }
 
       resetTimer = setTimeout(() => {
@@ -168,8 +169,8 @@ export function useProtection() {
       progress = 0;
       progressStatus = "error";
       const errorMessage = error instanceof Error ? error.message : String(error);
-      progressMessage = errorMessage || "Failed to protect image. Please try again.";
-      toast.error("Protection failed");
+      progressMessage = errorMessage || t("protection.failedMessage");
+      toast.error(t("protection.failedToast"));
       console.error("Protection error:", error);
 
       resetTimer = setTimeout(() => {
