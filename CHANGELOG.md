@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.3.0] - 2026-07-15
+
+### Security
+- Point the updater endpoint at the HopeArtOrg organization so update checks resolve to the correct release manifest.
+- Sanitize update release notes with DOMPurify before rendering to prevent HTML/script injection from the update manifest.
+- Remove the unused create_ort_session command, which accepted an arbitrary filesystem path from the webview.
+
+### Fixed
+- Prefill the extraction seed from the embed step so custom-seed watermark verification round-trips correctly.
+- Record the watermark signature length in UTF-8 bytes instead of UTF-16 code units so non-ASCII signatures verify correctly.
+- Guard against negative intensity and epsilon values that could panic the protection worker.
+- Add a re-entrancy guard to image protection, stop the progress listener before re-registering it, treat user cancellation as a non-error, and clear pending reset timers.
+- Keep both tabs mounted so an in-progress protection run survives switching tabs.
+- Add connection and read timeouts to model downloads, clean up temporary files on failure, and sweep stale temp files on start.
+- Save protected images with the correct file extension (jpeg vs png) based on the encoded output.
+- Fix macOS GPU detection parsing and the Android build by adding a cancel_protection stub and splitting the Linux and Android execution-provider configuration.
+- Make the theme store a singleton with a single system-theme listener, guard the file-upload race, reset fullscreen zoom on open, sync the window-control state, and add accessible labels to window and dialog controls.
+
+### Changed
+- Rename the ResourceDownloadGuard props type to ResourceDownloadGuardProps for consistency with other components.
+- Use the logical inset-e-4 utility instead of end-4, and document the Tailwind CSS 4 inset-e-* and inset-s-* convention in AGENTS.md.
+- Narrow the accepted image MIME types to png, jpeg, and webp, and disable native drag-and-drop so HTML5 drop works across platforms.
+- Bump version to 2.3.0 across package.json, Cargo.toml, and tauri.conf.json.
+
+### Removed
+- Remove unused UI component families (tabs, badge, switch), dead store members, the VerificationStatus barrel re-export, and the non-functional watermark strength slider.
+- Remove the unused @fontsource/be-vietnam-pro dependency.
+
+### Added
+- Add the dompurify dependency for update-notes sanitization.
+
 ## [2.2.3] - 2026-07-13
 
 ### Fixed

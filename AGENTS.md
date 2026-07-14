@@ -94,6 +94,10 @@ Example: `feat(protection): add nightshade intensity control`
 - Effects: `$effect(() => { ... return cleanup; })`
 - No `<style>` blocks; all styling via Tailwind CSS utility classes
 
+### Styling (Tailwind CSS 4)
+
+- Use logical inset utilities for RTL-aware positioning: prefer `inset-e-*` (inline-end) and `inset-s-*` (inline-start) over `end-*` / `start-*`. Example: `inset-e-4`, not `end-4`.
+
 ### State Management
 
 - TanStack Svelte Query for server state (`createQuery`, `createMutation`)
