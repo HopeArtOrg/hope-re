@@ -2,8 +2,8 @@ name: publish
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "v*"
 
 jobs:
   publish-tauri:
@@ -76,7 +76,7 @@ jobs:
       - name: Get Version
         id: get_version
         shell: bash
-        run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
       - name: Get Release Notes
         id: release_notes
@@ -104,8 +104,8 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
-          tagName: __VERSION__
-          releaseName: Hope v__VERSION__
+          tagName: ${{ github.ref_name }}
+          releaseName: Hope ${{ github.ref_name }}
           releaseBody: ${{ steps.release_notes.outputs.BODY }}
           releaseDraft: false
           prerelease: false
@@ -128,11 +128,9 @@ jobs:
       - name: Pull LFS objects
         run: git lfs pull
 
-      - name: Read version from tauri.conf.json
+      - name: Resolve release tag
         id: version
-        run: |
-          TAG="$(jq -r '.version' src-tauri/tauri.conf.json)"
-          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+        run: echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
 
       - name: Validate ONNX files are real binaries
         run: |
