@@ -158,7 +158,6 @@ export function useUpdater() {
     get minimized() {
       return minimized;
     },
-    checkForUpdate,
     downloadAndInstall,
     dismiss,
     minimize,

@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@fontsource/be-vietnam-pro':
-        specifier: ^5.2.8
-        version: 5.2.8
       '@fontsource/patrick-hand':
         specifier: ^5.2.8
         version: 5.2.8
@@ -326,9 +323,6 @@ packages:
 
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
-
-  '@fontsource/be-vietnam-pro@5.2.8':
-    resolution: {integrity: sha512-lqTtfpkAy0GdFH0fqwR0sW4VP+3CNGaQV6SpW2TSZaNmixZMlou+2dp5ErGidrS1MPiDDPfPbfW2i358PVFLZA==}
 
   '@fontsource/patrick-hand@5.2.8':
     resolution: {integrity: sha512-FZx34VLuiF+Pjv/A/m1bTxjR6hAvmL6vdCp62uypVdgFvSrPrBOxX+vCXVy8lfNVFqvKfm/ghun+aaYVYqfBEg==}
@@ -2862,8 +2856,6 @@ snapshots:
       '@floating-ui/utils': 0.2.12
 
   '@floating-ui/utils@0.2.12': {}
-
-  '@fontsource/be-vietnam-pro@5.2.8': {}
 
   '@fontsource/patrick-hand@5.2.8': {}
 

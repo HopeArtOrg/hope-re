@@ -26,7 +26,6 @@ pub fn run() {
             protect_image,
             embed_watermark,
             extract_watermark,
-            #[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
             cancel_protection,
             check_models_status,
             download_model

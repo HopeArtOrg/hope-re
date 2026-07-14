@@ -1,5 +1,3 @@
-import type { ModelsCheckResult } from "$lib/queries";
-
 import { useQueryClient } from "@tanstack/svelte-query";
 import { listen } from "@tauri-apps/api/event";
 
@@ -153,14 +151,8 @@ export function useModelDownload() {
     get currentModelName() {
       return currentModelName;
     },
-    get totalModels() {
-      return totalModels;
-    },
     get error() {
       return error;
-    },
-    get statusData(): ModelsCheckResult | undefined {
-      return statusQuery.data;
     },
     get minimized() {
       return minimized;

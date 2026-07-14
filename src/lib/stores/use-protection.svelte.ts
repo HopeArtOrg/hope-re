@@ -60,7 +60,6 @@ export function useProtection() {
   const resultImage = $derived(mutation.data?.image_base64 ?? null);
   const hasResult = $derived(mutation.isSuccess && !!mutation.data?.image_base64);
   const modelUsed = $derived(mutation.data?.model_used ?? true);
-  const resultMessage = $derived(mutation.data?.message ?? "");
 
   function stageMessage(stage: string): string {
     switch (stage) {
@@ -270,9 +269,6 @@ export function useProtection() {
     },
     get modelUsed() {
       return modelUsed;
-    },
-    get resultMessage() {
-      return resultMessage;
     },
     handleProtect,
     resetSettings,

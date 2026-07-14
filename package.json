@@ -15,7 +15,6 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "dependencies": {
-    "@fontsource/be-vietnam-pro": "^5.2.8",
     "@fontsource/patrick-hand": "^5.2.8",
     "@tailwindcss/vite": "^4.3.2",
     "@tanstack/svelte-query": "^6.1.36",
