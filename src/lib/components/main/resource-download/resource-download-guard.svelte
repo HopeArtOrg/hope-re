@@ -8,6 +8,7 @@
   import * as Dialog from "$lib/components/ui/dialog";
   import { Progress } from "$lib/components/ui/progress";
   import { MODEL_ALGO_SUFFIX } from "$lib/constants";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { useModelDownload } from "$lib/stores/use-model-download.svelte";
   import { cn } from "$lib/utils";
 
@@ -69,7 +70,7 @@
       <button
         onclick={() => models.minimize()}
         class="absolute inset-e-4 top-4 rounded-lg opacity-50 transition-opacity hover:opacity-100 focus-visible:outline-hidden cursor-pointer"
-        aria-label="Minimize to dock"
+        aria-label={t("resources.minimizeToDock")}
       >
         <MinusIcon class="size-4" />
       </button>
@@ -86,13 +87,13 @@
 
         <Dialog.DialogTitle class="text-lg font-medium tracking-tight">
           {#if models.isLoading}
-            Checking resources
+            {t("resources.checking")}
           {:else if models.error}
-            Download interrupted
+            {t("resources.interrupted")}
           {:else if models.isDownloading}
-            Preparing workspace
+            {t("resources.preparing")}
           {:else}
-            Setting up
+            {t("resources.settingUp")}
           {/if}
         </Dialog.DialogTitle>
 
@@ -100,11 +101,11 @@
           {#if models.error}
             {models.error}
           {:else if models.isDownloading && models.currentModelName}
-            Downloading {models.currentModelName} model
+            {t("resources.downloadingModel", { name: models.currentModelName })}
           {:else if models.isLoading}
-            Verifying model files
+            {t("resources.verifying")}
           {:else}
-            Initializing download
+            {t("resources.initializing")}
           {/if}
         </Dialog.DialogDescription>
       </div>
@@ -114,7 +115,7 @@
       <div class="space-y-4">
         <div class="space-y-2">
           <div class="flex items-center justify-between">
-            <span class="text-xs text-muted-foreground uppercase tracking-wider font-medium">Overall progress</span>
+            <span class="text-xs text-muted-foreground uppercase tracking-wider font-medium">{t("resources.overallProgress")}</span>
             <span class="text-xs text-muted-foreground/60 font-medium tabular-nums">
               {Math.round(models.overallPercent)}&percnt;
             </span>
@@ -139,13 +140,13 @@
 
               <span class="text-[10px] text-muted-foreground/40 font-medium tabular-nums uppercase">
                 {#if model.percent >= 100}
-                  Done
+                  {t("resources.done")}
                 {:else if model.totalBytes > 0}
                   {formatBytes(model.downloadedBytes)} / {formatBytes(model.totalBytes)}
                 {:else if model.percent > 0}
                   {Math.round(model.percent)}&percnt;
                 {:else}
-                  Waiting
+                  {t("resources.waiting")}
                 {/if}
               </span>
             </div>
@@ -167,7 +168,7 @@
           onclick={() => models.startDownload()}
         >
           <DownloadIcon class="size-4" />
-          Retry download
+          {t("resources.retryDownload")}
         </Button>
       </Dialog.Footer>
     {/if}

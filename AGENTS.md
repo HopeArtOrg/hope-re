@@ -105,6 +105,27 @@ Example: `feat(protection): add nightshade intensity control`
 - Expose reactive state via getters/setters in returned objects (preserves reactivity)
 - Module-level `$state` for singleton stores, function-level for instance stores
 
+### Internationalization (i18n)
+
+- Supported locales: English (`en`), Vietnamese (`vi`), Japanese (`ja`), Chinese (`zh`).
+- No i18n library. `lib/i18n/locales/en.ts` is the source of truth and exports
+  `type Messages = typeof en`; `vi`/`ja`/`zh` are typed `Messages`, so `pnpm check`
+  fails if any locale drifts out of key-sync. Add every new key to all four files.
+- Never hardcode user-facing text (template nodes, `placeholder`/`title`/`aria-label`,
+  `toast.*`, `sr-only`, progress messages). Use `t("dot.path")` from
+  `$lib/stores/use-i18n.svelte`; it is reactive in `.svelte` and callable in `.svelte.ts`.
+- Interpolate with `{name}` tokens: `t("image.loaded", { name })`. Unknown keys return
+  the key; a locale missing a key falls back to English.
+- Structural constants (`algorithms`, `glazeStyles`, `nightshadeTargets`, `qualityPresets`)
+  hold only `value`/`key`/icons/colours; their labels/descriptions live in the dictionaries,
+  keyed by `value`/`key` (e.g. algorithm labels resolve via `algorithms.<value>.label`).
+- Locale is persisted to `settings.json` (via `useI18n().setLocale`), detected from
+  `navigator.language` on first run, and switched from the header `LanguageSelect`.
+- Decorative, non-informational marks stay untranslated (brand `Hope:RE`, calligraphy
+  stamps `落款`/`印章`/`証`/`未`, the `ERASE` doodle).
+- CJK glyphs are covered by system-font fallbacks appended to `--font-patrick-hand` in
+  `app.css` (Patrick Hand has no CJK coverage).
+
 ### Error Handling (TypeScript)
 
 - Wrap in `try/catch`, call `toast.error("message")` + `console.error("context:", error)`
@@ -164,6 +185,7 @@ src/                      # Frontend (SvelteKit + Svelte 5)
   lib/components/         # UI components (shadcn-svelte based)
   lib/queries/            # TanStack Query hooks (by domain)
   lib/stores/             # Svelte 5 rune composables (use-*.svelte.ts)
+  lib/i18n/               # Message dictionaries (en/vi/ja/zh) + Messages type
   lib/constants.ts        # Algorithm/style/preset definitions
   lib/utils.ts            # cn(), parseMarkdown, type helpers
   routes/                 # SvelteKit routes (SPA, SSR disabled)

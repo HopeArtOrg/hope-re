@@ -1,8 +1,10 @@
 <script lang="ts">
   import { platform } from "@tauri-apps/plugin-os";
 
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { cn } from "$lib/utils";
 
+  import LanguageSelect from "./language-select.svelte";
   import SystemInfoDialog from "./system-info-dialog.svelte";
   import ThemeToggle from "./theme-toggle.svelte";
   import UpdateButton from "./update-button.svelte";
@@ -21,16 +23,17 @@
     <div class="mr-auto flex items-center gap-4 group">
       <div class="size-10 p-1.5 doodle-blob bg-primary/10 border-2 border-foreground/5 flex items-center justify-center transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-sm">
         <img src="/logo.png"
-             alt="Hope:RE Studio Logo"
+             alt={t("app.logoAlt")}
              class="size-full object-contain" />
       </div>
       <h1 class="text-2xl font-bold text-foreground/80 tracking-tighter flex items-center gap-2">
         Hope:RE
-        <span class="text-[9px] opacity-40 font-black uppercase tracking-widest bg-foreground/5 px-2 py-0.5 doodle-line self-center translate-y-0.5">Studio v2</span>
+        <span class="text-[9px] opacity-40 font-black uppercase tracking-widest bg-foreground/5 px-2 py-0.5 doodle-line self-center translate-y-0.5">{t("app.studioBadge")}</span>
       </h1>
     </div>
     <UpdateButton />
     <SystemInfoDialog />
+    <LanguageSelect />
     <ThemeToggle />
   </div>
 </header>

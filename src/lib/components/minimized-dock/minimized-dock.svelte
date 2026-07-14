@@ -2,6 +2,7 @@
   import { CircleArrowUpIcon, DownloadIcon } from "@lucide/svelte";
 
   import { Progress } from "$lib/components/ui/progress";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { useModelDownload } from "$lib/stores/use-model-download.svelte";
   import { useUpdater } from "$lib/stores/use-updater.svelte";
   import { cn } from "$lib/utils";
@@ -26,7 +27,7 @@
       {/if}
     </div>
     <div class="flex flex-col items-start gap-0.5 min-w-0">
-      <span class="text-xs font-medium text-foreground leading-none">Models</span>
+      <span class="text-xs font-medium text-foreground leading-none">{t("resources.models")}</span>
       <div class="w-20">
         <Progress value={models.overallPercent}
                   max={100}
@@ -54,7 +55,7 @@
     </div>
     <div class="flex flex-col items-start gap-0.5 min-w-0">
       <span class="text-xs font-medium text-foreground leading-none">
-        {updater.isInstalling ? "Installing" : "Updating"}
+        {updater.isInstalling ? t("updater.installing") : t("updater.updating")}
       </span>
       {#if updater.isDownloading}
         <div class="w-20">

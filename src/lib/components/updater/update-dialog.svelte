@@ -4,6 +4,7 @@
   import { Button } from "$lib/components/ui/button";
   import * as Dialog from "$lib/components/ui/dialog";
   import { Progress } from "$lib/components/ui/progress";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { useUpdater } from "$lib/stores/use-updater.svelte";
   import { parseMarkdown } from "$lib/utils";
 
@@ -39,7 +40,7 @@
       <button
         onclick={() => updater.minimize()}
         class="absolute inset-e-4 top-4 rounded-lg opacity-50 transition-opacity hover:opacity-100 focus-visible:outline-hidden cursor-pointer"
-        aria-label="Minimize to dock"
+        aria-label={t("updater.minimizeToDock")}
       >
         <MinusIcon class="size-4" />
       </button>
@@ -52,7 +53,7 @@
         </div>
         <div>
           <Dialog.DialogTitle class="text-lg font-bold">
-            New Version
+            {t("updater.newVersion")}
           </Dialog.DialogTitle>
           {#if updater.version}
             <p class="text-xs text-muted-foreground mt-0.5">v{updater.version}</p>
@@ -64,7 +65,7 @@
     <div class="mt-4 space-y-4 min-h-0 flex-1 overflow-y-auto">
       {#if renderedNotes}
         <div class="rounded-lg border bg-card p-4">
-          <p class="text-xs font-medium text-muted-foreground mb-2">What's new</p>
+          <p class="text-xs font-medium text-muted-foreground mb-2">{t("updater.whatsNew")}</p>
           <div class="release-notes text-sm leading-relaxed">
             {@html renderedNotes}
           </div>
@@ -74,7 +75,7 @@
       {#if updater.isDownloading}
         <div class="space-y-2">
           <div class="flex items-center justify-between text-xs text-muted-foreground uppercase tracking-wider font-medium">
-            <span>Downloading</span>
+            <span>{t("updater.downloading")}</span>
             <span class="tabular-nums opacity-60">{updater.downloadProgress}%</span>
           </div>
           <Progress value={updater.downloadProgress} class="h-1.5" />
@@ -84,7 +85,7 @@
       {#if updater.isInstalling}
         <div class="flex items-center gap-2 text-sm text-muted-foreground">
           <LoaderCircleIcon class="size-4 animate-spin" />
-          <span>Installing and restarting</span>
+          <span>{t("updater.installingRestarting")}</span>
         </div>
       {/if}
 
@@ -102,7 +103,7 @@
           size="sm"
           onclick={() => updater.dismiss()}
         >
-          Later
+          {t("updater.later")}
         </Button>
         <Button
           size="sm"
@@ -110,7 +111,7 @@
           class="gap-2"
         >
           <CircleArrowUpIcon class="size-3.5" />
-          Update
+          {t("updater.update")}
         </Button>
       {/if}
     </Dialog.Footer>

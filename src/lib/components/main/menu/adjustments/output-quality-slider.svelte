@@ -4,6 +4,7 @@
   import { ImageIcon } from "@lucide/svelte";
 
   import { Slider } from "$lib/components/ui/slider";
+  import { t } from "$lib/stores/use-i18n.svelte";
   import { cn } from "$lib/utils";
 
   let { value = $bindable([92]) }: OutputQualitySliderProps = $props();
@@ -15,6 +16,14 @@
       ? "High"
       : "Best",
   );
+
+  const qualityLabel = $derived(
+    qualityLevel === "Standard"
+      ? t("outputQuality.rough")
+      : qualityLevel === "High"
+      ? t("outputQuality.polished")
+      : t("outputQuality.pristine"),
+  );
 </script>
 
 <div class="space-y-4">
@@ -23,7 +32,7 @@
       <div class="p-2.5 doodle-blob bg-card border-2 border-foreground/10 bg-emerald-500/10">
         <ImageIcon class="size-6 text-emerald-600 dark:text-emerald-400" />
       </div>
-      <span class="text-2xl font-bold text-foreground/90 tracking-tight">Final Shine</span>
+      <span class="text-2xl font-bold text-foreground/90 tracking-tight">{t("outputQuality.title")}</span>
     </div>
     <div class="flex items-center gap-2">
       <span class={cn(
@@ -32,7 +41,7 @@
         qualityLevel === "High" && "text-emerald-700 border-emerald-500/40",
         qualityLevel === "Best" && "text-sky-700 border-sky-500/40",
       )}>
-        {qualityLevel === "Standard" ? "Rough" : qualityLevel === "High" ? "Polished" : "PRISTINE"}
+        {qualityLabel}
       </span>
       <span class="text-xl text-foreground/70 font-bold">
         {value[0]}
@@ -49,6 +58,6 @@
   </div>
 
   <p class="text-base text-foreground/60 font-bold px-1 leading-tight">
-    How detailed the final sheet should be. Higher shine looks better but creates a heavier file.
+    {t("outputQuality.hint")}
   </p>
 </div>

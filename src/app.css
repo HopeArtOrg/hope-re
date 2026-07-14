@@ -75,7 +75,9 @@
 }
 
 @theme {
-  --font-patrick-hand: "Patrick Hand", cursive;
+  --font-patrick-hand:
+    "Patrick Hand", "Hiragino Sans", "Yu Gothic UI", "Meiryo", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC",
+    "Noto Sans CJK JP", "Noto Sans SC", "Noto Sans JP", cursive, sans-serif;
   --font-sans: var(--font-patrick-hand);
 }
 
