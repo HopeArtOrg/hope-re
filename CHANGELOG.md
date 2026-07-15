@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Fixed
+- Prevent the Android app from crashing on launch by registering the desktop-only updater and process plugins under `#[cfg(desktop)]` and scoping their permissions to a desktop-only capability, so they no longer initialize on Android where they are unsupported. The auto-update button is now hidden on mobile.
+- Install the rustls `ring` crypto provider at startup so Tauri's internal reqwest client no longer panics with "No provider set" and aborts on Android; reqwest is built without a bundled provider, leaving the choice to the app.
+
 ## [2.5.0] - 2026-07-15
 
 ### Added

@@ -13,13 +13,20 @@ use commands::{
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    tauri::Builder::default()
-        .plugin(tauri_plugin_updater::Builder::new().build())
-        .plugin(tauri_plugin_process::init())
+    let _ = rustls::crypto::ring::default_provider().install_default();
+
+    let builder = tauri::Builder::default()
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_dialog::init())
-        .plugin(tauri_plugin_fs::init())
+        .plugin(tauri_plugin_fs::init());
+
+    #[cfg(desktop)]
+    let builder = builder
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_process::init());
+
+    builder
         .invoke_handler(tauri::generate_handler![
             get_system_info,
             get_inference_capabilities,
@@ -31,12 +38,15 @@ pub fn run() {
             download_model
         ])
         .setup(|app| {
-            use tauri::Manager;
             #[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
-            app.manage(onnx_integration::protection::ProtectionState::default());
+            {
+                use tauri::Manager;
+                app.manage(onnx_integration::protection::ProtectionState::default());
+            }
 
             #[cfg(target_os = "windows")]
             {
+                use tauri::Manager;
                 if let Some(window) = app.get_webview_window("main") {
                     let _ = window.set_decorations(false);
                 }

@@ -31,7 +31,9 @@
         <span class="text-[9px] opacity-40 font-black uppercase tracking-widest bg-foreground/5 px-2 py-0.5 doodle-line self-center translate-y-0.5">{t("app.studioBadge")}</span>
       </h1>
     </div>
-    <UpdateButton />
+    {#if !isMobile}
+      <UpdateButton />
+    {/if}
     <SystemInfoDialog />
     <LanguageSelect />
     <ThemeToggle />
