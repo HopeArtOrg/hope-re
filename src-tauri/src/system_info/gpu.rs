@@ -6,6 +6,7 @@ struct GpuDetails {
     vram_mb: Option<u64>,
 }
 
+#[cfg(not(all(target_os = "android", not(target_arch = "aarch64"))))]
 pub fn has_nvidia_gpu() -> bool {
     let gpu = detect_gpu();
     gpu.name.to_uppercase().contains("NVIDIA")
