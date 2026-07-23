@@ -19,6 +19,7 @@
               nodejs
               rustc
               pnpm
+              cargo-tauri
             ];
 
             buildInputs = with pkgs; [
