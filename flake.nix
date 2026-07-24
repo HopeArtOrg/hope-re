@@ -84,6 +84,8 @@
                     egl-wayland
                     hicolor-icon-theme
                     gsettings-desktop-schemas
+                    rustfmt
+                    clippy
                     fish
                   ];
                 profile = ''

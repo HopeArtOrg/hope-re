@@ -4,9 +4,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.5.1] - 2026-07-25
+
+### Added
+
+- Add `flake.nix` for better DX on Linux.
+
+### Fixed
+
+- Fix typo error in the `models_downloader.rs`, which still use the old version nametag instead of `v2.x.x`.
+
+### Changed
+
+- Add `flake.nix` for future development and fix `src-tauri/src/onnx_integration/model_downloader.rs`'s typo.
+
 ## [2.5.0] - 2026-07-15
 
 ### Added
+
 - Add CODEBASE.md documenting the architecture, project structure, key dependencies, and the ONNX model pipeline.
 - Add CODING_CONVENTION.md documenting the TypeScript, Svelte, i18n, and Rust coding standards.
 - Add CONTRIBUTE.md documenting setup commands, testing, pre-commit hooks, the commit convention, CI/CD, and the tag-driven release flow.
@@ -14,22 +29,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Add CORE_FUNCTION.md documenting the Tauri command surface and the protection, watermarking, model management, update, and system info flows.
 
 ### Changed
+
 - Restructure AGENTS.md into a documentation hub that features CODEBASE.md, CODING_CONVENTION.md, and CONTRIBUTE.md alongside the agent skill guides.
 - Bump version to 2.5.0 across package.json, Cargo.toml, and tauri.conf.json.
 
 ## [2.4.0] - 2026-07-15
 
 ### Added
+
 - Add in-app language switching with full UI localization for English, Vietnamese, Japanese, and Chinese.
 
 ## [2.3.0] - 2026-07-15
 
 ### Security
+
 - Point the updater endpoint at the HopeArtOrg organization so update checks resolve to the correct release manifest.
 - Sanitize update release notes with DOMPurify before rendering to prevent HTML/script injection from the update manifest.
 - Remove the unused create_ort_session command, which accepted an arbitrary filesystem path from the webview.
 
 ### Fixed
+
 - Prefill the extraction seed from the embed step so custom-seed watermark verification round-trips correctly.
 - Record the watermark signature length in UTF-8 bytes instead of UTF-16 code units so non-ASCII signatures verify correctly.
 - Guard against negative intensity and epsilon values that could panic the protection worker.
@@ -41,25 +60,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Make the theme store a singleton with a single system-theme listener, guard the file-upload race, reset fullscreen zoom on open, sync the window-control state, and add accessible labels to window and dialog controls.
 
 ### Changed
+
 - Rename the ResourceDownloadGuard props type to ResourceDownloadGuardProps for consistency with other components.
-- Use the logical inset-e-4 utility instead of end-4, and document the Tailwind CSS 4 inset-e-* and inset-s-* convention in AGENTS.md.
+- Use the logical inset-e-4 utility instead of end-4, and document the Tailwind CSS 4 inset-e-_ and inset-s-_ convention in AGENTS.md.
 - Narrow the accepted image MIME types to png, jpeg, and webp, and disable native drag-and-drop so HTML5 drop works across platforms.
 - Bump version to 2.3.0 across package.json, Cargo.toml, and tauri.conf.json.
 
 ### Removed
+
 - Remove unused UI component families (tabs, badge, switch), dead store members, the VerificationStatus barrel re-export, and the non-functional watermark strength slider.
 - Remove the unused @fontsource/be-vietnam-pro dependency.
 
 ### Added
+
 - Add the dompurify dependency for update-notes sanitization.
 
 ## [2.2.3] - 2026-07-13
 
 ### Fixed
+
 - Prevent false positive watermark verification on normal images using a robust character printability ratio check that filters out unwatermarked garbage (mostly null bytes) without modifying the embedded text. This preserves the original length mapping and backward compatibility.
 - Fix GitHub Actions workflow self-installer crash by reordering the Node.js setup step before the pnpm installation and pinning the pnpm version to 11.11.0.
 
 ### Changed
+
 - Bump version to 2.2.3 across package.json, Cargo.toml, and tauri.conf.json.
 - Refactor extract-form.svelte to extract the verification status display into a new VerificationStatus component (located in watermark-tab/) for better separation of concerns.
 - Update all component barrel files to use the direct export style.
@@ -67,15 +91,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [2.2.2] - 2026-07-11
 
 ### Fixed
+
 - Resolve result image zoom dialog not triggering on the Cloak Canvas tab when clicking the magnifying glass icon.
 
 ### Changed
+
 - Bump version to 2.2.2 across package.json, Cargo.toml, and tauri.conf.json.
 - Remove any type from GlazeForm component props and rename the props type definition to GlazeFormProps.
 
 ## [2.2.1] - 2026-07-10
 
 ### Added
+
 - Integrate the blind watermarking feature in the Rust Tauri backend using the blind_watermark crate.
 - Expose embed_watermark and extract_watermark Tauri commands asynchronously to prevent main UI thread freezing.
 - Add Svelte Query mutations useEmbedWatermark and useExtractWatermark for watermark processing.
@@ -84,6 +111,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Create Background.svelte component to encapsulate the drawing doodles and keep the background vibe in sync.
 
 ### Changed
+
 - Refactor +page.svelte to implement vertical, overlapping notebook-divider-style tabs on the left.
 - Refactor glaze-tab.svelte into glaze-tab.svelte and glaze-form.svelte to separate canvas views from settings controls.
 - Bump version to 2.2.1 across package.json, Cargo.toml, and tauri.conf.json.
@@ -91,6 +119,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [2.1.19] - 2026-06-14
 
 ### Changed
+
 - Update dependencies to their latest versions, including Svelte 5.56.3 and Vite 8.0.16.
 - Refactor UI components to utilize modern Svelte 5 declaration tags (`{const}`) with `$derived` for improved reactivity and alignment with the latest framework standards.
 - Update GitHub Actions `publish` workflow to use the `windows-2025-vs2026` runner to ensure CI/CD stability.
@@ -99,12 +128,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [2.1.18] - 2026-05-31
 
 ### Changed
+
 - Refactor UI components to remove legacy Svelte `{@const}` syntax in favor of modern Svelte 5 patterns (dot notation and inlining) for improved performance and maintainability.
 - Bump version to 2.1.18 across package.json, Cargo.toml, and tauri.conf.json.
 
 ## [2.1.17] - 2026-05-22
 
 ### Fixed
+
 - Resolved rendering issues on Linux Wayland environments by removing hardcoded `libwebkit2gtk-4.1` versions to prevent DMA-BUF conflicts.
 
 ## [2.1.16] - 2026-05-21
