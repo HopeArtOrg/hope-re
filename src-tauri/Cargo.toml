@@ -1,94 +1,107 @@
 [package]
 name = "hope-ad"
-version = "2.5.0"
+version = "2.5.1"
 description = "An AI-proofing arts app"
-authors = [ "HopeArtOrg" ]
+authors = ["HopeArtOrg"]
 license = "MIT"
 repository = "https://github.com/HopeArtOrg/hope-re"
 edition = "2021"
 rust-version = "1.93.1"
 
 [lib]
+crate-type = ["cdylib", "rlib", "staticlib"]
 name = "hope_remake_lib"
-crate-type = [
-  "staticlib",
-  "cdylib",
-  "rlib"
-]
+
+[dependencies]
+base64 = "0.22"
+blind_watermark = "0.1"
+futures-util = "0.3"
+image = "0.25"
+log = "0.4"
+ndarray = { version = "0.17", features = ["std"] }
+reqwest = {
+  version = "0.12",
+  default-features = false,
+  features = ["charset", "http2", "rustls-tls", "stream", "system-proxy"]
+}
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+sysinfo = "0.36.1"
+tauri = { version = "2.11.2", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"
+tauri-plugin-log = "2"
+tauri-plugin-os = "2.3.2"
+tauri-plugin-process = "2"
+tauri-plugin-store = "2.4.1"
+tauri-plugin-updater = "2"
+tokio = {
+  version = "1",
+  features = [
+    "fs",
+    "io-util",
+  ]
+}
+uuid = { version = "1.0", features = ["v4"] }
 
 [build-dependencies]
 tauri-build = { version = "2.6.2", features = [] }
 
-[dependencies]
-serde_json = "1.0"
-serde = { version = "1.0", features = [ "derive" ] }
-log = "0.4"
-tauri = { version = "2.11.2", features = [] }
-tauri-plugin-log = "2"
-tauri-plugin-os = "2.3.2"
-tauri-plugin-store = "2.4.1"
-tauri-plugin-dialog = "2"
-tauri-plugin-fs = "2"
-tauri-plugin-updater = "2"
-tauri-plugin-process = "2"
-sysinfo = "0.36.1"
-image = "0.25"
-base64 = "0.22"
-blind_watermark = "0.1"
-ndarray = { version = "0.17", features = [ "std" ] }
-reqwest = { version = "0.12", default-features = false, features = [
-  "charset",
-  "http2",
-  "rustls-tls",
-  "stream",
-  "system-proxy"
-] }
-tokio = { version = "1", features = [
-  "fs",
-  "io-util",
-] }
-futures-util = "0.3"
-uuid = { version = "1.0", features = [ "v4" ] }
-sha2 = "0.10"
-
-[target.'cfg(windows)'.dependencies]
-ort = { version = "2.0.0-rc.12", default-features = false, features = [
-  "ndarray",
-  "copy-dylibs",
-  "download-binaries",
-  "tls-rustls",
-  "cuda",
-  "directml"
-] }
-windows = { version = "0.61.3", features = [
-  "Win32_Graphics_Dxgi",
-  "Win32_System_Com"
-] }
+[target.'cfg(all(target_os = "android", target_arch = "aarch64"))'.dependencies]
+ort = {
+  version = "2.0.0-rc.12",
+  default-features = false,
+  features = [
+    "copy-dylibs",
+    "download-binaries",
+    "ndarray",
+    "tls-rustls",
+    "xnnpack"
+  ]
+}
 
 [target.'cfg(all(target_os = "linux", not(target_os = "android")))'.dependencies]
-ort = { version = "2.0.0-rc.12", default-features = false, features = [
-  "ndarray",
-  "copy-dylibs",
-  "download-binaries",
-  "tls-rustls",
-  "cuda",
-  "xnnpack"
-] }
+ort = {
+  version = "2.0.0-rc.12",
+  default-features = false,
+  features = [
+    "copy-dylibs",
+    "cuda",
+    "download-binaries",
+    "ndarray",
+    "tls-rustls",
+    "xnnpack"
+  ]
+}
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
-ort = { version = "2.0.0-rc.12", default-features = false, features = [
-  "ndarray",
-  "copy-dylibs",
-  "download-binaries",
-  "tls-rustls",
-  "coreml"
-] }
+ort = {
+  version = "2.0.0-rc.12",
+  default-features = false,
+  features = [
+    "copy-dylibs",
+    "coreml",
+    "download-binaries",
+    "ndarray",
+    "tls-rustls"
+  ]
+}
 
-[target.'cfg(all(target_os = "android", target_arch = "aarch64"))'.dependencies]
-ort = { version = "2.0.0-rc.12", default-features = false, features = [
-  "ndarray",
-  "copy-dylibs",
-  "download-binaries",
-  "tls-rustls",
-  "xnnpack"
-] }
+[target."cfg(windows)".dependencies]
+ort = {
+  version = "2.0.0-rc.12",
+  default-features = false,
+  features = [
+    "copy-dylibs",
+    "cuda",
+    "directml",
+    "download-binaries",
+    "ndarray",
+    "tls-rustls"
+  ]
+}
+windows = {
+  version = "0.61.3",
+  features = ["Win32_Graphics_Dxgi", "Win32_System_Com"]
+}
