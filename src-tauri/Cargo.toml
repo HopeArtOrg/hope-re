@@ -1,3 +1,5 @@
+# :tombi format.disabled = true
+
 [package]
 name = "hope-ad"
 version = "2.5.1"
