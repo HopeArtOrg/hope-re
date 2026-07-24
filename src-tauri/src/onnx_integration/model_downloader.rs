@@ -151,7 +151,7 @@ pub async fn download_model(app: AppHandle, model_name: String) -> Result<String
     }
 
     let version = get_app_version();
-    let url = format!("{}/{}/{}", GITHUB_RELEASE_URL, version, model_name);
+    let url = format!("{}/v{}/{}", GITHUB_RELEASE_URL, version, model_name);
 
     let client = reqwest::Client::builder()
         .connect_timeout(std::time::Duration::from_secs(30))
