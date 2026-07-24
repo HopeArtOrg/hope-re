@@ -2,14 +2,18 @@
 name = "hope-ad"
 version = "2.5.1"
 description = "An AI-proofing arts app"
-authors = ["HopeArtOrg"]
+authors = [ "HopeArtOrg" ]
 license = "MIT"
 repository = "https://github.com/HopeArtOrg/hope-re"
 edition = "2021"
 rust-version = "1.93.1"
 
 [lib]
-crate-type = ["cdylib", "rlib", "staticlib"]
+crate-type = [
+  "cdylib",
+  "rlib",
+  "staticlib"
+]
 name = "hope_remake_lib"
 
 [dependencies]
@@ -18,13 +22,19 @@ blind_watermark = "0.1"
 futures-util = "0.3"
 image = "0.25"
 log = "0.4"
-ndarray = { version = "0.17", features = ["std"] }
+ndarray = { version = "0.17", features = [ "std" ] }
 reqwest = {
   version = "0.12",
   default-features = false,
-  features = ["charset", "http2", "rustls-tls", "stream", "system-proxy"]
+  features = [
+    "charset",
+    "http2",
+    "rustls-tls",
+    "stream",
+    "system-proxy"
+  ]
 }
-serde = { version = "1.0", features = ["derive"] }
+serde = { version = "1.0", features = [ "derive" ] }
 serde_json = "1.0"
 sha2 = "0.10"
 sysinfo = "0.36.1"
@@ -43,7 +53,7 @@ tokio = {
     "io-util",
   ]
 }
-uuid = { version = "1.0", features = ["v4"] }
+uuid = { version = "1.0", features = [ "v4" ] }
 
 [build-dependencies]
 tauri-build = { version = "2.6.2", features = [] }
@@ -103,5 +113,8 @@ ort = {
 }
 windows = {
   version = "0.61.3",
-  features = ["Win32_Graphics_Dxgi", "Win32_System_Com"]
+  features = [
+    "Win32_Graphics_Dxgi",
+    "Win32_System_Com"
+  ]
 }
