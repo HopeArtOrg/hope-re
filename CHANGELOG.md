@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 - Add `flake.nix` for future development and fix `src-tauri/src/onnx_integration/model_downloader.rs`'s typo.
+- Update version for the `actions/checkout`, `actions/setup-node`, and `tauri-apps/tauri-action` for both `publish.yml`, and `lint.yml`. 
 
 ## [2.5.0] - 2026-07-15
 
