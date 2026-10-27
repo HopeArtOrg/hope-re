@@ -60,11 +60,12 @@ tauri-build = { version = "2.6.2", features = [] }
 
 [target.'cfg(all(target_os = "android", target_arch = "aarch64"))'.dependencies]
 ort = {
-  version = "2.0.0-rc.12",
+  version = "2.0.0-rc.13",
   default-features = false,
   features = [
     "copy-dylibs",
     "download-binaries",
+    "lax-feature-matching",
     "ndarray",
     "tls-rustls",
     "xnnpack"
@@ -73,12 +74,13 @@ ort = {
 
 [target.'cfg(all(target_os = "linux", not(target_os = "android")))'.dependencies]
 ort = {
-  version = "2.0.0-rc.12",
+  version = "2.0.0-rc.13",
   default-features = false,
   features = [
     "copy-dylibs",
     "cuda",
     "download-binaries",
+    "lax-feature-matching",
     "ndarray",
     "tls-rustls",
     "xnnpack"
@@ -87,7 +89,7 @@ ort = {
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
 ort = {
-  version = "2.0.0-rc.12",
+  version = "2.0.0-rc.13",
   default-features = false,
   features = [
     "copy-dylibs",
@@ -100,7 +102,7 @@ ort = {
 
 [target."cfg(windows)".dependencies]
 ort = {
-  version = "2.0.0-rc.12",
+  version = "2.0.0-rc.13",
   default-features = false,
   features = [
     "copy-dylibs",
