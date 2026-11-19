@@ -63,10 +63,10 @@ Code style standards for the TypeScript/Svelte frontend and the Rust backend. Mo
 
 ### Internationalization (i18n)
 
-- Supported locales: English (`en`), Vietnamese (`vi`), Japanese (`ja`), Chinese (`zh`).
+- Supported locales: English (`en`), Vietnamese (`vi`), Japanese (`ja`), Chinese (`zh`), Spanish (`es`).
 - No i18n library. `lib/i18n/locales/en.ts` is the source of truth and exports
-  `type Messages = typeof en`; `vi`/`ja`/`zh` are typed `Messages`, so `pnpm check`
-  fails if any locale drifts out of key-sync. Add every new key to all four files.
+  `type Messages = typeof en`; `vi`/`ja`/`zh`/`es` are typed `Messages`, so `pnpm check`
+  fails if any locale drifts out of key-sync. Add every new key to all five files.
 - Never hardcode user-facing text (template nodes, `placeholder`/`title`/`aria-label`,
   `toast.*`, `sr-only`, progress messages). Use `t("dot.path")` from
   `$lib/stores/use-i18n.svelte`; it is reactive in `.svelte` and callable in `.svelte.ts`.

@@ -4,7 +4,7 @@ import { LazyStore } from "@tauri-apps/plugin-store";
 
 import { dictionaries } from "$lib/i18n";
 
-const SUPPORTED_LOCALES: Locale[] = ["en", "vi", "ja", "zh"];
+const SUPPORTED_LOCALES: Locale[] = ["en", "vi", "ja", "zh", "es"];
 
 const store = new LazyStore("settings.json");
 
